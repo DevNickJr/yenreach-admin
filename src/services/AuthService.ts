@@ -4,9 +4,9 @@ import BaseService from "./BaseService"
 const servicePrefix = '/'
 
 export const apiRegister = (data: IUserRegister) => {
-    return BaseService.post(`${servicePrefix}/register`, JSON.stringify(data))
+    return BaseService.post(`${servicePrefix}/admin_login_api.php`, JSON.stringify(data))
 }
 
 export const apiLogin =  (data: IUserLogin) => {
-    return BaseService.post<ILogin>(`${servicePrefix}/login`, data)
+    return BaseService.post<ILogin>(`/admin_login_api.php`, data)
 }

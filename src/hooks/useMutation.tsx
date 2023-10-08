@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { toast } from 'react-toastify';
 import { AxiosResponse } from "axios";
-import { useAuthContext } from '@/hooks/useAuthContext'
+import { useAuthContext } from 'src/hooks/useAuthContext'
 
 
 interface State {
@@ -25,7 +25,13 @@ const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string,
           // const response = requireAuth ? await api(data, session?.user?.token.access) : await api(data)
           const response = requireAuth ? await api(data, { id: id!, token }) : await api(data, { id: id!, token })
           // console.log("response from usePost", response)
-          return response?.data
+
+          if (response?.data?.status === "success") {
+            return response?.data?.data
+          } else {
+            throw new Error(response?.data?.message)
+          }
+
           // if (response?.data?.status === "success") {
           //   return response?.data?.data
           // } else {
@@ -46,9 +52,9 @@ const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string,
         onError: (error: any, variables, context) => {
             console.log("error", error)
             if (showErrorMessage) {
-              toast.error(error?.response?.data?.message || "An Error Occurred!");
-            } else {
-              // toast.error("An Error Occurred!");
+              // toast.error(error?.response?.data?.message || "An Error Occurred!");
+              toast.error(error?.message || "An Error Occurred!");
+
             }
             if (onError) {
                 onError(error, variables, context)

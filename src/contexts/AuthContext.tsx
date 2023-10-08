@@ -4,8 +4,11 @@ import { ReactNode, Reducer, createContext, useEffect, useReducer } from "react"
 const user = sessionStorage.getItem("user") 
 
 interface IUser {
-    _id: string
-    // dispatch: React.Dispatch<IAction>;
+    id: string | undefined
+    verify_string?: string | undefined
+    username?: string | undefined
+    autho_level?: string | undefined
+    user_type?: string | undefined
 }
 interface IAuthContext {
     isLoggedIn: boolean
@@ -16,14 +19,14 @@ interface IAuthContext {
 
 const initialState: IAuthContext = user ? JSON.parse(user) : {
     isLoggedIn: false,
-    user: { _id: '' },
+    user: null,
     token: ''
 };
 
 type IActionType = "LOGIN" | "LOGOUT"
 interface IAction {
     type: IActionType
-    payload: Partial<IUser>
+    payload: IUser
 }
 interface IAuthContextProvider extends IAuthContext {
     dispatch: React.Dispatch<IAction>
@@ -31,7 +34,7 @@ interface IAuthContextProvider extends IAuthContext {
 
 const initAuthContext: IAuthContextProvider = {
     isLoggedIn: false,
-    user: { _id: '' },
+    user: null,
     token: '',
     dispatch: (): void => {}
 }
@@ -46,14 +49,14 @@ const authReducer = (state: IAuthContext, action: IAction) => {
             sessionStorage.setItem("user", JSON.stringify(action.payload))
             return {
                 isLoggedIn: true,
-                user: { _id: action.payload._id || '' }, 
-                token: action.payload._id || null
+                user: { ...action.payload }, 
+                token: action.payload.id || null
             }
         case "LOGOUT":
             sessionStorage.setItem("user", '')
             return {
                 isLoggedIn: false,
-                user: { _id: '' },
+                user: null,
                 token: ''
             }
         default:
