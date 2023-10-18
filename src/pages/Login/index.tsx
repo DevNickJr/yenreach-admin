@@ -80,7 +80,7 @@ const handleLoginMutation = async (e: FormEvent<HTMLFormElement>): Promise<void>
             <Link to='/password-recovery' className='text-[#FF6B93] text-xs ml-auto'>Forgot Password?</Link>
           </div>
           
-          <button className='p-3 font-semibold disabled:bg-green/90' type='submit' disabled={loginMutation.isLoading}>
+          <button className='p-3 font-semibold bg-green-400 disabled:bg-green/90' type='submit' disabled={loginMutation.isLoading}>
             {loginMutation.isLoading ? "Loading..." : "Login to my account" }
           </button>
           {/* <div className='absolute left-0 flex justify-center w-full -bottom-8'>
