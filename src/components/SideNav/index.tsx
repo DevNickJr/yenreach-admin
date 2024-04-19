@@ -1,6 +1,5 @@
-import { MdOutlineDashboardCustomize, MdLogout } from 'react-icons/md'
-import { RiTeamLine } from 'react-icons/ri'
-import { GiCrownedSkull } from 'react-icons/gi'
+import { MdLogout, MdBusiness, MdWorkOutline } from 'react-icons/md'
+import { TbBrandBlogger } from 'react-icons/tb'
 import { Link, useLocation } from 'react-router-dom'
 
 const SideNav = () => {
@@ -17,29 +16,17 @@ const SideNav = () => {
                 </Link>
             </div>
             <div className='flex flex-col gap-2 pt-12 pb-2'>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${(pathname === '/admin') && 'font-bold'}`} to="/admin">
-                    <MdOutlineDashboardCustomize size={"1.3rem"} />
-                    Manage Users
+                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${(pathname === '/business') && 'font-bold'}`} to="/business">
+                    <MdBusiness size={"1.3rem"} />
+                    Businesses
                 </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("wallets") && 'font-bold'}`} to={"/admin/wallets"}>
-                    <GiCrownedSkull size={"1.3rem"} />
-                    Manage Wallets
+                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("jobs") && 'font-bold'}`} to={"/jobs"}>
+                    <MdWorkOutline size={"1.3rem"} />
+                    Jobs 
                 </Link>
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("trades") && 'font-bold'}`} to={"/admin/trades"}>
-                    <RiTeamLine size={"1.3rem"} />
-                    Manage Trades
-                </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("deposit") && 'font-bold'}`} to={"/admin/deposit"}>
-                    <RiTeamLine size={"1.3rem"} />
-                    Manage Deposit
-                </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("withdrawal") && 'font-bold'}`} to={"/admin/withdrawal"}>
-                    <RiTeamLine size={"1.3rem"} />
-                    Manage Withdrawal
-                </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("plans") && 'font-bold'}`} to={"/admin/plans"}>
-                    <RiTeamLine size={"1.3rem"} />
-                    Manage Plans
+                    <TbBrandBlogger size={"1.3rem"} />
+                    Blogs 
                 </Link>
             </div>
         </div>

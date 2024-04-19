@@ -1,5 +1,5 @@
-import Dashboard from "src/components/Dashboard"
 import { useAuthContext } from "src/hooks/useAuthContext"
+import Layout from "src/layout"
 
 const Home = () => {
 
@@ -13,12 +13,12 @@ const Home = () => {
 
 
     return (
-        <Dashboard>
+        <Layout>
           <div className="flex flex-col gap-1 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
             <h1>Your Yenreach Admin Dashboar</h1>
           </div>
-        </Dashboard>
+        </Layout>
     )
 }
 

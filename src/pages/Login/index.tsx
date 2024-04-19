@@ -33,7 +33,7 @@ const loginMutation = useMutations<IUserLogin, any>(
         }})
         
         toast.success("Logged in Successfully.")
-        return navigate('/')
+        return navigate('/home')
     },
     showErrorMessage: true,
   }

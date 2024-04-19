@@ -82,4 +82,24 @@ export interface IUser extends IUserRegister {
     symbol?: string  
 }
 
+export interface IJob {
+    company_name: string,
+    job_title: string,
+    job_type: string,
+    salary: string,
+    location: string,
+    job_overview: string,
+    job_benefit: string,
+    job_link: string,
+    job_tags: string,
+    admin_string: string,
+    expiry_date: string
+    admin_job?: string
+    business_string?: string
+    created_at?: string
+    id?: string
+    job_string?: string
+    status?: string
+}
+
 

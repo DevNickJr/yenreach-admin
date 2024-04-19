@@ -20,10 +20,6 @@ export default function AuthHOC(
       );
     }
 
-    if (!user.id) {
-      return null;
-    }
-
     return <ProtectedComponent user={user} {...props} />;
   };
 }
