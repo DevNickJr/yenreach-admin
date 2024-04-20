@@ -1,3 +1,8 @@
+export interface IResponse<T> {
+    data: T
+    status: string
+}
+
 export interface IUserLogin {
     username: string
     password: string
@@ -102,4 +107,56 @@ export interface IJob {
     status?: string
 }
 
+export interface IBlog {
+    author: string
+    blog_string: string
+    created_at: string | null
+    file_path: string
+    id: string
+    post: string
+    snippet: string
+    title: string
+}
 
+
+export interface IUpdateStatus {
+    id: string
+    data: string
+}
+
+export interface IBusiness {
+    address: string
+    category: string
+    created: string
+    cv: string
+    description: string    
+    email: string
+    experience: string
+    facebook_link: string
+    facilities: string
+    id: string
+    instagram_link: string
+    last_updated: string
+    linkedin_link: string
+    modifiedby: string
+    name: string
+    owner_email: string
+    owner_name: string
+    phonenumber: string
+    reg_stage: string
+    state: string
+    state_id: string
+    subscription_string: string
+    user_string: string
+    verify_string: string
+    website: string
+    whatsapp: string
+    working_hours: string
+    youtube_link: string
+}
+
+
+export interface IQuery {
+    page: number
+    num_per_page: number
+}

@@ -16,7 +16,7 @@ const SideNav = () => {
                 </Link>
             </div>
             <div className='flex flex-col gap-2 pt-12 pb-2'>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${(pathname === '/business') && 'font-bold'}`} to="/business">
+                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${(pathname === '/businesses') && 'font-bold'}`} to="/businesses">
                     <MdBusiness size={"1.3rem"} />
                     Businesses
                 </Link>
@@ -24,7 +24,7 @@ const SideNav = () => {
                     <MdWorkOutline size={"1.3rem"} />
                     Jobs 
                 </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("trades") && 'font-bold'}`} to={"/admin/trades"}>
+                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("blogs") && 'font-bold'}`} to={"/blogs"}>
                     <TbBrandBlogger size={"1.3rem"} />
                     Blogs 
                 </Link>

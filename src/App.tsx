@@ -6,6 +6,8 @@ import Jobs from './pages/Jobs';
 import AddJob from './pages/Jobs/add';
 import Businesses from './pages/businesses';
 import AddBusiness from './pages/businesses/add';
+import Blogs from './pages/blogs';
+import AddBlog from './pages/businesses/add';
 
 
 function App() { 
@@ -24,6 +26,10 @@ function App() {
             {/* businesses */}
             <Route path="/businesses" element={<Businesses />} />
             <Route path="/businesses/add" element={<AddBusiness />} />
+         
+            {/* blogs */}
+            <Route path="/blogs" element={<Blogs />} />
+            <Route path="/blogs/add" element={<AddBlog />} />
 
           </Routes>
         </ScrollToTop>

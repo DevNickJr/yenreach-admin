@@ -1,8 +1,21 @@
 import { RxCaretDown } from 'react-icons/rx'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useAuthContext } from 'src/hooks/useAuthContext'
+import Links from '../SideNav/Links'
+import { useState } from 'react'
+import { BiMenu } from 'react-icons/bi'
 
 const AdminHead = () => {
-  const { user } = useAuthContext()
+  const { user, dispatch } = useAuthContext()
+  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleLogout = () => {
+    toast.success("Logged ot Successfully.")
+    dispatch({ type: "LOGOUT", payload: null })
+    return navigate('/')
+  }
 
 
   return (
@@ -17,7 +30,7 @@ const AdminHead = () => {
               <div className='text-sm font-semibold'>{user?.username}</div>
               <div className='text-xs'>{user?.username}</div>
             </div>
-            <div className='relative cursor-pointer group'>
+            <div className='relative hidden cursor-pointer group md:block'>
               <RxCaretDown className='text-2xl text-gray-dark md:' />
               <div className='absolute right-0 flex-col hidden gap-2 bg-white shadow-md top-6 group-hover:flex'>
                 {/* <Link href={`/dashboard/settings`} className='py-2 border-b-2 cursor-pointer'>
@@ -25,18 +38,17 @@ const AdminHead = () => {
                     Settings
                   </span>
                 </Link> */}
-                <div onClick={() => ''} className='pb-2'>
+                <div onClick={handleLogout} className='pb-2'>
                   <span className={`py-2 pb-2.5 px-6 text-xs font-medium`}>
                     Logout
                   </span>
                 </div>
               </div>
             </div>
-          
-              {/* <BiMenu onClick={() => setIsOpen(true)} className='relative z-50 text-3xl cursor-pointer md:hidden text-gray-dark' /> */}
+            <BiMenu onClick={() => setIsOpen(true)} className='relative z-50 text-3xl cursor-pointer md:hidden text-gray-dark' />
           </div>
         </div>
-        {/* <Links isOpen={isOpen} setIsOpen={setIsOpen} /> */}
+        <Links isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   )
 }
