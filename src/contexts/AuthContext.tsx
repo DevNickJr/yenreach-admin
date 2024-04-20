@@ -1,4 +1,5 @@
 import { ReactNode, Reducer, createContext, useEffect, useReducer } from "react";
+import { toast } from "react-toastify";
 
 
 const user = sessionStorage.getItem("user") 
@@ -26,7 +27,7 @@ const initialState: IAuthContext = user ? JSON.parse(user) : {
 type IActionType = "LOGIN" | "LOGOUT"
 interface IAction {
     type: IActionType
-    payload: IUser
+    payload: IUser | null
 }
 interface IAuthContextProvider extends IAuthContext {
     dispatch: React.Dispatch<IAction>
@@ -45,8 +46,20 @@ export const AuthContext = createContext<IAuthContextProvider>(initAuthContext)
 
 const authReducer = (state: IAuthContext, action: IAction) => {
     switch (action.type) {
-        case "LOGIN":
-            sessionStorage.setItem("user", JSON.stringify(action.payload))
+        case "LOGIN": 
+            if (!action.payload) {
+                toast.info("No Payload Provided")
+                return {
+                    isLoggedIn: false,
+                    user: null,
+                    token: ''
+                }
+            }
+            sessionStorage.setItem("user", JSON.stringify({
+                isLoggedIn: true,
+                user: action.payload, 
+                token: action.payload.id || null
+            }))
             return {
                 isLoggedIn: true,
                 user: { ...action.payload }, 
@@ -72,9 +85,10 @@ export const AuthContextProvider = ({children}: { children: ReactNode }) => {
     
     
     useEffect(() => {
-        const user = JSON.parse(sessionStorage.getItem("user")!)
+        const user: IAuthContext = JSON.parse(sessionStorage.getItem("user") || "{}")
+        console.log({user })
         if (user) {
-            dispatch({type: "LOGIN", payload: user})
+            dispatch({type: "LOGIN", payload: user?.user })
         }
     }, [dispatch])
     
