@@ -14,9 +14,9 @@ const Home = () => {
 
     return (
         <Layout>
-          <div className="flex flex-col gap-1 mb-6">
+          <div className="flex flex-col gap-1 p-4 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
-            <h1>Your Yenreach Admin Dashboar</h1>
+            <h1>Your Yenreach Admin Dashboard</h1>
           </div>
         </Layout>
     )

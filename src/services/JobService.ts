@@ -4,7 +4,7 @@ import BaseService from "./BaseService"
 const servicePrefix = "/jobs"
 const serviceSuffix = ".php"
 
-const token = JSON.parse(sessionStorage.getItem("user") || '')?.verify_string
+const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
 
 console.log({token})
 
