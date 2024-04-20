@@ -15,6 +15,8 @@ const Businesses = () => {
     const { user } = useAuthContext()
     const [editBusiness, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
+
+    console.log({editBusiness, deleteBusiness})
     
     const { data: businesses, isLoading } = useFetch<IBusiness[]>({
       api: apiAdminGetBusinesses,

@@ -1,10 +1,10 @@
 import BaseService from "./BaseService";
 
 const ApiAdapter = {
-    fetchData(params) {
-        return new Promise(async (resolve, reject) => {
+    fetchData(params: string) {
+        return new Promise((resolve, reject) => {
             try {
-                const response = await BaseService(params)
+                const response = BaseService(params)
                 resolve(response)
             } catch (error) {
                 reject(error)

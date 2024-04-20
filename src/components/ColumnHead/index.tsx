@@ -1,5 +1,5 @@
 import { Column } from '@tanstack/react-table'
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { CgSortAz } from 'react-icons/cg'
 
 interface IProps<T> {

@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 
-export default async function getData(service: (a?: any, b?: any) =>  Promise<AxiosResponse<T, any>>, params="", token="") {
+export default async function getData(service: (a?: any, b?: any) =>  Promise<AxiosResponse<any, any>>, params="", token="") {
     const response = await service(params, token)
     // console.log("response", response)
     if (response?.data?.status === "failed") {
