@@ -1,74 +1,67 @@
+"use client"
+import React from 'react';
+import clsx from "clsx";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import clsx from "clsx";
 
-function Button({ to, variant, inverse, className, override, children, type, onClickFunc, ...rest }) {
+interface IProps {
+  children: React.ReactNode
+  to?: string
+  variant?: "danger" | "wide" | "default" | "no-flex"
+  outlined?: boolean
+  className?: string
+  override?: boolean
+  type?: "button" | "submit" | "reset" | undefined
+  onClick?: (a?: any) => void
+}
+
+function Button({ to="", variant="default", outlined=false, className="", override=false, children, type="button", onClick=()=> "", ...rest }: IProps) {
   const [effect, setEffect] = useState(false);
-  const styles = (variant, inverse, className, override, effect) => clsx(
+  const styles = (variant: string, outlined: boolean, className: string, override: boolean, effect: boolean) => clsx(
     className,
-    
-    ['text-center text-xs'], 
+    ['text-center cursor-pointer whitespace-nowrap'], 
     // Products/Marketplace
-    variant === 'product'
-      ? !override && [ inverse && 'rounded-full flex items-center gap-0.5 py-2 md:px-10 font-bold text-orange',
-          !inverse && 'bg-orange text-white'
-        ]
+    variant === 'danger'
+      ? !override && 
+          [ 
+            outlined && 'p-6 py-2.5 text-sm font-medium border rounded-md border-[#ED3A3A] flex items-center justify-center gap-2 p-3 px-8 md:px-16 text-sm font-bold rounded-md outline-none w-fit focus:outline-[#ED3A3A]',
+            !outlined && 'flex items-center justify-center gap-2 p-3 px-8 md:px-16 text-sm font-bold text-white rounded-md outline-none w-fit bg-[#ED3A3A] focus:outline-[#ED3A3A]'
+          ]
       
     // Jobs
-      : variant === 'job'
-        ? !override && [ inverse && 'rounded-full flex items-center md:gap-0.5 p-0 py-2 md:px-10 font-semibold text-blue',
-            !inverse && 'bg-blue text-white'
-          ]
+      : variant === 'wide'
+        ? !override && 
+              [ outlined && 'p-6 py-2.5 text-sm font-medium bg-white border rounded-md border-primary flex items-center justify-center gap-2 p-3 px-8 md:px-16 text-sm font-bold text-primary rounded-md outline-none w-fit focus:outline-primary',
+              !outlined && 'flex items-center justify-center gap-2 p-3 px-8 md:px-16 text-sm font-bold text-white rounded-md outline-none w-fit bg-grad-linear focus:outline-primary'
+            ]
+   
+            // Jobs
+      : variant === 'no-flex'
+        ? !override && 
+        [ outlined && 'p-6 py-2.5 font-medium bg-white border rounded-md border-primary gap-2 p-2 px-2 md:px-3 font-bold text-primary rounded-md outline-none w-fit focus:outline-primary',
+        !outlined && 'gap-2 text-sm font-bold text-white rounded-md outline-none w-fit bg-primary focus:outline-primary'
+      ]
 
-      : variant === 'job-inverted'
-        ? !override && [ inverse && 'rounded-full flex items-center md:gap-0.5 p-0 py-2 md:px-10 font-semibold text-blue',
-            !inverse && 'bg-white text-blue'
-          ]
-
-    // Businesses
-      : !override && [ inverse && 'rounded-full flex items-center gap-0.5 py-2 md:px-10 font-medium text-green',
-          !inverse && 'bg-green text-white'
-        ],
+    // Default
+      : !override && 
+          [ outlined && 'p-6 py-2.5 font-medium bg-white border rounded-md border-primary flex items-center justify-center gap-2 p-2 px-2 md:px-3 font-bold text-primary rounded-md outline-none w-fit focus:outline-primary',
+            !outlined && 'flex items-center justify-center gap-2 text-sm font-bold text-white rounded-md outline-none w-fit bg-primary focus:outline-primary'
+          ],
 
     // Default
     effect && 'animate-button_click'
-
-    
   )
 
   return to.length > 0 ? (
-    <Link {...rest} onClick={() => { setEffect(true) }} onAnimationEnd={() => { setEffect(false) }} className={styles(variant, inverse, className, override, effect)} to={`/${to}`}>
+    <Link {...rest} onClick={() => { setEffect(true) }} onAnimationEnd={() => { setEffect(false) }} className={styles(variant, outlined, className, override, effect)} to={`${to}`}>
       {children}
     </Link>
   ) : (
-    <button {...rest} onClick={() => { setEffect(true); onClickFunc() }} onAnimationEnd={() => { setEffect(false) }} type={type} className={styles(variant, inverse, className, override, effect)}>
+    <button {...rest} onClick={() => { setEffect(true); onClick() }} onAnimationEnd={() => { setEffect(false) }} type={type} className={styles(variant, outlined, className, override, effect)}>
       {children}
     </button>
   );
 }
                
-
-Button.defaultProps = {
-  to: '',
-  variant: 'business',
-  inverse: false,
-  className: '',
-  override: false,
-  type: 'button',
-  onClickFunc: () => { console.log('Button clicked')}
-  };
-
-Button.propTypes = {
-  children: PropTypes.node,
-  to: PropTypes.string,
-  variant: PropTypes.string,
-  inverse: PropTypes.bool,
-  className: PropTypes.string,
-  override: PropTypes.bool,
-  type: PropTypes.string,
-  onClickFunc: PropTypes.func
-};
-
 export default Button;
 
