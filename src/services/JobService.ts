@@ -1,4 +1,4 @@
-import { IDelete, IJob } from "src/interfaces"
+import { IDelete, IJob, IPaginatedQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const servicePrefix = "/jobs"

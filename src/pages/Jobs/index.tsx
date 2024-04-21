@@ -18,7 +18,7 @@ const Jobs = () => {
   const [page, setPage] = useState(1)
   const num_per_page = 20
 
-  const { data, refetch, isLoading, remove } = useFetch<IResponse<IJob[]>>({
+  const { data, refetch, isLoading } = useFetch<IResponse<IJob[]>>({
     api: apiGetAllJobsAdmin,
     key: ["jobs", String(page), String(num_per_page)],
     param: { page, num_per_page },
