@@ -17,6 +17,13 @@ export const apiAdminGetBlogs =  (query: IQuery) => {
     return BaseService.get("/fetch_all_blog_post_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
+// /* Delete Job */
+// export const apiDeleteBlog = ({job_string, admin_string }) => {
+//     return ApiAdapter.fetchData({
+//         url: `${servicePrefix}/delete_job_api${serviceSuffix}?job_string=${job_string}&admin_string=${admin_string}`,
+//         method: "get",
+//     })
+// }
 
 
 

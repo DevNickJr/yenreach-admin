@@ -21,7 +21,7 @@ import {
 } from "./comps"
 import React from "react"
 // import { MdChevronLeft, MdChevronRight, MdSearch } from "react-icons/md"
-import { Pagination } from "../Pagination"
+import { Pagination } from "./Pagination"
 import { MdSearch } from "react-icons/md"
 
 interface DataTableProps<TData, TValue> {

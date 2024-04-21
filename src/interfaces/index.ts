@@ -1,6 +1,7 @@
 export interface IResponse<T> {
     data: T
     status: string
+    total?: number
 }
 
 export interface IUserLogin {
@@ -85,6 +86,16 @@ export interface IUser extends IUserRegister {
     },
     referral_id?: string
     symbol?: string  
+}
+
+export interface IDelete {
+    admin_string: string
+    id: string
+}
+
+export interface IPaginatedQuery {
+    page: number
+    num_per_page: number
 }
 
 export interface IJob {

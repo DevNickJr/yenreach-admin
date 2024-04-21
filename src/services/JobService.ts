@@ -1,4 +1,4 @@
-import { IJob } from "src/interfaces"
+import { IDelete, IJob } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const servicePrefix = "/jobs"
@@ -8,17 +8,29 @@ const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
 
 console.log({token})
 
+
+
 /* Get Jobs */
-export const apiGetAllJobsAdmin = () => {
-    return BaseService.get(`${servicePrefix}/fetch_all_job_api${serviceSuffix}`)
+export const apiGetAllJobsAdmin = (query: IPaginatedQuery) => {
+    return BaseService.get(`${servicePrefix}/fetch_all_job_api${serviceSuffix}?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
+
+/* Add Job */
+export const apiAdminAddJob = (data: IJob) => {
+    return BaseService.post(`${servicePrefix}/add_job_admin_api${serviceSuffix}`, data)
 }
 
 /* Add Job */
-export const apiAddJob = (data: IJob) => {
-    return  BaseService.post(`${servicePrefix}/add_job_api${serviceSuffix}`, data)
+// export const apiAddJob = (data: IJob) => {
+//     return  BaseService.post(`${servicePrefix}/add_job_api${serviceSuffix}`, data)
+// }
+
+
+/* Delete Job */
+export const apiDeleteJob = ({id, admin_string }: IDelete) => {
+    return BaseService.delete(`${servicePrefix}/delete_job_api${serviceSuffix}?job_string=${id}&admin_string=${admin_string}`)
 }
-
-
 
 
 
