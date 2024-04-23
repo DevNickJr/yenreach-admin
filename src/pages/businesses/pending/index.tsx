@@ -1,10 +1,7 @@
-import { useAuthContext } from "src/hooks/useAuthContext"
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
-import { Link } from "react-router-dom"
-import { apiAdminGetBusinesses } from "src/services/CommonService"
+import { apiAdminGetPendingBusinesses } from "src/services/CommonService"
 import { IBusiness } from "src/interfaces"
-// import BusinessCard from "./fragments/BusinessCard"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
@@ -12,15 +9,14 @@ import NoResult from "src/components/NoResult"
 
 
 const PendingBusinesses = () => {
-    const { user } = useAuthContext()
     const [editBusiness, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
 
     console.log({editBusiness, deleteBusiness})
     
     const { data: businesses, isLoading } = useFetch<IBusiness[]>({
-      api: apiAdminGetBusinesses,
-      key: ["businesses"],
+      api: apiAdminGetPendingBusinesses,
+      key: ["pending-businesses"],
       param: {
         page: 1,
         num_per_page: 40
@@ -47,11 +43,7 @@ const PendingBusinesses = () => {
     return (
         <Layout>
           <div className="flex flex-col gap-1 p-6 mb-6">
-            <h1 className="text-xl">Hi {user?.username}</h1>
-            <h1>Your Business Layout</h1>
-            <div className="flex flex-end">
-              <Link to={"/businesses/add"}>Add Business</Link>
-            </div>
+          <h1 className="text-xl">Pending Businesses</h1>
             <div className="mt-12">
             {
                 (businesses?.length && businesses?.length > 0) ?

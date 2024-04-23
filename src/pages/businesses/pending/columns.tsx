@@ -1,14 +1,14 @@
 "use client"
 import { ColumnDef } from "@tanstack/react-table"
 import { MdCheckBoxOutlineBlank, MdDelete } from "react-icons/md"
-// import { BiEdit } from "react-icons/bi";
+import { BiEdit } from "react-icons/bi";
 // import { UseMutationResult } from "@tanstack/react-query";
 import { IBusiness } from "src/interfaces";
 import ColumnHead from "src/components/ColumnHead";
-import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { BsEye } from "react-icons/bs";
 
-// businessRole: "Enumerator",
+// agentRole: "Enumerator",
 // zoneId: string,
 // email: string,
 // password: string,
@@ -24,7 +24,7 @@ interface IProps {
 
 
 export const columnsMaker = ({ 
-  // editFunc,
+  editFunc,
   deleteFunc
  }: IProps): ColumnDef<IBusiness>[] => [
   {
@@ -64,11 +64,11 @@ export const columnsMaker = ({
       const business = row.original
       return (
         <div className="flex items-center justify-center gap-2">
-          <Link to={`/businesses/${business.verify_string}`}>
-              <BsEye className="text-xl cursor-pointer text-black/40"  />
-          </Link>
-        {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(business?.verify_string || "")} /> */}
-          <MdDelete onClick={() => deleteFunc(business.verify_string || "")} className="text-xl cursor-pointer text-black/40" />
+            <Link to={`/businesses/${business.verify_string}`}>
+                <BsEye className="text-base cursor-pointer text-black/40"  />
+            </Link>
+            <BiEdit className="text-base cursor-pointer text-black/40" onClick={() => editFunc(business?.verify_string || "")} />
+            <MdDelete onClick={() => deleteFunc(business.verify_string || "")} className="text-base cursor-pointer text-black/40" />
         </div>
 
       )

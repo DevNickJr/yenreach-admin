@@ -1,4 +1,4 @@
-import { IQuery } from "src/interfaces"
+import { IDisapproveBusiness, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const serviceSuffix = ".php"
@@ -9,6 +9,32 @@ console.log({token})
 export const apiAdminGetBusinesses =  (query: IQuery) => {
     // console.log({ query })
     return BaseService.get("/fetch_all_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
+export const apiAdminGetPendingBusinesses =  (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("fetch_pending_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
+export const apiAdminGetOneBusinesses =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("fetch_business_by_string_api" + serviceSuffix + `/?string=${id}`)
+}
+
+export const apiAdminApproveBusinesses =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("approve_business_api" + serviceSuffix + `/?string=${id}`)
+}
+
+
+export const apiAdminDispproveBusinesses =  (data: IDisapproveBusiness) => {
+    // console.log({ query })
+    return BaseService.post("disapprove_business_api" + serviceSuffix, data)
+}
+
+export const apiAdminDeleteBusiness =  (id: string) => {
+    // console.log({ query })
+    return BaseService.post("delete_business_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
 }
 
 

@@ -11,6 +11,7 @@ import { toast } from "react-toastify"
 import { useState } from "react"
 import Loader from "src/components/Loader"
 import Pagination from "src/components/Pagination"
+import Button from "src/components/Button"
 
 const Jobs = () => {
   const { user, isLoggedIn } = useAuthContext()
@@ -65,7 +66,9 @@ const Jobs = () => {
             <h1 className="text-xl">Hi {user?.username}</h1>
             <h1>Your Job Layout</h1>
             <div className="flex flex-end">
-              <Link to={"/jobs/add"}>Add Job</Link>
+              <Button className="p-2">
+                <Link to={"/jobs/add"}>Add Job</Link>
+              </Button>
             </div>
             <div className="flex flex-col gap-4 mt-12">
               {

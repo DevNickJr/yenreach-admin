@@ -24,8 +24,8 @@ function Button({ to="", variant="default", outlined=false, className="", overri
     variant === 'danger'
       ? !override && 
           [ 
-            outlined && 'p-6 py-2.5 text-sm font-medium border rounded-md border-[#ED3A3A] flex items-center justify-center gap-2 p-3 px-8 md:px-16 text-sm font-bold rounded-md outline-none w-fit focus:outline-[#ED3A3A]',
-            !outlined && 'flex items-center justify-center gap-2 p-3 px-8 md:px-16 text-sm font-bold text-white rounded-md outline-none w-fit bg-[#ED3A3A] focus:outline-[#ED3A3A]'
+            outlined && 'p-6 py-2.5 text-sm font-medium border rounded-md border-[#ED3A3A] flex items-center justify-center gap-2 p-3 px-4 md:px-8 text-sm font-bold rounded-md outline-none w-fit focus:outline-[#ED3A3A]',
+            !outlined && 'flex items-center justify-center gap-2 p-3 px-4 md:px-8 text-sm font-bold text-white rounded-md outline-none w-fit bg-[#ED3A3A] focus:outline-[#ED3A3A]'
           ]
       
     // Jobs

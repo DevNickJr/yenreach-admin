@@ -10,6 +10,7 @@ import Blogs from './pages/blogs';
 import AddBlog from './pages/businesses/add';
 import AllBusinesses from './pages/businesses/all';
 import PendingBusinesses from './pages/businesses/pending';
+import Business from './pages/businesses/business';
 
 
 function App() { 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/businesses/add" element={<AddBusiness />} />
             <Route path="/businesses/all" element={<AllBusinesses />} />
             <Route path="/businesses/pending" element={<PendingBusinesses />} />
+            <Route path="/businesses/:id" element={<Business />} />
          
             {/* blogs */}
             <Route path="/blogs" element={<Blogs />} />

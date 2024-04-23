@@ -135,6 +135,11 @@ export interface IUpdateStatus {
     data: string
 }
 
+export interface IDisapproveBusiness {
+    verify_string: string
+    remarks: string
+}
+
 export interface IBusiness {
     address: string
     category: string
@@ -164,6 +169,8 @@ export interface IBusiness {
     whatsapp: string
     working_hours: string
     youtube_link: string
+    cover_img?: string
+    profile_img?: string
 }
 
 

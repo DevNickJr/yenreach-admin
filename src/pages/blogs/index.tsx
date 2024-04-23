@@ -9,6 +9,8 @@ import { apiDeleteBlog } from "src/services/BlogService"
 import { toast } from "react-toastify"
 import { useState } from "react"
 import DeleteItemModal from "src/assets"
+// import Button from "src/components/Button"
+// import { Link } from "react-router-dom"
 
 
 const Jobs = () => {
@@ -54,8 +56,10 @@ const Jobs = () => {
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
             <h1>Your Blog Layout</h1>
-            <div className="flex flex-end">
-              {/* <Link to={"/blogs/add"}>Add Blog</Link> */}
+            <div className="flex flex-end mt-6">
+              {/* <Button className="p-2">
+                <Link to={"/blogs/add"}>Add Blog</Link>
+              </Button> */}
             </div>
             <div className="flex flex-col gap-4 mt-12">
               {
