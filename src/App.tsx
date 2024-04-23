@@ -8,6 +8,8 @@ import Businesses from './pages/businesses';
 import AddBusiness from './pages/businesses/add';
 import Blogs from './pages/blogs';
 import AddBlog from './pages/businesses/add';
+import AllBusinesses from './pages/businesses/all';
+import PendingBusinesses from './pages/businesses/pending';
 
 
 function App() { 
@@ -26,6 +28,8 @@ function App() {
             {/* businesses */}
             <Route path="/businesses" element={<Businesses />} />
             <Route path="/businesses/add" element={<AddBusiness />} />
+            <Route path="/businesses/all" element={<AllBusinesses />} />
+            <Route path="/businesses/pending" element={<PendingBusinesses />} />
          
             {/* blogs */}
             <Route path="/blogs" element={<Blogs />} />
