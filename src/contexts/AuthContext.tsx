@@ -81,13 +81,11 @@ export const AuthContextProvider = ({children}: { children: ReactNode }) => {
     // const [state, dispatch] = useReducer(authReducer, initialState)
     const [state, dispatch] = useReducer<Reducer<IAuthContext, IAction>>(authReducer, initialState)
 
-
-    
     
     useEffect(() => {
         const user: IAuthContext = JSON.parse(sessionStorage.getItem("user") || "{}")
-        console.log({user })
-        if (user) {
+        console.log({user})
+        if (user?.isLoggedIn) {
             dispatch({type: "LOGIN", payload: user?.user })
         }
     }, [dispatch])

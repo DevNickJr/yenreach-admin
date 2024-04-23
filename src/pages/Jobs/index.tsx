@@ -59,7 +59,7 @@ const Jobs = () => {
             deleteFunc={() => deleteItemMutation.mutate({ id: deleteItemId, admin_string: user?.verify_string || "" })}
             isOpen={deleteItemId} 
             setIsOpen={setDeleteItemId} 
-            desc='Are you sure you want to delete this Agent?'
+            desc='Are you sure you want to delete this Job?'
           />
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
