@@ -1,5 +1,6 @@
 import { useReducer } from "react"
 import { toast } from "react-toastify"
+import Button from "src/components/Button"
 import Loader from "src/components/Loader"
 import { useAuthContext } from "src/hooks/useAuthContext"
 import useMutations from "src/hooks/useMutation"
@@ -100,7 +101,7 @@ const AddJob = () => {
                     <span className="text-xs">Job Perks and benefits</span>
                     <textarea value={job.job_benefit} onChange={e => handleChange("job_benefit", e.target.value)} rows={6} className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
-                <button onClick={() => addItemMutation.mutate({ ...job, admin_string: user?.verify_string || "" })} className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</button>
+                <Button onClick={() => addItemMutation.mutate({ ...job, admin_string: user?.verify_string || "" })} className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</Button>
             </div>
           </div>
         </Layout>
