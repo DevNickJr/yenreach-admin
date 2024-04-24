@@ -11,6 +11,10 @@ import AddBlog from './pages/businesses/add';
 import AllBusinesses from './pages/businesses/all';
 import PendingBusinesses from './pages/businesses/pending';
 import Business from './pages/businesses/business';
+import Admins from './pages/admins';
+import AddAdmin from './pages/admins/add';
+import AllAdmins from './pages/admins/all';
+import Admin from './pages/admins/admin';
 
 
 function App() { 
@@ -32,6 +36,12 @@ function App() {
             <Route path="/businesses/all" element={<AllBusinesses />} />
             <Route path="/businesses/pending" element={<PendingBusinesses />} />
             <Route path="/businesses/:id" element={<Business />} />
+         
+            {/* admins */}
+            <Route path="/admins" element={<Admins />} />
+            <Route path="/admins/add" element={<AddAdmin />} />
+            <Route path="/admins/all" element={<AllAdmins />} />
+            <Route path="/admins/:id" element={<Admin />} />
          
             {/* blogs */}
             <Route path="/blogs" element={<Blogs />} />

@@ -140,6 +140,20 @@ export interface IDisapproveBusiness {
     remarks: string
 }
 
+export interface IAdmin {
+    activation: string
+    autho_level: string
+    created: string
+    id: string
+    last_updated: string
+    name: string
+    official_email: string
+    personal_email: string
+    phone: string
+    username: string
+    verify_string: string
+}
+
 export interface IBusiness {
     address: string
     category: string

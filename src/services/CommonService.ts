@@ -11,6 +11,11 @@ export const apiAdminGetBusinesses =  (query: IQuery) => {
     return BaseService.get("/fetch_all_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
+export const apiAdminGetAdmins =  (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("/fetch_admins_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
 export const apiAdminGetPendingBusinesses =  (query: IQuery) => {
     // console.log({ query })
     return BaseService.get("fetch_pending_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
@@ -19,6 +24,11 @@ export const apiAdminGetPendingBusinesses =  (query: IQuery) => {
 export const apiAdminGetOneBusinesses =  (id: string) => {
     // console.log({ query })
     return BaseService.get("fetch_business_by_string_api" + serviceSuffix + `/?string=${id}`)
+}
+
+export const apiAdminGetOneAdmin =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("fetch_admin_by_string_api" + serviceSuffix + `/?string=${id}`)
 }
 
 export const apiAdminApproveBusinesses =  (id: string) => {
