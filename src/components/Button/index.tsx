@@ -13,9 +13,10 @@ interface IProps {
   override?: boolean
   type?: "button" | "submit" | "reset" | undefined
   onClick?: (a?: any) => void
+  disabled?: boolean
 }
 
-function Button({ to="", variant="default", outlined=false, className="", override=false, children, type="button", onClick=()=> "", ...rest }: IProps) {
+function Button({ to="", variant="default", outlined=false, className="", override=false, children, type="button", onClick=()=> "", disabled, ...rest }: IProps) {
   const [effect, setEffect] = useState(false);
   const styles = (variant: string, outlined: boolean, className: string, override: boolean, effect: boolean) => clsx(
     className,
@@ -57,7 +58,7 @@ function Button({ to="", variant="default", outlined=false, className="", overri
       {children}
     </Link>
   ) : (
-    <button {...rest} onClick={() => { setEffect(true); onClick() }} onAnimationEnd={() => { setEffect(false) }} type={type} className={styles(variant, outlined, className, override, effect)}>
+    <button disabled={disabled} {...rest} onClick={() => { setEffect(true); onClick() }} onAnimationEnd={() => { setEffect(false) }} type={type} className={styles(variant, outlined, className, override, effect)}>
       {children}
     </button>
   );

@@ -7,6 +7,7 @@ import { apiLogin } from 'src/services/AuthService';
 import useMutations from 'src/hooks/useMutation';
 import { toast } from 'react-toastify'
 import { useAuthContext } from 'src/hooks/useAuthContext';
+import Button from 'src/components/Button';
 // import Button from '@/components/ui/Button';
 // import Header from '@/components/Header';
 // import useAuth from '@/hooks/useAuth';
@@ -80,9 +81,9 @@ const handleLoginMutation = async (e: FormEvent<HTMLFormElement>): Promise<void>
             <Link to='/password-recovery' className='text-[#FF6B93] text-xs ml-auto'>Forgot Password?</Link>
           </div>
           
-          <button className='p-3 font-semibold bg-green-400 disabled:bg-green/90' type='submit' disabled={loginMutation.isLoading}>
+          <Button className='p-3 font-semibold bg-green-400 disabled:bg-green/90 mx-auto w-full' type='submit' disabled={loginMutation.isLoading}>
             {loginMutation.isLoading ? "Loading..." : "Login to my account" }
-          </button>
+          </Button>
           {/* <div className='absolute left-0 flex justify-center w-full -bottom-8'>
             {messageState && <p className='text-[#FF6B93] text-sm'>{messageState}</p>}
           </div> */}

@@ -57,9 +57,9 @@ const Businesses = () => {
               <Button className="p-2">
                 <Link to={"/businesses/all"}>View all Businesses</Link>
               </Button>
-              <Button className="p-2">
+              {/* <Button className="p-2">
                 <Link to={"/businesses/add"}>Add Business</Link>
-              </Button>
+              </Button> */}
             </div>
             {/* <Button className="p-2">
               <Link to={"/businesses/add"}>Add Business</Link>
