@@ -11,6 +11,11 @@ export const apiAdminGetBusinesses =  (query: IQuery) => {
     return BaseService.get("/fetch_all_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
+export const apiAdminGetBilllboards =  (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("/fetch_all_billboard_applications" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
 export const apiAdminGetAdmins =  (query: IQuery) => {
     // console.log({ query })
     return BaseService.get("/fetch_admins_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
@@ -21,9 +26,19 @@ export const apiAdminGetPendingBusinesses =  (query: IQuery) => {
     return BaseService.get("fetch_pending_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
+export const apiAdminGetPendingBillboards =  (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("fetch_pending_billboard_applications_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
 export const apiAdminGetOneBusinesses =  (id: string) => {
     // console.log({ query })
     return BaseService.get("fetch_business_by_string_api" + serviceSuffix + `/?string=${id}`)
+}
+
+export const apiAdminGetOneBillboard =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("fetch_billboard_application_by_string_api" + serviceSuffix + `/?string=${id}`)
 }
 
 export const apiAdminGetOneAdmin =  (id: string) => {

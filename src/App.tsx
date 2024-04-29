@@ -15,6 +15,11 @@ import Admins from './pages/admins';
 import AddAdmin from './pages/admins/add';
 import AllAdmins from './pages/admins/all';
 import Admin from './pages/admins/admin';
+import Billboards from './pages/billboards';
+import AddBillboard from './pages/billboards/add';
+import AllBillboards from './pages/billboards/all';
+import PendingBillboard from './pages/billboards/pending';
+import Billboard from './pages/billboards/billboard';
 
 
 function App() { 
@@ -36,6 +41,13 @@ function App() {
             <Route path="/businesses/all" element={<AllBusinesses />} />
             <Route path="/businesses/pending" element={<PendingBusinesses />} />
             <Route path="/businesses/:id" element={<Business />} />
+       
+            {/* billboards */}
+            <Route path="/billboards" element={<Billboards />} />
+            <Route path="/billboards/add" element={<AddBillboard />} />
+            <Route path="/billboards/all" element={<AllBillboards />} />
+            <Route path="/billboards/pending" element={<PendingBillboard />} />
+            <Route path="/billboards/:id" element={<Billboard />} />
          
             {/* admins */}
             <Route path="/admins" element={<Admins />} />
