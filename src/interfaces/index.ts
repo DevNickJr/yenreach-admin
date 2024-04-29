@@ -86,6 +86,7 @@ export interface IUser extends IUserRegister {
     },
     referral_id?: string
     symbol?: string  
+    user?: string
 }
 
 export interface IDelete {
@@ -185,6 +186,37 @@ export interface IBusiness {
     youtube_link: string
     cover_img?: string
     profile_img?: string
+}
+
+interface IAdvert {
+    id: string
+    verify_string: string
+    title: string
+    duration_type: string
+    duration: string
+}
+
+export interface IBillboard {
+    verify_string: string
+    advert_type: IAdvert
+    agent_string: string
+    agent_type: string
+    call_to_action_link: string
+    call_to_action_type: string
+    code: string
+    created: string
+    end_date: string
+    errors: string[]
+    filename: string
+    id: string
+    last_updated: string
+    proposed_start_date: string
+    remarks: string
+    stage: string
+    start_date: string
+    text: string
+    title: string
+    user: IUser
 }
 
 
