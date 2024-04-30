@@ -155,6 +155,20 @@ export interface IAdmin {
     verify_string: string
 }
 
+export interface IAddAdmin {
+    name: string
+    username: string
+    personal_email: string
+    official_email: string
+    phone: string
+    autho_level: number
+}
+
+export interface IActivateAdmin {
+    verify_string: string
+    password: string
+}
+
 export interface IBusiness {
     address: string
     category: string

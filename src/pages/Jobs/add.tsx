@@ -30,8 +30,8 @@ interface IAction {
 }
 
 const AddJob = () => {
-  const { user } = useAuthContext()
-  const [job, setJob] = useReducer((state: IJob, action: IAction) => {
+    const { user } = useAuthContext()
+    const [job, setJob] = useReducer((state: IJob, action: IAction) => {
     if (action.type === "reset") {
         return initialState
     }
@@ -39,11 +39,11 @@ const AddJob = () => {
         ...state,
         [action.type]: action.payload
     }
-  }, initialState)
+    }, initialState)
 
-  const addItemMutation = useMutations<IJob, any>(
+    const addItemMutation = useMutations<IJob, any>(
     apiAdminAddJob,
-{
+    {
     onSuccess: (data: any) => {
         console.log("data", data)
         toast.success("Item Added Successfully.")
@@ -51,12 +51,12 @@ const AddJob = () => {
     },
     showErrorMessage: true,
     requireAuth: true,
-})
+    })
 
-  const handleChange = (type: Action, payload: string) => {
+    const handleChange = (type: Action, payload: string) => {
     setJob({ type, payload })
-  }
-  
+    }
+
     return (
         <Layout>
           {addItemMutation?.isLoading && <Loader />}

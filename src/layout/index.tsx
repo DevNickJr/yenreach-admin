@@ -1,6 +1,6 @@
 import React from 'react'
 import SideNav from 'src/components/SideNav'
-import BottomNav from 'src/components/BottomNav'
+// import BottomNav from 'src/components/BottomNav'
 import Head from 'src/components/Head'
 import AuthHOC from 'src/components/AuthHOC'
 
@@ -13,7 +13,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
             <Head />
             {children}
           </div>
-          <BottomNav />
+          {/* <BottomNav /> */}
         </div>
     )
 } 

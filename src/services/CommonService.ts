@@ -1,4 +1,4 @@
-import { IDisapproveBusiness, IQuery } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IDisapproveBusiness, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const serviceSuffix = ".php"
@@ -76,7 +76,14 @@ export const apiAdminGetBlogs =  (query: IQuery) => {
 //     })
 // }
 
+/* Add Admin */
+export const apiAddAdmin = (data: IAddAdmin) => {
+    return BaseService.post(`/add_admin_api${serviceSuffix}`, data)
+}
 
+export const apiActivateAdmin = (data: IActivateAdmin) => {
+    return BaseService.post(`/activate_admin_account_api${serviceSuffix}`, data)
+}
 
 
 
