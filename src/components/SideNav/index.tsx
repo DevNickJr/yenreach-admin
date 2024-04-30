@@ -26,7 +26,7 @@ const SideNav = () => {
                             Admins
                         </Link>
                 }
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${(pathname === '/businesses') && 'font-bold'}`} to="/businesses">
+                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${(pathname?.includes("businesses")) && 'font-bold'}`} to="/businesses">
                     <MdBusiness size={"1.3rem"} />
                     Businesses
                 </Link>

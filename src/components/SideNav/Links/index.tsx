@@ -1,12 +1,15 @@
 import { MdLogout, MdOutlineClose } from 'react-icons/md'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAuthContext } from 'src/hooks/useAuthContext'
 
 
 
 const Links = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
-  const { dispatch } = useAuthContext()
+  const { dispatch, user } = useAuthContext()
+  const { pathname } = useLocation();
+
+  
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -24,9 +27,14 @@ const Links = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: React.Dispat
             }
       <nav className="flex flex-col justify-between h-full gap-16 p-4 pt-24 md:hidden">
         <ul className='flex flex-col font-medium text-dark-light gap-7 md:gap-4 lg:gap-7'>
-          <li><Link to="/businesses" className={`pb-1.5 px-1 font-medium`}>Businesses</Link></li>
-          <li><Link to="/jobs" className={`pb-1.5 px-1 font-medium`}>Jobs</Link></li>
-          <li><Link to="/blogs" className={`pb-1.5 px-1 font-medium`}>Blogs</Link></li>
+          {
+            (user?.autho_level && Number(user?.autho_level) < 2) &&
+              <li><Link to="/admins" className={`pb-1.5 px-1 ${(pathname === '/admins') ? 'font-bold' : "font-medium"}`}>Admins</Link></li>
+          }
+          <li><Link to="/businesses" className={`pb-1.5 px-1 ${(pathname?.includes("businesses")) ? 'font-bold' : "font-medium"}`}>Businesses</Link></li>
+          <li><Link to="/jobs" className={`pb-1.5 px-1 ${(pathname?.includes("jobs")) ? 'font-bold' : "font-medium"}`}>Jobs</Link></li>
+          <li><Link to="/billboards" className={`pb-1.5 px-1 ${(pathname?.includes("billboards")) ? 'font-bold' : "font-medium"}`}>Billboards</Link></li>
+          <li><Link to="/blogs" className={`pb-1.5 px-1 ${(pathname?.includes("blogs")) ? 'font-bold' : "font-medium"}`}>Blogs</Link></li>
         </ul>
         <div onClick={handleLogout} className={`w-fit py-2 pb-2.5 flex items-center gap-2 text-xs font-medium rounded-full`}>
             <MdLogout size={"1.3rem"} />
