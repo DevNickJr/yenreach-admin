@@ -1,31 +1,39 @@
-import { useReducer } from "react"
+import { useReducer, useRef } from "react"
+import { toast } from "react-toastify"
+import Button from "src/components/Button"
+import Loader from "src/components/Loader"
+import TinymceWrapper from "src/components/TinymceWrapper"
 import { useAuthContext } from "src/hooks/useAuthContext"
-import { IJob } from "src/interfaces"
+import useImage from "src/hooks/useImage"
+import useMutations from "src/hooks/useMutation"
+import { IAddBlog } from "src/interfaces"
 import Layout from 'src/layout'
+import { apiAdminAddBlog } from "src/services/BlogService"
+import { Editor } from "tinymce"
 
-const initialState: IJob = { 
-    company_name: "",
-    job_title: '',
-    job_type: '',
-    salary: '',
-    location: '',
-    job_overview: "",
-    job_benefit: "",
-    job_link: "",
-    job_tags: "",
-    admin_string: "",
-    expiry_date: ""
+const initialState: IAddBlog = { 
+    title: "",
+    author: "",
+    post: "",
+    snippet: "",
+    admin_string : "",
+    file_path: "",
 }
 
-type Action = "reset" | "company_name" | "job_title" | "job_type" | "location" | "salary"
+type Action = "reset" | "title" | "author" | "post" | "snippet" | "admin_string" | "file_path"
+
 interface IAction {
     type: Action,
     payload: string
 }
 
-const AddJob = () => {
+const AddBlog = () => {
   const { user } = useAuthContext()
-  const [job, setJob] = useReducer((state: IJob, action: IAction) => {
+
+  const { url: img, uploadImage: uploadImg, loading: uploadingImg } = useImage()
+
+  const ref = useRef<Editor | null>(null)
+  const [blog, setBlog] = useReducer((state: IAddBlog, action: IAction) => {
     if (action.type === "reset") {
         return initialState
     }
@@ -35,57 +43,68 @@ const AddJob = () => {
     }
   }, initialState)
 
+  const addItemMutation = useMutations<IAddBlog, any>(
+    apiAdminAddBlog,
+    {
+    onSuccess: (data: any) => {
+        console.log("data", data)
+        toast.success("Blog Added Successfully.")
+        setBlog({ type: "reset", payload: "" })
+        ref?.current?.setContent("")
+    },
+    showErrorMessage: true,
+    requireAuth: true,
+})
+
   const handleChange = (type: Action, payload: string) => {
-    setJob({ type, payload })
+    setBlog({ type, payload })
   }
   
-    return (
-        <Layout>
-          <div className="flex flex-col gap-1 p-6 mb-6">
-            <h1 className="text-xl">Hi {user?.username}</h1>
-            <h1>Your Job Layout</h1>
-            <div className="flex flex-col gap-4 mt-12">
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Comany Name</span>
-                    <input value={job.company_name} onChange={e => handleChange("company_name", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Job Title</span>
-                    <input value={job.job_title} onChange={e => handleChange("job_title", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Job Type</span>
-                    <input value={job.job_type} onChange={e => handleChange("job_type", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Location</span>
-                    <input value={job.location} onChange={e => handleChange("location", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Salary</span>
-                    <input value={job.salary} onChange={e => handleChange("salary", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Link</span>
-                    <input type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Expiry Date</span>
-                    <input type="date" className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Job Description</span>
-                    <textarea rows={6} className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Job Perks and benefits</span>
-                    <textarea rows={6} className="p-2 px-3 text-sm rounded-md outline-none" />
-                </div>
-                <button className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</button>
+  const handleSubmit = () => {
+    console.log({ "submit": "now" })
+    if (!img) {
+      toast.info("upload image")
+    }
+    addItemMutation.mutate({ ...blog, file_path: img, post: ref?.current?.getContent() || "", admin_string: user?.verify_string || "" })
+  }
+  
+  return (
+    <Layout>
+      {(addItemMutation?.isLoading || uploadingImg) && <Loader />}
+
+      <div className="flex flex-col gap-1 p-6 mb-6">
+        <h1 className="text-xl">Hi {user?.username}</h1>
+        <h1>Your Blog Layout</h1>
+        <div className="flex flex-col gap-4 mt-12">
+            <div className="flex flex-col gap-1">
+                <span className="text-xs">Title</span>
+                <input value={blog.title} onChange={e => handleChange("title", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
             </div>
-          </div>
-        </Layout>
-    )
+            <div className="flex flex-col gap-1">
+                <span className="text-xs">Author</span>
+                <input value={blog.author} onChange={e => handleChange("author", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+            </div>
+            <div className="flex flex-col gap-1">
+                <span className="text-xs">Image</span>
+                <input onChange={(e) => uploadImg(e.target.files![0])}  type="file" className="p-2 px-3 text-sm rounded-md outline-none" />
+            </div>
+            <div className="flex flex-col gap-1">
+                <span className="text-xs">Snippet</span>
+                <input maxLength={120} placeholder="(max 120 characters)" value={blog.snippet} onChange={e => handleChange("snippet", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+            </div>
+            <div className="flex flex-col gap-1">
+                <span className="text-xs">Content</span>
+                <TinymceWrapper ref={ref} />
+            </div>
+            <Button 
+              onClick={handleSubmit} 
+              className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">
+                Submit
+            </Button>
+        </div>
+      </div>
+    </Layout>
+  )
 }
 
-export default AddJob
+export default AddBlog

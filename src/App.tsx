@@ -7,7 +7,7 @@ import AddJob from './pages/Jobs/add';
 import Businesses from './pages/businesses';
 import AddBusiness from './pages/businesses/add';
 import Blogs from './pages/blogs';
-import AddBlog from './pages/businesses/add';
+import AddBlog from './pages/blogs/add';
 import AllBusinesses from './pages/businesses/all';
 import PendingBusinesses from './pages/businesses/pending';
 import Business from './pages/businesses/business';

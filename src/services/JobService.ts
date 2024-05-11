@@ -21,6 +21,7 @@ export const apiAdminAddJob = (data: IJob) => {
     return BaseService.post(`${servicePrefix}/add_job_admin_api${serviceSuffix}`, data)
 }
 
+
 /* Add Job */
 // export const apiAddJob = (data: IJob) => {
 //     return  BaseService.post(`${servicePrefix}/add_job_api${serviceSuffix}`, data)

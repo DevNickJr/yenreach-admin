@@ -9,6 +9,9 @@ import { apiDeleteBlog } from "src/services/BlogService"
 import { toast } from "react-toastify"
 import { useState } from "react"
 import DeleteItemModal from "src/assets"
+import { Link } from "react-router-dom"
+import Button from "src/components/Button"
+import Loader from "src/components/Loader"
 // import Button from "src/components/Button"
 // import { Link } from "react-router-dom"
 
@@ -17,7 +20,7 @@ const Jobs = () => {
     const { user, isLoggedIn } = useAuthContext()
   const [deleteItemId, setDeleteItemId] = useState('')
 
-    const { data, refetch } = useFetch<IBlog[]>({
+    const { data, refetch, isLoading } = useFetch<IBlog[]>({
       api: apiAdminGetBlogs,
       key: ["blogs"],
       enabled: !!isLoggedIn
@@ -30,7 +33,7 @@ const Jobs = () => {
   {
       onSuccess: (data: any) => {
           console.log("data", data)
-          toast.success("Item Deleted Successfully.")
+          toast.success("Blog Deleted Successfully.")
           refetch()
           // remove()
           setDeleteItemId('')
@@ -47,6 +50,8 @@ const Jobs = () => {
   
     return (
         <Layout>
+          {(isLoading || deleteItemMutation?.isLoading) && <Loader />}
+
             <DeleteItemModal
               deleteFunc={() => deleteItemMutation.mutate({ id: deleteItemId, admin_string: user?.verify_string || "" })}
               isOpen={deleteItemId} 
@@ -57,9 +62,9 @@ const Jobs = () => {
             <h1 className="text-xl">Hi {user?.username}</h1>
             <h1>Your Blog Layout</h1>
             <div className="flex flex-end mt-6">
-              {/* <Button className="p-2">
+              <Button className="p-2">
                 <Link to={"/blogs/add"}>Add Blog</Link>
-              </Button> */}
+              </Button>
             </div>
             <div className="flex flex-col gap-4 mt-12">
               {

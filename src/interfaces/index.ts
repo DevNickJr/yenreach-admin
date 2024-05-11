@@ -120,6 +120,7 @@ export interface IJob {
 }
 
 export interface IBlog {
+    title: string
     author: string
     blog_string: string
     created_at: string | null
@@ -127,7 +128,15 @@ export interface IBlog {
     id: string
     post: string
     snippet: string
+}
+
+export interface IAddBlog {
     title: string
+    author: string
+    post: string
+    snippet: string
+    admin_string : string
+    file_path: string
 }
 
 

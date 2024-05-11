@@ -42,19 +42,19 @@ const AddJob = () => {
     }, initialState)
 
     const addItemMutation = useMutations<IJob, any>(
-    apiAdminAddJob,
-    {
-    onSuccess: (data: any) => {
-        console.log("data", data)
-        toast.success("Item Added Successfully.")
-        setJob({ type: "reset", payload: "" })
-    },
-    showErrorMessage: true,
-    requireAuth: true,
+        apiAdminAddJob,
+        {
+        onSuccess: (data: any) => {
+            console.log("data", data)
+            toast.success("Item Added Successfully.")
+            setJob({ type: "reset", payload: "" })
+        },
+        showErrorMessage: true,
+        requireAuth: true,
     })
 
     const handleChange = (type: Action, payload: string) => {
-    setJob({ type, payload })
+        setJob({ type, payload })
     }
 
     return (
