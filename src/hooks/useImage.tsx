@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { apiLogin } from '../services/AuthService'
 import { ref, uploadBytesResumable, getDownloadURL  } from "firebase/storage";
 import storage from '../configs/firebase.config';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,12 +7,12 @@ import { v4 as uuidv4 } from 'uuid';
 const useImage = () => {
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
-    const [progress, setProgress] = useState(null)
-    const [url, setUrl] = useState(null)
+    const [progress, setProgress] = useState(0)
+    const [url, setUrl] = useState("")
     const uui = uuidv4()
 
     
-    const uploadImage = (file) => {
+    const uploadImage = (file: File) => {
         setError(null)
         setProgress(0)
         setLoading(true)
@@ -38,7 +37,7 @@ const useImage = () => {
                     break;
             }
             }, 
-            (error) => {
+            (error: any) => {
                 setError(error)
                 setLoading(false)
                 console.log("error", error)
@@ -50,7 +49,7 @@ const useImage = () => {
                 setLoading(false)
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: string) => {
                 console.log('File available at', downloadURL);
                 setUrl(downloadURL)
             });
@@ -58,7 +57,7 @@ const useImage = () => {
         );
     }
 
-    const downloadImage = (name) => {
+    const downloadImage = (name: string) => {
         // setLoading(true)
         const storageRef = ref(storage, `images/${name}`);
         getDownloadURL(storageRef)
