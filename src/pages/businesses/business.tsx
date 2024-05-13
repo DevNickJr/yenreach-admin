@@ -1,7 +1,7 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 import { IBusiness, IDisapproveBusiness } from "src/interfaces"
-import { apiAdminApproveBusinesses, apiAdminDispproveBusinesses, apiAdminGetOneBusinesses } from "src/services/CommonService"
+import { apiAdminAddBusinessesOfTheWeek, apiAdminApproveBusinesses, apiAdminDispproveBusinesses, apiAdminGetOneBusinesses } from "src/services/CommonService"
 import { useParams } from "react-router-dom"
 import Loader from "src/components/Loader"
 import Button from "src/components/Button"
@@ -27,6 +27,17 @@ const Business = () => {
         onSuccess: (data: any) => {
             console.log("data", data)
             toast.success("Business Approved Successfully")
+        },
+        showErrorMessage: true,
+        requireAuth: true,
+    })
+
+    const makeWeekBussinessMutation = useMutations<string, any>(
+      apiAdminAddBusinessesOfTheWeek,
+    {
+        onSuccess: (data: any) => {
+            console.log("data", data)
+            toast.success("Business of the week set Successfully")
         },
         showErrorMessage: true,
         requireAuth: true,
@@ -81,6 +92,12 @@ const Business = () => {
                 </div>
               }
             </div>
+            {
+              Number(business?.reg_stage || 0) > 3 &&
+                <Button onClick={() => makeWeekBussinessMutation?.mutate(business?.verify_string || "")} className="mt-3 p-3 h-fit px-6">
+                  Business of the week
+                </Button>
+            }
           </div>
         </Layout>
     )

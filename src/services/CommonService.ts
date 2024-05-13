@@ -51,6 +51,11 @@ export const apiAdminApproveBusinesses =  (id: string) => {
     return BaseService.get("approve_business_api" + serviceSuffix + `/?string=${id}`)
 }
 
+export const apiAdminAddBusinessesOfTheWeek =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("add_business_of_the_week_api" + serviceSuffix + `/?string=${id}`)
+}
+
 
 export const apiAdminDispproveBusinesses =  (data: IDisapproveBusiness) => {
     // console.log({ query })
