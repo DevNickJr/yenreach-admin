@@ -1,4 +1,4 @@
-import { IActivateAdmin, IAddAdmin, IDisapproveBusiness, IQuery } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IAddAdvert, IDisapproveBusiness, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const serviceSuffix = ".php"
@@ -14,6 +14,11 @@ export const apiAdminGetBusinesses =  (query: IQuery) => {
 export const apiAdminGetBilllboards =  (query: IQuery) => {
     // console.log({ query })
     return BaseService.get("/fetch_all_billboard_applications" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
+export const apiAdminGetAdverts =  () => {
+    // console.log({ query })
+    return BaseService.get("/fetch_all_advert_payment_types_api" + serviceSuffix)
 }
 
 export const apiAdminGetAdmins =  (query: IQuery) => {
@@ -44,6 +49,10 @@ export const apiAdminGetOneBillboard =  (id: string) => {
 export const apiAdminGetOneAdmin =  (id: string) => {
     // console.log({ query })
     return BaseService.get("fetch_admin_by_string_api" + serviceSuffix + `/?string=${id}`)
+}
+export const apiAdminGetOneAdvert =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("fetch_advert_payment_type_by_string_api" + serviceSuffix + `/?string=${id}`)
 }
 
 export const apiAdminApproveBusinesses =  (id: string) => {
@@ -84,6 +93,10 @@ export const apiAdminGetBlogs =  (query: IQuery) => {
 /* Add Admin */
 export const apiAddAdmin = (data: IAddAdmin) => {
     return BaseService.post(`/add_admin_api${serviceSuffix}`, data)
+}
+
+export const apiAddAdvert = (data: IAddAdvert) => {
+    return BaseService.post(`/add_advert_payment_type_api${serviceSuffix}`, data)
 }
 
 export const apiActivateAdmin = (data: IActivateAdmin) => {

@@ -15,6 +15,10 @@ import Admins from './pages/admins';
 import AddAdmin from './pages/admins/add';
 import AllAdmins from './pages/admins/all';
 import Admin from './pages/admins/admin';
+import Adverts from './pages/adverts';
+import AddAdvert from './pages/adverts/add';
+import AllAdverts from './pages/adverts/all';
+import Advert from './pages/adverts/advert';
 import Billboards from './pages/billboards';
 import AddBillboard from './pages/billboards/add';
 import AllBillboards from './pages/billboards/all';
@@ -54,6 +58,12 @@ function App() {
             <Route path="/admins/add" element={<AddAdmin />} />
             <Route path="/admins/all" element={<AllAdmins />} />
             <Route path="/admins/:id" element={<Admin />} />
+         
+            {/* adverts */}
+            <Route path="/adverts" element={<Adverts />} />
+            <Route path="/adverts/add" element={<AddAdvert />} />
+            <Route path="/adverts/all" element={<AllAdverts />} />
+            <Route path="/adverts/:id" element={<Advert />} />
          
             {/* blogs */}
             <Route path="/blogs" element={<Blogs />} />

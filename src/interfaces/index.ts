@@ -164,6 +164,18 @@ export interface IAdmin {
     verify_string: string
 }
 
+export interface IAdvert {
+    amount: string
+    created: string
+    duration: string
+    duration_type: string
+    errors: any[]
+    id: string
+    last_updated: string
+    title: string
+    verify_string: string
+}
+
 export interface IAddAdmin {
     name: string
     username: string
@@ -211,12 +223,11 @@ export interface IBusiness {
     profile_img?: string
 }
 
-interface IAdvert {
-    id: string
-    verify_string: string
+export interface IAddAdvert {
     title: string
     duration_type: string
     duration: string
+    amount: string
 }
 
 export interface IBillboard {
