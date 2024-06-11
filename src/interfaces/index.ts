@@ -221,6 +221,11 @@ export interface IBusiness {
     youtube_link: string
     cover_img?: string
     profile_img?: string
+    month_started?: string
+    year_started?: string
+    town?: string
+    categories: string[]
+    lga?: string   
 }
 
 export interface IAddAdvert {

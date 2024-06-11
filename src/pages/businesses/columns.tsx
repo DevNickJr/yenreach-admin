@@ -7,6 +7,7 @@ import { IBusiness } from "src/interfaces";
 import ColumnHead from "src/components/ColumnHead";
 import { BsEye } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { BiEdit } from "react-icons/bi";
 
 // businessRole: "Enumerator",
 // zoneId: string,
@@ -67,7 +68,9 @@ export const columnsMaker = ({
           <Link to={`/businesses/${business.verify_string}`}>
               <BsEye className="text-xl cursor-pointer text-black/40"  />
           </Link>
-        {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(business?.verify_string || "")} /> */}
+          <Link to={`/businesses/${business.verify_string}/edit`}>
+              <BiEdit className="text-xl cursor-pointer text-black/40" />
+          </Link>
           <MdDelete onClick={() => deleteFunc(business.verify_string || "")} className="text-xl cursor-pointer text-black/40" />
         </div>
 

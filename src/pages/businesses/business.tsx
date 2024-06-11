@@ -70,12 +70,12 @@ const Business = () => {
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Business Name - {business?.name}</h1>
             <h1 className="text-xl">Owner's Name - {business?.owner_name}</h1>
-            <div className="flex flex-col md:flex-row gap-6">
-                <img src={business?.profile_img?.replace("mediatoken", "media&token")} alt="" className="flex-1 w-full max-h-48" />
-                <img src={business?.cover_img?.replace("mediatoken", "media&token")} alt="" className="flex-1 w-full max-h-48" />
+            <div className="flex flex-col gap-6 md:flex-row">
+                <img src={business?.profile_img?.replace("mediatoken", "media&token")} alt="profile image" className="flex-1 w-full max-h-48" />
+                <img src={business?.cover_img?.replace("mediatoken", "media&token")} alt="cover image" className="flex-1 w-full max-h-48" />
             </div>
-            <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
-              <Button onClick={() => approveBussinessMutation?.mutate(business?.verify_string || "")} className="p-3 h-fit px-6">
+            <div className="flex flex-col flex-wrap gap-4 mt-4 md:flex-row">
+              <Button onClick={() => approveBussinessMutation?.mutate(business?.verify_string || "")} className="p-3 px-6 h-fit">
                 Approve
               </Button>
               {
@@ -84,8 +84,8 @@ const Business = () => {
                     Decline
                   </Button>
                   :
-                <div className="flex flex-col lg:w-1/2 gap-2">
-                  <input type="text" placeholder="input reason for decline" value={remarks} className="text-sm outline-none rounded-md p-3 w-full max-w-lg" onChange={(e) => setRemarks(e.target.value)} />
+                <div className="flex flex-col gap-2 lg:w-1/2">
+                  <input type="text" placeholder="input reason for decline" value={remarks} className="w-full max-w-lg p-3 text-sm rounded-md outline-none" onChange={(e) => setRemarks(e.target.value)} />
                   <Button onClick={() => dispproveBussinessMutation?.mutate({ verify_string: id || "", remarks })} variant="danger" className="p-2">
                   Submit
                 </Button>
@@ -94,7 +94,7 @@ const Business = () => {
             </div>
             {
               Number(business?.reg_stage || 0) > 3 &&
-                <Button onClick={() => makeWeekBussinessMutation?.mutate(business?.verify_string || "")} className="mt-3 p-3 h-fit px-6">
+                <Button onClick={() => makeWeekBussinessMutation?.mutate(business?.verify_string || "")} className="p-3 px-6 mt-3 h-fit">
                   Business of the week
                 </Button>
             }
