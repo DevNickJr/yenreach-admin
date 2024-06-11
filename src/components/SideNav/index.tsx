@@ -44,7 +44,7 @@ const SideNav = () => {
                 </Link>
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("adverts") && 'font-bold'}`} to={"/adverts"}>
                     <MdOutlineAirplaneTicket size={"1.3rem"} />
-                    Adverts 
+                    AdPayType 
                 </Link>
             </div>
         </div>

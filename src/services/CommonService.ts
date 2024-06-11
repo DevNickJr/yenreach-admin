@@ -1,4 +1,4 @@
-import { IActivateAdmin, IAddAdmin, IAddAdvert, IDisapproveBusiness, IQuery } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IAddAdvert, IBusiness, IDisapproveBusiness, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const serviceSuffix = ".php"
@@ -39,6 +39,13 @@ export const apiAdminGetPendingBillboards =  (query: IQuery) => {
 export const apiAdminGetOneBusinesses =  (id: string) => {
     // console.log({ query })
     return BaseService.get("fetch_business_by_string_api" + serviceSuffix + `/?string=${id}`)
+}
+
+/* Edit business */
+export const apiEditBusiness = (data: Partial<IBusiness>) => {
+    const val = {...data, user_string: data?.user_string || token}
+         
+    return BaseService.post("edit_business_profile_api" + serviceSuffix, val)
 }
 
 export const apiAdminGetOneBillboard =  (id: string) => {

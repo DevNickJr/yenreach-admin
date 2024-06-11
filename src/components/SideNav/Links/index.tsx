@@ -35,6 +35,7 @@ const Links = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: React.Dispat
           <li><Link to="/jobs" className={`pb-1.5 px-1 ${(pathname?.includes("jobs")) ? 'font-bold' : "font-medium"}`}>Jobs</Link></li>
           <li><Link to="/billboards" className={`pb-1.5 px-1 ${(pathname?.includes("billboards")) ? 'font-bold' : "font-medium"}`}>Billboards</Link></li>
           <li><Link to="/blogs" className={`pb-1.5 px-1 ${(pathname?.includes("blogs")) ? 'font-bold' : "font-medium"}`}>Blogs</Link></li>
+          <li><Link to="/adverts" className={`pb-1.5 px-1 ${(pathname?.includes("adverts")) ? 'font-bold' : "font-medium"}`}>AdPayType</Link></li>
         </ul>
         <div onClick={handleLogout} className={`w-fit py-2 pb-2.5 flex items-center gap-2 text-xs font-medium rounded-full`}>
             <MdLogout size={"1.3rem"} />

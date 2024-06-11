@@ -24,6 +24,7 @@ import AddBillboard from './pages/billboards/add';
 import AllBillboards from './pages/billboards/all';
 import PendingBillboard from './pages/billboards/pending';
 import Billboard from './pages/billboards/billboard';
+import EditBusiness from './pages/businesses/edit-business';
 
 
 function App() { 
@@ -45,6 +46,7 @@ function App() {
             <Route path="/businesses/all" element={<AllBusinesses />} />
             <Route path="/businesses/pending" element={<PendingBusinesses />} />
             <Route path="/businesses/:id" element={<Business />} />
+            <Route path="/businesses/:id/edit" element={<EditBusiness />} />
        
             {/* billboards */}
             <Route path="/billboards" element={<Billboards />} />

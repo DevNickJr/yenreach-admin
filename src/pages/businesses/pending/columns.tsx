@@ -24,7 +24,7 @@ interface IProps {
 
 
 export const columnsMaker = ({ 
-  editFunc,
+  // editFunc,
   deleteFunc
  }: IProps): ColumnDef<IBusiness>[] => [
   {
@@ -67,7 +67,9 @@ export const columnsMaker = ({
             <Link to={`/businesses/${business.verify_string}`}>
                 <BsEye className="text-base cursor-pointer text-black/40"  />
             </Link>
-            <BiEdit className="text-base cursor-pointer text-black/40" onClick={() => editFunc(business?.verify_string || "")} />
+            <Link to={`/businesses/${business.verify_string}/edit`}>
+                <BiEdit className="text-base cursor-pointer text-black/40" />
+            </Link>
             <MdDelete onClick={() => deleteFunc(business.verify_string || "")} className="text-base cursor-pointer text-black/40" />
         </div>
 
