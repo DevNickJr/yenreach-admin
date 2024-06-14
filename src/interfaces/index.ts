@@ -176,6 +176,27 @@ export interface IAdvert {
     verify_string: string
 }
 
+export interface ICategory {
+    created: string
+    details: string
+    id: string
+    last_updated: string
+    section: string
+    section_string: string
+    verify_string: string
+}
+
+export interface ISubCategory {
+    category: string
+    created: string
+    details: string
+    id: string
+    last_updated: string
+    section: string
+    section_string: string
+    verify_string: string
+}
+
 export interface IAddAdmin {
     name: string
     username: string
@@ -233,6 +254,14 @@ export interface IAddAdvert {
     duration_type: string
     duration: string
     amount: string
+}
+export interface IAddCategory {
+    section: string
+}
+
+export interface IAddSubCategory {
+    section_string: string
+    category: string
 }
 
 export interface IBillboard {

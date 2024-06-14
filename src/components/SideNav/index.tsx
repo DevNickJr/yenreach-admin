@@ -1,4 +1,5 @@
 import { AiOutlineBorderVerticle } from 'react-icons/ai';
+import { BiCategory } from 'react-icons/bi';
 import { MdLogout, MdBusiness, MdWorkOutline, MdPerson, MdOutlineAirplaneTicket } from 'react-icons/md'
 import { TbBrandBlogger } from 'react-icons/tb'
 import { Link, useLocation } from 'react-router-dom'
@@ -47,7 +48,7 @@ const SideNav = () => {
                     AdPayType 
                 </Link>
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("categories") && 'font-bold'}`} to={"/categories"}>
-                    <MdOutlineAirplaneTicket size={"1.3rem"} />
+                    <BiCategory size={"1.3rem"} />
                     Categories 
                 </Link>
             </div>
