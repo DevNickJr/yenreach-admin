@@ -1,4 +1,4 @@
-import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IBusiness, IDisapproveBusiness, IQuery } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IAddSubscription, IBusiness, IDisapproveBusiness, IPlan, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const serviceSuffix = ".php"
@@ -21,6 +21,11 @@ export const apiAdminGetAdverts =  () => {
     return BaseService.get("/fetch_all_advert_payment_types_api" + serviceSuffix)
 }
 
+export const apiAdminGetSubscriptions =  () => {
+    // console.log({ query })
+    return BaseService.get("/fetch_all_business_subscriptions_api" + serviceSuffix)
+}
+
 export const apiAdminGetSubCategories =  () => {
     // console.log({ query })
     return BaseService.get("/fetch_all_categories_api" + serviceSuffix)
@@ -35,10 +40,19 @@ export const apiAdminGetSubCategoriesByCategoryString =  (id: string) => {
     // console.log({ query })
     return BaseService.get("/fetch_categories_by_section_string_api" + serviceSuffix + `/?section_string=${id}`)
 }
+export const apiAdminGetPlansBySubscriptionString =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("/fetch_subscription_plans_api" + serviceSuffix + `/?string=${id}`)
+}
 
 export const apiAdminGetCategoryString =  (id: string) => {
     // console.log({ query })
     return BaseService.get("/fetch_section_by_string_api" + serviceSuffix + `/?string=${id}`)
+}
+
+export const apiAdminGetSubscriptionByString =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("/fetch_business_subscription_by_string_api" + serviceSuffix + `/?string=${id}`)
 }
 
 export const apiAdminGetAdmins =  (query: IQuery) => {
@@ -102,6 +116,15 @@ export const apiAdminDeleteBusiness =  (id: string) => {
     // console.log({ query })
     return BaseService.post("delete_business_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
 }
+export const apiAdminDeleteAdvert =  (id: string) => {
+    // console.log({ query })
+    return BaseService.post("delete_advert_payment_type_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
+}
+
+export const apiAdminDeleteSubscription =  (id: string) => {
+    // console.log({ query })
+    return BaseService.post("delete_business_subscription_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
+}
 
 // section == category
 // category == subcategory
@@ -113,6 +136,11 @@ export const apiAdminDeleteCategory =  (id: string) => {
 export const apiAdminDeleteSubCategory =  (id: string) => {
     // console.log({ query })
     return BaseService.post("delete_category_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
+}
+
+export const apiAdminDeletePaymentPlan =  (id: string) => {
+    // console.log({ query })
+    return BaseService.post("delete_payment_plan_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
 }
 
 
@@ -137,6 +165,10 @@ export const apiAddAdmin = (data: IAddAdmin) => {
 export const apiAddAdvert = (data: IAddAdvert) => {
     return BaseService.post(`/add_advert_payment_type_api${serviceSuffix}`, data)
 }
+
+export const apiAddSubscription = (data: IAddSubscription) => {
+    return BaseService.post(`/add_business_subscription_api${serviceSuffix}`, data)
+}
 export const apiAddCategory = (data: IAddCategory) => {
     return BaseService.post(`/add_section_api${serviceSuffix}`, data)
 }
@@ -145,6 +177,10 @@ export const apiAddCategory = (data: IAddCategory) => {
 // category == subcategory
 export const apiAddSubCategory = (data: IAddSubCategory) => {
     return BaseService.post(`/add_category_api${serviceSuffix}`, data)
+}
+
+export const apiAddPlan = (data: IPlan) => {
+    return BaseService.post(`/add_payment_plan_api${serviceSuffix}`, data)
 }
 
 export const apiActivateAdmin = (data: IActivateAdmin) => {

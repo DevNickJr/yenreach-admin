@@ -4,10 +4,11 @@ import { toast } from "react-toastify"
 import Button from "src/components/Button"
 import Loader from "src/components/Loader"
 import { useAuthContext } from "src/hooks/useAuthContext"
+import useFetch from "src/hooks/useFetch"
 import useMutations from "src/hooks/useMutation"
-import { IAddSubCategory } from "src/interfaces"
+import { IAddSubCategory, ICategory } from "src/interfaces"
 import Layout from 'src/layout'
-import { apiAddSubCategory } from "src/services/CommonService"
+import { apiAddSubCategory, apiAdminGetCategoryString } from "src/services/CommonService"
 
 const initialState: IAddSubCategory = { 
     section_string: "",
@@ -51,6 +52,12 @@ const AddSubCategory = () => {
         requireAuth: true,
     })
 
+    const { data: category } = useFetch<ICategory>({
+        api: apiAdminGetCategoryString,
+        key: ["category", String(id)],
+        param: id
+      })
+  
 
     return (
         <Layout>
@@ -58,7 +65,7 @@ const AddSubCategory = () => {
 
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
-            <h1 className="text-lg">Add Category</h1>
+            <h1 className="text-lg">Add Category - {category?.section}</h1>
 
             <div className="flex flex-col gap-4 mt-12">
                 <div className="flex flex-col gap-1">
