@@ -46,6 +46,10 @@ const SideNav = () => {
                     <MdOutlineAirplaneTicket size={"1.3rem"} />
                     AdPayType 
                 </Link>
+                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("categories") && 'font-bold'}`} to={"/categories"}>
+                    <MdOutlineAirplaneTicket size={"1.3rem"} />
+                    Categories 
+                </Link>
             </div>
         </div>
         <div className='flex flex-col gap-10 pb-2 underline'>

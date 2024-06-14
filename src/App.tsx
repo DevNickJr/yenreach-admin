@@ -25,6 +25,14 @@ import AllBillboards from './pages/billboards/all';
 import PendingBillboard from './pages/billboards/pending';
 import Billboard from './pages/billboards/billboard';
 import EditBusiness from './pages/businesses/edit-business';
+import Categories from './pages/categories';
+import AddCategory from './pages/categories/add';
+import Category from './pages/categories/category';
+import AllCategories from './pages/categories/all';
+import AllSubCategories from './pages/categories/subcategories/all';
+import SubCategory from './pages/categories/subcategories/category';
+import AddSubCategory from './pages/categories/subcategories/add';
+import AllCategoriesSub from './pages/categories/categories-sub';
 
 
 function App() { 
@@ -67,6 +75,19 @@ function App() {
             <Route path="/adverts/all" element={<AllAdverts />} />
             <Route path="/adverts/:id" element={<Advert />} />
          
+            {/* categories */}
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/categories/add" element={<AddCategory />} />
+            <Route path="/categories/all" element={<AllCategories />} />
+            <Route path="/categories/:id" element={<Category />} />
+
+            <Route path="/categories/:id/subcategories" element={<AllCategoriesSub />} />
+         
+            <Route path="/categories/subcategories/all" element={<AllSubCategories />} />
+            <Route path="/categories/subcategories/:id" element={<SubCategory />} />
+            <Route path="/categories/:id/add-subcategory" element={<AddSubCategory />} />
+
+
             {/* blogs */}
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/add" element={<AddBlog />} />

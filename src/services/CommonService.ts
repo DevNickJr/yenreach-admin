@@ -1,4 +1,4 @@
-import { IActivateAdmin, IAddAdmin, IAddAdvert, IBusiness, IDisapproveBusiness, IQuery } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IBusiness, IDisapproveBusiness, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const serviceSuffix = ".php"
@@ -19,6 +19,26 @@ export const apiAdminGetBilllboards =  (query: IQuery) => {
 export const apiAdminGetAdverts =  () => {
     // console.log({ query })
     return BaseService.get("/fetch_all_advert_payment_types_api" + serviceSuffix)
+}
+
+export const apiAdminGetSubCategories =  () => {
+    // console.log({ query })
+    return BaseService.get("/fetch_all_categories_api" + serviceSuffix)
+}
+
+export const apiAdminGetCategories =  () => {
+    // console.log({ query })
+    return BaseService.get("/fetch_all_sections_api" + serviceSuffix)
+}
+
+export const apiAdminGetSubCategoriesByCategoryString =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("/fetch_categories_by_section_string_api" + serviceSuffix + `/?section_string=${id}`)
+}
+
+export const apiAdminGetCategoryString =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("/fetch_section_by_string_api" + serviceSuffix + `/?string=${id}`)
 }
 
 export const apiAdminGetAdmins =  (query: IQuery) => {
@@ -83,6 +103,18 @@ export const apiAdminDeleteBusiness =  (id: string) => {
     return BaseService.post("delete_business_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
 }
 
+// section == category
+// category == subcategory
+export const apiAdminDeleteCategory =  (id: string) => {
+    // console.log({ query })
+    return BaseService.post("delete_section_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
+}
+
+export const apiAdminDeleteSubCategory =  (id: string) => {
+    // console.log({ query })
+    return BaseService.post("delete_category_api" + serviceSuffix + `/?string=${id}`, { verify_string: id })
+}
+
 
 export const apiAdminGetBlogs =  (query: IQuery) => {
     // console.log({ query })
@@ -104,6 +136,15 @@ export const apiAddAdmin = (data: IAddAdmin) => {
 
 export const apiAddAdvert = (data: IAddAdvert) => {
     return BaseService.post(`/add_advert_payment_type_api${serviceSuffix}`, data)
+}
+export const apiAddCategory = (data: IAddCategory) => {
+    return BaseService.post(`/add_section_api${serviceSuffix}`, data)
+}
+
+// section == category
+// category == subcategory
+export const apiAddSubCategory = (data: IAddSubCategory) => {
+    return BaseService.post(`/add_category_api${serviceSuffix}`, data)
 }
 
 export const apiActivateAdmin = (data: IActivateAdmin) => {
