@@ -1,11 +1,7 @@
-// import { useAuthContext } from "src/hooks/useAuthContext"
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
-// import { Link } from "react-router-dom"
-import { apiAdminDeleteAdvert, apiAdminGetAdverts } from "src/services/CommonService"
-import { IAdvert } from "src/interfaces"
-// import BusinessCard from "./fragments/BusinessCard"
-import { columnsMaker } from "./columns"
+import { apiAdminDeletePaymentPlan, apiAdminGetPlansBySubscriptionString, apiAdminGetSubscriptionByString } from "src/services/CommonService"
+import { IPlan, ISubscription } from "src/interfaces"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
 import NoResult from "src/components/NoResult"
@@ -13,31 +9,44 @@ import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
 import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
+import { Link, useParams } from "react-router-dom"
+import Button from "src/components/Button"
+import { columnsMaker } from "./subscription-plans-columns"
 
 
-const AllAdverts = () => {
+const AllSubscriptionPlans = () => {
+    const { id } = useParams();
+
     // const { user } = useAuthContext()
     const [editBusiness, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
 
     console.log({editBusiness, deleteBusiness})
     
-    const { data: adverts, isLoading, refetch } = useFetch<IAdvert[]>({
-      api: apiAdminGetAdverts,
-      key: ["adverts"],
-      param: {
-        page: 1,
-        num_per_page: 40
-      }
+    const { data: plans, isLoading, refetch } = useFetch<IPlan[]>({
+      api: apiAdminGetPlansBySubscriptionString,
+      key: ["subscriptions", String(id), "plans"],
+      param: id
+    //   param: {
+    //     id: string
+    //     page: 1,
+    //     num_per_page: 40
+    //   }
+    })
+
+    const { data: subscription } = useFetch<ISubscription>({
+      api: apiAdminGetSubscriptionByString,
+      key: ["subscriptions", String(id)],
+      param: id
     })
 
     
     const deleteBussinessMutation = useMutations<string, any>(
-      apiAdminDeleteAdvert,
+        apiAdminDeletePaymentPlan,
     {
         onSuccess: (data: any) => {
             console.log("data", data)
-            toast.success("Advert Deleted Successfully")
+            toast.success("plan Deleted Successfully")
             setDeleteBusiness("")
             refetch()
         },
@@ -50,7 +59,7 @@ const AllAdverts = () => {
       deleteFunc: (id: string) => setDeleteBusiness(id),
     })
 
-    console.log({ adverts })
+    console.log({ plans })
 
     // useEffect(() => {
     //   const fn = async () => {
@@ -73,20 +82,22 @@ const AllAdverts = () => {
                 deleteFunc={() => deleteBussinessMutation.mutate(deleteBusiness)}
                 isOpen={deleteBusiness} 
                 setIsOpen={setDeleteBusiness} 
-                desc='Are you sure you want to delete this Payment Type?'
+                desc='Are you sure you want to delete this plan?'
             />
           <div className="flex flex-col gap-1 p-6 mb-6">
-            <h1 className="text-xl">Advert Payment Type</h1>
-            {/* <div className="flex flex-end">
-              <Link to={"/adverts/add"}>Add Business</Link>
-            </div> */}
+            <div className="flex flex-col justify-between md:flex-row">
+              <h1 className="text-xl">{subscription?.package} - All Plans</h1>
+              <Button className="flex p-2.5 flex-end">
+                <Link to={`/subscriptions/${id}/add-plan`}>Add Plan</Link>
+              </Button>
+            </div>
             <div className="mt-12">
             {
-                (adverts?.length && adverts?.length > 0) ?
+                (plans?.length && plans?.length > 0) ?
                       <DataTable 
-                          title="Adverts"
+                          title="Sub plans"
                           columns={columns} 
-                          data={adverts || []} 
+                          data={plans || []} 
                           // onPaginationChange={onPaginationChange}
                           // pageCount={Math.floor(Number(adverts?.length || 0)/pagination.pageSize)}
                           // pagination={pagination}
@@ -97,8 +108,8 @@ const AllAdverts = () => {
                       <NoResult
                           isLoading={isLoading}
                           image={""}
-                          desc='Add adverts paymemnt types to start to see them here.' 
-                          buttonText='Add Advert Payment types'
+                          desc='Add Plan to your dashboard and start to see  them here.' 
+                          buttonText='Add Plan'
                           onClick={() => ""}
                       />
               }
@@ -108,4 +119,4 @@ const AllAdverts = () => {
     )
 }
 
-export default AllAdverts
+export default AllSubscriptionPlans

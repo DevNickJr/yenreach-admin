@@ -176,6 +176,36 @@ export interface IAdvert {
     verify_string: string
 }
 
+export interface IPlan {
+    created?: string
+    description: string
+    duration: number
+    duration_type: number
+    errors?: string[]
+    id?: string
+    last_updated?: string
+    plan: string
+    price: number
+    subscription_string: string
+    verify_string?: string
+}
+
+export interface ISubscription {
+    branches: string
+    created: string
+    description: string
+    id: string
+    last_updated: string
+    package: string
+    photos: string
+    plans: IPlan[]
+    position: string
+    slider: string
+    socialmedia: string
+    verify_string: string
+    videos: string
+}
+
 export interface ICategory {
     created: string
     details: string
@@ -254,6 +284,17 @@ export interface IAddAdvert {
     duration_type: string
     duration: string
     amount: string
+}
+
+export interface IAddSubscription {
+    package: string
+    description: string
+    position: number
+    photos: number
+    videos: number
+    slider: number
+    socialmedia:number
+    branches: number
 }
 export interface IAddCategory {
     section: string

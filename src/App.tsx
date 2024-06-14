@@ -33,6 +33,12 @@ import AllSubCategories from './pages/categories/subcategories/all';
 import SubCategory from './pages/categories/subcategories/category';
 import AddSubCategory from './pages/categories/subcategories/add';
 import AllCategoriesSub from './pages/categories/categories-sub';
+import Subscriptions from './pages/subscriptions';
+import AddSubscription from './pages/subscriptions/add';
+import AllSubscription from './pages/subscriptions/all';
+import Subscription from './pages/subscriptions/subscription';
+import AllSubscriptionPlans from './pages/subscriptions/subscription-plans';
+import AddPlan from './pages/subscriptions/plans/add';
 
 
 function App() { 
@@ -74,6 +80,15 @@ function App() {
             <Route path="/adverts/add" element={<AddAdvert />} />
             <Route path="/adverts/all" element={<AllAdverts />} />
             <Route path="/adverts/:id" element={<Advert />} />
+
+            
+            {/* subscriptions */}
+            <Route path="/subscriptions" element={<Subscriptions />} />
+            <Route path="/subscriptions/add" element={<AddSubscription />} />
+            <Route path="/subscriptions/all" element={<AllSubscription />} />
+            <Route path="/subscriptions/:id" element={<Subscription />} />
+            <Route path="/subscriptions/:id/plans" element={<AllSubscriptionPlans />} />
+            <Route path="/subscriptions/:id/add-plan" element={<AddPlan />} />
          
             {/* categories */}
             <Route path="/categories" element={<Categories />} />
