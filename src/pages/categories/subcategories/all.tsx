@@ -1,6 +1,6 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
-import { apiAdminDeleteBusiness, apiAdminDeleteSubCategory, apiAdminGetSubCategories } from "src/services/CommonService"
+import { apiAdminDeleteSubCategory, apiAdminGetSubCategories } from "src/services/CommonService"
 import { ISubCategory } from "src/interfaces"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
