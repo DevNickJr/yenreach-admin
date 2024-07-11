@@ -1,6 +1,6 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
-import { apiAdminDeleteBusiness, apiAdminGetSubCategories } from "src/services/CommonService"
+import { apiAdminDeleteBusiness, apiAdminDeleteSubCategory, apiAdminGetSubCategories } from "src/services/CommonService"
 import { ISubCategory } from "src/interfaces"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
@@ -30,11 +30,11 @@ const AllSubCategories = () => {
 
     
     const deleteBussinessMutation = useMutations<string, any>(
-        apiAdminDeleteBusiness,
+      apiAdminDeleteSubCategory,
     {
         onSuccess: (data: any) => {
             console.log("data", data)
-            toast.success("Advert Deleted Successfully")
+            toast.success("Sub Category Deleted Successfully")
             setDeleteBusiness("")
             refetch()
         },
