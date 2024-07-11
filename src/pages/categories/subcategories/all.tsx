@@ -14,10 +14,10 @@ import DeleteItemModal from "src/assets"
 
 const AllSubCategories = () => {
     // const { user } = useAuthContext()
-    const [editBusiness, setEditBusiness] = useState('')
-    const [deleteBusiness, setDeleteBusiness] = useState('')
+    const [editSubCat, setEditSubCat] = useState('')
+    const [deleteSubCat, setDeleteSubCat] = useState('')
 
-    console.log({editBusiness, deleteBusiness})
+    console.log({editSubCat, deleteSubCat})
     
     const { data: categories, isLoading, refetch } = useFetch<ISubCategory[]>({
       api: apiAdminGetSubCategories,
@@ -35,7 +35,7 @@ const AllSubCategories = () => {
         onSuccess: (data: any) => {
             console.log("data", data)
             toast.success("Sub Category Deleted Successfully")
-            setDeleteBusiness("")
+            setDeleteSubCat("")
             refetch()
         },
         showErrorMessage: true,
@@ -43,8 +43,8 @@ const AllSubCategories = () => {
     })
 
     const columns = columnsMaker({
-      editFunc: (id: string) => setEditBusiness(id),
-      deleteFunc: (id: string) => setDeleteBusiness(id),
+      editFunc: (id: string) => setEditSubCat(id),
+      deleteFunc: (id: string) => setDeleteSubCat(id),
     })
 
     console.log({ categories })
@@ -67,15 +67,15 @@ const AllSubCategories = () => {
                 (deleteBussinessMutation?.isLoading) && <Loader />
             }
             <DeleteItemModal
-                deleteFunc={() => deleteBussinessMutation.mutate(deleteBusiness)}
-                isOpen={deleteBusiness} 
-                setIsOpen={setDeleteBusiness} 
-                desc='Are you sure you want to delete this Business?'
+                deleteFunc={() => deleteBussinessMutation.mutate(deleteSubCat)}
+                isOpen={deleteSubCat} 
+                setIsOpen={setDeleteSubCat} 
+                desc='Are you sure you want to delete this Sub category?'
             />
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">All Sub Categories</h1>
             {/* <div className="flex flex-end">
-              <Link to={"/adverts/add"}>Add Business</Link>
+              <Link to={"/adverts/add"}>Add Sub category</Link>
             </div> */}
             <div className="mt-12">
             {
