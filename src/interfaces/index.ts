@@ -214,6 +214,7 @@ export interface ICategory {
     section: string
     section_string: string
     verify_string: string
+    category: string
 }
 
 export interface ISubCategory {

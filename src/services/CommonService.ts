@@ -6,6 +6,7 @@ const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
 
 console.log({token})
 
+
 export const apiAdminGetBusinesses =  (query: IQuery) => {
     // console.log({ query })
     return BaseService.get("/fetch_all_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
@@ -34,6 +35,11 @@ export const apiAdminGetSubCategories =  () => {
 export const apiAdminGetCategories =  () => {
     // console.log({ query })
     return BaseService.get("/fetch_all_sections_api" + serviceSuffix)
+}
+
+export const apiAdminGetAllCategories =  () => {
+    // console.log({ query })
+    return BaseService.get("/fetch_all_categories_api" + serviceSuffix)
 }
 
 export const apiAdminGetSubCategoriesByCategoryString =  (id: string) => {
@@ -73,6 +79,14 @@ export const apiAdminGetPendingBillboards =  (query: IQuery) => {
 export const apiAdminGetOneBusinesses =  (id: string) => {
     // console.log({ query })
     return BaseService.get("fetch_business_by_string_api" + serviceSuffix + `/?string=${id}`)
+}
+
+export const apiAdminGetBusinessCategories =  (id: string) => {
+    return BaseService.get("fetch_business_categories_api" + serviceSuffix + `/?string=${id}`)
+}
+
+export const apiAdminDeleteBusinessCategory =  (id: string) => {
+    return BaseService.get("delete_business_category_api" + serviceSuffix + `/?string=${id}`)
 }
 
 /* Edit business */

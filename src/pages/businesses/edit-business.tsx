@@ -3,14 +3,15 @@ import { useParams, useNavigate } from 'react-router-dom'
 // import { apiGetAllCategories } from '/src/services/CommonService'
 import Button from 'src/components/Button'
 import Loader from 'src/components/Loader'
-import { apiAdminGetOneBusinesses, apiEditBusiness } from 'src/services/CommonService'
-import { IBusiness } from 'src/interfaces'
+import { apiAdminDeleteBusinessCategory, apiAdminGetAllCategories, apiAdminGetBusinessCategories, apiAdminGetOneBusinesses, apiEditBusiness } from 'src/services/CommonService'
+import { IBusiness, ICategory } from 'src/interfaces'
 import { toast } from 'react-toastify'
 import useMutations from 'src/hooks/useMutation'
 import useFetch from 'src/hooks/useFetch'
 import Layout from 'src/layout'
 import useImage from 'src/hooks/useImage'
 import { useAuthContext } from 'src/hooks/useAuthContext'
+import { MdClose } from 'react-icons/md'
 
 
 
@@ -42,28 +43,60 @@ const EditBusiness = () => {
     const { url: coverImg, uploadImage: uploadCoverImg, loading: uploadingCoverImg } = useImage()
 
 
- 
-    const editBusinessMutation = useMutations<Partial<IBusiness>, any>(
-            apiEditBusiness,
-        {
-            onSuccess: () => {                
-                toast.success("Business Edited Successfully")
-                navigate(`/businesses/${id}`)
-            },
-            showErrorMessage: true,
-            requireAuth: true,
+    const { data: categories } = useFetch<ICategory[]>({
+        api: apiAdminGetAllCategories,
+        key: ['user-categories'],
     })
+  
+    const handleCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        if ((businessData?.categories?.length || 0) < 5) {
+            console.log({add: businessData})
 
 
+            setBusinessData(prev => ({...prev, [event.target.name]: [...(businessData.categories || []), event.target.value] }))
+        } 
+        console.log({businessData})
+    }
 
  const { data: business, isLoading } = useFetch<IBusiness>({
     api: apiAdminGetOneBusinesses,
     key: ["one-businesses", id || ""],
     param: id,
     enabled: !!id
-  })
+})
 
-//   console.log("bua", business)
+const { data: businessCategories, refetch: refetchBusCategories } = useFetch<ICategory[]>({
+    api: apiAdminGetBusinessCategories,
+    param: id,
+    key: ['businessCategories', id || ''],
+    enabled: !!id
+  })
+  
+
+  const deleteBusinessCategoryMutation = useMutations<string, any>(
+    apiAdminDeleteBusinessCategory,
+{
+    onSuccess: () => {                
+        toast.success("Category Deleted Successfully")
+        refetchBusCategories()
+    },
+    showErrorMessage: true,
+    requireAuth: true,
+})
+
+
+  const editBusinessMutation = useMutations<Partial<IBusiness>, any>(
+    apiEditBusiness,
+{
+    onSuccess: () => {                
+        toast.success("Business Edited Successfully")
+        navigate(`/businesses/${id}`)
+    },
+    showErrorMessage: true,
+    requireAuth: true,
+})
+  
+//   console.log("bua", businessCategories)
 
     // const {  data: categories } = useQuery({
     //     queryKey: ['categories'],
@@ -74,7 +107,7 @@ const EditBusiness = () => {
 
     React.useEffect(() => {
         if (business) {
-            setBusinessData(business)
+            setBusinessData(prev => ({ ...prev,  ...business }))
             setStateId(business.state_id)
         }
     }, [business])
@@ -94,7 +127,7 @@ const EditBusiness = () => {
     setBusinessData(prev => ({...prev, [event.target.name]: event.target.value }))
   }
 
-  console.log("business", businessData)
+//   console.log("business", businessData)
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -109,7 +142,7 @@ const EditBusiness = () => {
 
   return (
     <Layout>
-        {(isLoading || editBusinessMutation?.isLoading || uploadingCoverImg || uploadingProfileImg) && <Loader />}
+        {(isLoading || editBusinessMutation?.isLoading || uploadingCoverImg || uploadingProfileImg || deleteBusinessCategoryMutation?.isLoading) && <Loader />}
 
         <main className='flex-1 overflow-hidden overflow-y-scroll'>
             <section className='p-8 px-4 sm:px-8'>
@@ -188,7 +221,7 @@ const EditBusiness = () => {
                     
                         <div className='mb-32 mt-9 md:flex gap-9'>
                             <div className='mb-4'>
-                                <label htmlFor="profile_img" className='font-medium text-sm bg-[#E5E5E5] p-16 py-20 flex flex-col items-center justify-center max-w-[25rem] rounded-2xl relative cursor-pointer'>
+                                <label htmlFor="profile_img" className='font-medium text-sm bg-[#E5E5E5] p-16 py-20 flex flex-col items-center justify-center max-w-[25rem] rounded-2xl relative max-h-96 cursor-pointer'>
                                         <>
                                             <img src={''} alt="profile" className='mb-4 border-2 rounded-full' />
                                             <span className='text-center'>Select profile Image for your business</span>
@@ -201,17 +234,45 @@ const EditBusiness = () => {
                                 <input onChange={(e) => e.target.files ? uploadProfileImg(e.target.files[0]) : ""} className='border-[#E5E5E5] rounded-lg hidden' type="file" name="profile_img" id="profile_img" />
                             </div>
                             <div className=''>
-                                <label htmlFor="cover_img" className='font-medium text-sm bg-[#E5E5E5] p-16 py-20 flex flex-col items-center justify-center max-w-[25rem] rounded-2xl relative cursor-pointer'>
+                                <label htmlFor="cover_img" className='font-medium text-sm bg-[#E5E5E5] p-16 py-20 flex flex-col items-center justify-center max-w-[25rem] rounded-2xl relative max-h-96 cursor-pointer'>
                                         <>
                                             <img src={''} alt="" className='mb-4 border-2 rounded-full' />
                                             <span className='text-center'>Select cover Image for your business</span>
                                         </>
-                                    {(coverImg || businessData?.cover_img) && <img src={coverImg || businessData?.cover_img?.replace("mediatoken", "media&token")} alt="" className='top-0 left-0 z-10 object-cover w-full h-full bg-transparent ' />
+                                    {(coverImg || businessData?.cover_img) && <img src={coverImg || businessData?.cover_img?.replace("mediatoken", "media&token")} alt="" className='absolute top-0 left-0 z-10 object-cover w-full h-full' />
                                     }        
                                 </label>
                                 <input onChange={(e) => e.target.files ? uploadCoverImg(e.target.files[0]) : ''} className='border-[#E5E5E5] rounded-lg hidden' type="file" name="cover_img" id="cover_img" />
                             </div>
-                     </div>
+                        </div>
+                        <div className='w-full mb-4'>
+                            <label htmlFor="categories" className='text-sm font-medium'>Current Categories</label>
+                            <div className='flex flex-wrap items-center gap-3 text-xsm text-green md:w-7/8'>
+                                {businessCategories?.map(category =>
+                                    <div key={category.id} className='flex items-center gap-2 bg-black/10 px-4 py-2 font-medium whitespace-nowrap'>
+                                        <span className=''>{category.category}</span>
+                                        <MdClose onClick={() => deleteBusinessCategoryMutation?.mutate(category.verify_string)} className='text-base cursor-pointer'  />
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className='justify-between mb-8 md:flex gap-9'>
+                            <div className='w-full mb-8'>
+                                <label htmlFor="categories" className='text-sm font-medium'>Add Categories</label>
+                                <select onChange={(e) => handleCategory(e)} className='w-full px-4 py-3 border-2 rounded-lg outline-none cursor-pointer bg-inherit focus:invalid:border-red-400 border-green' name="categories" id="categories" placeholder='Enter Categoies'>
+                                    <option value="">Select Categories(max 5)</option>
+                                    {categories?.map((category) => (
+                                        <option key={category.id} value={category.category}>{category.category}</option>
+                                    ))}
+                                </select>
+                            <div>
+                            {businessData.categories?.map((category) => (
+                                <span key={category} className='py-1 mr-2 text-xs text-black text-gray-600 bg-gray-200 rounded-full'>{category}</span>
+                            ))}
+                        </div>
+            </div>
+        </div>
+                     
               
                     </div>
                     <Button

@@ -14,6 +14,7 @@ const Business = () => {
     const [decline, setDecline] = useState(false)
     const [remarks, setRemarks] = useState("")
 
+  
     const { data: business, isLoading } = useFetch<IBusiness>({
       api: apiAdminGetOneBusinesses,
       key: ["one-businesses", id || ""],
