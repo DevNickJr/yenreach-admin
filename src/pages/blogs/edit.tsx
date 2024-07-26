@@ -1,14 +1,17 @@
-import { useReducer, useRef } from "react"
+import { useCallback, useEffect, useReducer, useRef, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import Button from "src/components/Button"
 import Loader from "src/components/Loader"
 import TinymceWrapper from "src/components/TinymceWrapper"
 import { useAuthContext } from "src/hooks/useAuthContext"
+import useFetch from "src/hooks/useFetch"
 import useImage from "src/hooks/useImage"
 import useMutations from "src/hooks/useMutation"
-import { IAddBlog } from "src/interfaces"
+import { IAddBlog, IBlog } from "src/interfaces"
 import Layout from 'src/layout'
-import { apiAdminAddBlog } from "src/services/BlogService"
+import { apiAdminUpdateBlog } from "src/services/BlogService"
+import { apiAdminGetBlog } from "src/services/CommonService"
 import { Editor } from "tinymce"
 
 const initialState: IAddBlog = { 
@@ -17,21 +20,25 @@ const initialState: IAddBlog = {
     post: "",
     snippet: "",
     admin_string : "",
+    blog_string : "",
     file_path: "",
 }
 
-type Action = "reset" | "title" | "author" | "post" | "snippet" | "admin_string" | "file_path"
+type Action = "reset" | "title" | "author" | "post" | "snippet" | "admin_string" | "file_path" | "blog_string"
 
 interface IAction {
     type: Action,
     payload: string
 }
 
-const AddBlog = () => {
+const EditBlog = () => {
   const { user } = useAuthContext()
+  const navigate = useNavigate()
 
   const { url: img, uploadImage: uploadImg, loading: uploadingImg } = useImage()
+  const { id } = useParams();
 
+  const [editorReady, setEditorReady] = useState(false);
   const ref = useRef<Editor | null>(null)
   const [blog, setBlog] = useReducer((state: IAddBlog, action: IAction) => {
     if (action.type === "reset") {
@@ -43,33 +50,54 @@ const AddBlog = () => {
     }
   }, initialState)
 
+  const { data: blogPost, isLoading: blogPostLoading } = useFetch<IBlog>({
+    api: apiAdminGetBlog,
+    key: ["blog", id || ''],
+    enabled: !!id,
+    param: id,
+  })
+
+  const handleChange = useCallback((type: Action, payload: string) => {
+    setBlog({ type, payload })
+  }, [])
+  
+  useEffect(() => {
+    if (blogPost && editorReady) {
+        handleChange("title", blogPost.title)
+        handleChange("author", blogPost.author)
+        handleChange("blog_string", blogPost.blog_string)
+        handleChange("file_path", blogPost.file_path)
+        handleChange("post", blogPost.post)
+        handleChange("snippet", blogPost.snippet)
+        ref?.current?.setContent(blogPost.post)
+    }
+  }, [blogPost, handleChange, editorReady])
+
   const addItemMutation = useMutations<IAddBlog, any>(
-    apiAdminAddBlog,
+    apiAdminUpdateBlog,
     {
     onSuccess: (data: any) => {
         console.log("data", data)
-        toast.success("Blog Added Successfully.")
+        toast.success("Blog Updated Successfully.")
         setBlog({ type: "reset", payload: "" })
         ref?.current?.setContent("")
+        navigate('/blogs')
     },
     showErrorMessage: true,
     requireAuth: true,
 })
 
-  const handleChange = (type: Action, payload: string) => {
-    setBlog({ type, payload })
-  }
-  
+
   const handleSubmit = () => {
-    if (!img) {
+    if (!img && !blogPost?.file_path) {
       return toast.info("upload image")
     }
-    addItemMutation.mutate({ ...blog, file_path: img, post: ref?.current?.getContent() || "", admin_string: user?.verify_string || "" })
+    addItemMutation.mutate({ ...blog, file_path: img || blogPost?.file_path || "", post: ref?.current?.getContent() || "", admin_string: user?.verify_string || "" }) 
   }
   
   return (
     <Layout>
-      {(addItemMutation?.isLoading || uploadingImg) && <Loader />}
+      {(addItemMutation?.isLoading || uploadingImg || blogPostLoading) && <Loader />}
 
       <div className="flex flex-col gap-1 p-6 mb-6">
         <h1 className="text-xl">Hi {user?.username}</h1>
@@ -93,7 +121,7 @@ const AddBlog = () => {
             </div>
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Content</span>
-                <TinymceWrapper ref={ref} />
+                <TinymceWrapper ref={ref} onReady={() => setEditorReady(true)} />
             </div>
             <Button 
               onClick={handleSubmit} 
@@ -106,4 +134,4 @@ const AddBlog = () => {
   )
 }
 
-export default AddBlog
+export default EditBlog

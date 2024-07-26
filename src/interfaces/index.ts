@@ -135,8 +135,9 @@ export interface IAddBlog {
     author: string
     post: string
     snippet: string
-    admin_string : string
+    admin_string: string
     file_path: string
+    blog_string?: string
 }
 
 
