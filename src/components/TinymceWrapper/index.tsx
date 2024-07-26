@@ -1,10 +1,12 @@
 import { forwardRef, ForwardedRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
-// const TinymceWrapper = () => {
-const TinymceWrapper = forwardRef((props, ref: ForwardedRef<any>) => {
+interface TinymceWrapperProps {
+  onReady?: () => void;
+}
+const TinymceWrapper = forwardRef(({ onReady }: TinymceWrapperProps, ref: ForwardedRef<any>) => {
 
-  console.log(props)
+  // console.log(props)
 
   // const log = () => {
   //   if (editorRef.current) {
@@ -20,7 +22,16 @@ const TinymceWrapper = forwardRef((props, ref: ForwardedRef<any>) => {
       :
         <Editor
           apiKey='lfp1sibdc44a0qoqpita2999rwr01nnq7abmtwh1pnhb8boe'
-          onInit={(_evt, editor) => typeof ref === "function" ? ref(editor) : ref.current = editor}
+          onInit={(_evt, editor) => {
+            if (typeof ref === "function") {
+              ref(editor);
+            } else if (ref) {
+              ref.current = editor;
+            }
+            if (onReady) {
+              onReady();
+            }
+          }}
           initialValue=""
           init={{
             height: 500,

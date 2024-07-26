@@ -39,6 +39,7 @@ import AllSubscription from './pages/subscriptions/all';
 import Subscription from './pages/subscriptions/subscription';
 import AllSubscriptionPlans from './pages/subscriptions/subscription-plans';
 import AddPlan from './pages/subscriptions/plans/add';
+import EditBlog from './pages/blogs/edit';
 
 
 function App() { 
@@ -106,6 +107,7 @@ function App() {
             {/* blogs */}
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/add" element={<AddBlog />} />
+            <Route path="/blogs/:id/edit" element={<EditBlog />} />
 
           </Routes>
         </ScrollToTop>

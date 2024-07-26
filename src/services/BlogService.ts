@@ -19,6 +19,11 @@ export const apiAdminAddBlog = (data: IAddBlog) => {
     return BaseService.post(`${servicePrefix}/add_blog_post_api${serviceSuffix}`, data)
 }
 
+/* Add Blog */
+export const apiAdminUpdateBlog = (data: IAddBlog) => {
+    return BaseService.post(`${servicePrefix}/update_blog_post_api${serviceSuffix}`, data)
+}
+
 /* Delete Blog */
 export const apiDeleteBlog = ({id, admin_string }: IDelete) => {
     return BaseService.delete(`${servicePrefix}/delete_blog_post_api${serviceSuffix}?blog_string=${id}&admin_string=${admin_string}`)

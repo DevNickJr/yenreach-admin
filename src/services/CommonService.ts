@@ -163,6 +163,10 @@ export const apiAdminGetBlogs =  (query: IQuery) => {
     return BaseService.get("/fetch_all_blog_post_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
+export const apiAdminGetBlog =  (id: string) => {
+    return BaseService.get(`/fetch_one_blog_post_api.php?string=${id}`)
+}
+
 // /* Delete Job */
 // export const apiDeleteBlog = ({job_string, admin_string }) => {
 //     return ApiAdapter.fetchData({
