@@ -41,7 +41,7 @@ const TinymceWrapper = forwardRef(({ onReady }: TinymceWrapperProps, ref: Forwar
               'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
               'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
             ],
-            toolbar: 'undo redo | blocks | ' +
+            toolbar: 'undo redo | ' +
               'bold italic forecolor underline strikethrough fontsize | alignleft alignjustify aligncenter ' +
               'alignright alignjustify | bullist numlist outdent indent | ' +
               'subscript superscript code address | ' +
