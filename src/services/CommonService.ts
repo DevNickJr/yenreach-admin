@@ -1,10 +1,15 @@
-import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IAddSubscription, IBusiness, IDisapproveBusiness, IPlan, IQuery } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IAddSubscription, IBulkSMS, IBusiness, IDisapproveBusiness, IPlan, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 
 const serviceSuffix = ".php"
 const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
 
-console.log({token})
+// console.log({token})
+
+/* Add Job */
+export const apiSendBulkSMS = (data: IBulkSMS) => {
+    return BaseService.post(`/send_bulk_sms_api${serviceSuffix}`, data)
+}
 
 
 export const apiAdminGetBusinesses =  (query: IQuery) => {

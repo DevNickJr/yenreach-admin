@@ -98,6 +98,9 @@ export interface IPaginatedQuery {
     page: number
     num_per_page: number
 }
+export interface IBulkSMS {
+    message: string
+}
 
 export interface IJob {
     company_name: string,

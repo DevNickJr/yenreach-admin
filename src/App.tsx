@@ -40,6 +40,8 @@ import Subscription from './pages/subscriptions/subscription';
 import AllSubscriptionPlans from './pages/subscriptions/subscription-plans';
 import AddPlan from './pages/subscriptions/plans/add';
 import EditBlog from './pages/blogs/edit';
+import SMS from './pages/sms';
+import BulkSMS from './pages/sms/bulk';
 
 
 function App() { 
@@ -108,6 +110,12 @@ function App() {
             <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/add" element={<AddBlog />} />
             <Route path="/blogs/:id/edit" element={<EditBlog />} />
+
+            
+            {/* SMS */}
+            <Route path="/sms" element={<SMS />} />
+            <Route path="/sms/bulk" element={<BulkSMS />} />
+            <Route path="/sms/:id" element={<SMS />} />
 
           </Routes>
         </ScrollToTop>
