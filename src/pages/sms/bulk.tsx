@@ -9,10 +9,10 @@ import Layout from 'src/layout'
 import { apiSendBulkSMS } from "src/services/CommonService"
 
 const initialState: IBulkSMS = { 
-    message: ""
+    content: ""
 }
 
-type Action = "reset" | "message"
+type Action = "reset" | "content"
 
 interface IAction {
     type: Action,
@@ -57,7 +57,7 @@ const BulkSMS = () => {
             <div className="flex flex-col gap-4 mt-12">
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Message</span>
-                    <input value={data.message} onChange={e => handleChange("message", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={data.content} onChange={e => handleChange("content", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <Button onClick={() => addItemMutation.mutate({ ...data })} className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</Button>
             </div>

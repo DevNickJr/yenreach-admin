@@ -99,7 +99,7 @@ export interface IPaginatedQuery {
     num_per_page: number
 }
 export interface IBulkSMS {
-    message: string
+    content: string
 }
 
 export interface IJob {
