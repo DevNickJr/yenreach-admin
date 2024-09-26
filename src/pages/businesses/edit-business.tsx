@@ -175,7 +175,7 @@ const { data: businessCategories, refetch: refetchBusCategories } = useFetch<ICa
                     <div className='justify-between mb-8 md:flex gap-9'>
                         <div className='flex flex-col w-full mb-8'>
                             <label htmlFor="state_id" className='text-sm font-medium'>State</label>
-                            <select value={businessData?.state_id} onChange={(e) => setStateId(e.target.value)} required className="p-2 px-3 text-sm border rounded-md outline-none" name="state_id" id="state_id" placeholder='Enter state'>
+                            <select value={businessData?.state_id} onChange={(e) => setStateId(e.target.value)} required className="p-2 px-3 text-sm border rounded-md outline-none" name="state_id" id="state_id">
                                 <option value="">Enter State</option>
                                 {states?.map((state) => (
                                     <option key={state.id} value={state.id}>{state.name}</option>
@@ -184,7 +184,7 @@ const { data: businessCategories, refetch: refetchBusCategories } = useFetch<ICa
                         </div>
                         <div className='flex flex-col w-full mb-8'>
                             <label htmlFor="lga" className='text-sm font-medium'>LGA</label>
-                            <select value={businessData?.lga} onChange={handleBusinessData} className="p-2 px-3 text-sm border rounded-md outline-none" name="lga" id="lga" placeholder='Enter LGA'>
+                            <select value={businessData?.lga} onChange={handleBusinessData} className="p-2 px-3 text-sm border rounded-md outline-none" name="lga" id="lga">
                                 <option value="">Enter LGA</option>
                                 {filteredLgas?.map((lga) => (
                                     <option key={lga.id} value={lga.name}>{lga.name}</option>
@@ -203,7 +203,7 @@ const { data: businessCategories, refetch: refetchBusCategories } = useFetch<ICa
                     <div className='justify-between mb-8 md:flex gap-9'>
                         <div className='flex flex-col w-full mb-8'>
                             <label htmlFor="month_started" className='text-sm font-medium'>Business start month</label>
-                            <select required value={businessData?.month_started} onChange={handleBusinessData} className="p-2 px-3 text-sm border rounded-md outline-none" name="month_started" id="month_started" placeholder='Enter your business start Month'>
+                            <select required value={businessData?.month_started} onChange={handleBusinessData} className="p-2 px-3 text-sm border rounded-md outline-none" name="month_started" id="month_started">
                                 <option value="">Enter your business start Month</option>
                                 {months?.map((month) => (
                                     <option key={month.id} value={month.id}>{month.name}</option>
@@ -259,7 +259,7 @@ const { data: businessCategories, refetch: refetchBusCategories } = useFetch<ICa
                         <div className='justify-between mb-8 md:flex gap-9'>
                             <div className='w-full mb-8'>
                                 <label htmlFor="categories" className='text-sm font-medium'>Add Categories</label>
-                                <select onChange={(e) => handleCategory(e)} className='w-full px-4 py-3 border-2 rounded-lg outline-none cursor-pointer bg-inherit focus:invalid:border-red-400 border-green' name="categories" id="categories" placeholder='Enter Categoies'>
+                                <select onChange={(e) => handleCategory(e)} className='w-full px-4 py-3 border-2 rounded-lg outline-none cursor-pointer bg-inherit focus:invalid:border-red-400 border-green' name="categories" id="categories">
                                     <option value="">Select Categories(max 5)</option>
                                     {categories?.map((category) => (
                                         <option key={category.id} value={category.category}>{category.category}</option>

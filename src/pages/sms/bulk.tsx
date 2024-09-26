@@ -55,9 +55,9 @@ const BulkSMS = () => {
             <h1 className="text-xl">Hi {user?.username}</h1>
             <h1>Your Job Layout</h1>
             <div className="flex flex-col gap-4 mt-12">
-                <div className="flex flex-col gap-1">
-                    <span className="text-xs">Message</span>
-                    <input value={data.content} onChange={e => handleChange("content", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                <div className="flex flex-col gap-2">
+                    <span className="text-sm">Message</span>
+                    <textarea value={data.content} onChange={e => handleChange("content", e.target.value)} rows={5} cols={10} className="p-2 px-3 text-sm rounded-md outline-none max-w-sm" placeholder="Enter Text Message" />
                 </div>
                 <Button onClick={() => addItemMutation.mutate({ ...data })} className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</Button>
             </div>
