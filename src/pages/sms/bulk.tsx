@@ -53,7 +53,7 @@ const BulkSMS = () => {
 
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
-            <h1>Your Job Layout</h1>
+            <h1>Send Bulk Message</h1>
             <div className="flex flex-col gap-4 mt-12">
                 <div className="flex flex-col gap-2">
                     <span className="text-sm">Message</span>

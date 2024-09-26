@@ -11,7 +11,7 @@ const SMS = () => {
         <Layout>
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
-            <h1>Your SMS Layout</h1>
+            <h1>SMS</h1>
             <div className="flex flex-wrap gap-4 mt-6">
               <Button className="p-2">
                 <Link to={"/sms/bulk"}>Send Bulk SMS</Link>
