@@ -76,6 +76,11 @@ export const apiAdminGetPendingBusinesses =  (query: IQuery) => {
     return BaseService.get("fetch_pending_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
+export const apiAdminGetIncompleteBusinesses =  (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("fetch_incomplete_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+}
+
 export const apiAdminGetPendingBillboards =  (query: IQuery) => {
     // console.log({ query })
     return BaseService.get("fetch_pending_billboard_applications_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)

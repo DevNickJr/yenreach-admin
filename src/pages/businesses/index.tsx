@@ -55,6 +55,9 @@ const Businesses = () => {
                 <Link to={"/businesses/pending"}>View Pending Businesses</Link>
               </Button>
               <Button className="p-2">
+                <Link to={"/businesses/incomplete"}>View Incomplete Registrations</Link>
+              </Button>
+              <Button className="p-2">
                 <Link to={"/businesses/all"}>View all Businesses</Link>
               </Button>
               {/* <Button className="p-2">

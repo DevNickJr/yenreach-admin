@@ -42,6 +42,7 @@ import AddPlan from './pages/subscriptions/plans/add';
 import EditBlog from './pages/blogs/edit';
 import SMS from './pages/sms';
 import BulkSMS from './pages/sms/bulk';
+import IncompleteBusinesses from './pages/businesses/incomplete';
 
 
 function App() { 
@@ -61,6 +62,7 @@ function App() {
             <Route path="/businesses" element={<Businesses />} />
             <Route path="/businesses/add" element={<AddBusiness />} />
             <Route path="/businesses/all" element={<AllBusinesses />} />
+            <Route path="/businesses/incomplete" element={<IncompleteBusinesses />} />
             <Route path="/businesses/pending" element={<PendingBusinesses />} />
             <Route path="/businesses/:id" element={<Business />} />
             <Route path="/businesses/:id/edit" element={<EditBusiness />} />
