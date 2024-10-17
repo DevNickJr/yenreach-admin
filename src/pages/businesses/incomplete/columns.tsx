@@ -6,7 +6,6 @@ import { BiEdit } from "react-icons/bi";
 import { IBusiness } from "src/interfaces";
 import ColumnHead from "src/components/ColumnHead";
 import { Link } from "react-router-dom";
-import { BsEye } from "react-icons/bs";
 
 // agentRole: "Enumerator",
 // zoneId: string,
@@ -64,9 +63,9 @@ export const columnsMaker = ({
       const business = row.original
       return (
         <div className="flex items-center justify-center gap-2">
-            <Link to={`/businesses/${business.verify_string}`}>
+            {/* <Link to={`/businesses/${business.verify_string}`}>
                 <BsEye className="text-base cursor-pointer text-black/40"  />
-            </Link>
+            </Link> */}
             <Link to={`/businesses/${business.verify_string}/edit`}>
                 <BiEdit className="text-base cursor-pointer text-black/40" />
             </Link>
