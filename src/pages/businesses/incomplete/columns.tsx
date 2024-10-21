@@ -6,6 +6,7 @@ import { BiEdit } from "react-icons/bi";
 import { IBusiness } from "src/interfaces";
 import ColumnHead from "src/components/ColumnHead";
 import { Link } from "react-router-dom";
+import { BsEye } from "react-icons/bs";
 
 // agentRole: "Enumerator",
 // zoneId: string,
