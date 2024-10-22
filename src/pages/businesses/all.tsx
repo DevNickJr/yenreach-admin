@@ -60,7 +60,7 @@ const AllBusinesses = () => {
     //   fn()
     // }, [])
 
-    console.log({businesses})
+    // console.log({businesses})
   
     return (
         <Layout>

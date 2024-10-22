@@ -17,6 +17,11 @@ export const apiAdminGetBusinesses =  (query: IQuery) => {
     return BaseService.get("/fetch_all_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
+// export const apiAdminGetBusinesses =  (query: IQuery) => {
+//     // console.log({ query })
+//     return BaseService.get("/fetch_public_approved_businesses_api" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+// }
+
 export const apiAdminGetBilllboards =  (query: IQuery) => {
     // console.log({ query })
     return BaseService.get("/fetch_all_billboard_applications" + serviceSuffix + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
