@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuthContext } from "src/hooks/useAuthContext";
 
 // import Loader from "../Loader";
@@ -9,18 +9,18 @@ export default function AuthHOC(
 ) {
   //
   return function AuthComp(props: any) {
-    const navigate = useNavigate()
 
     const { isLoggedIn, user } = useAuthContext()
 
 
     if (!isLoggedIn) {
-      return navigate('/')
-      // return (
-      //   <div className='flex items-center justify-center w-screen h-screen'>
-      //    Loading
-      //   </div>
-      // );
+      // return 
+      return (
+        <div className='flex flex-col gap-4 items-center justify-center w-screen h-screen'>
+          You are not Logged In
+          <Link to='/' className="py-2.5 px-8 text-sm flex items-center gap-2 bg-primary rounded-md text-white">Login</Link>
+        </div>
+      );
     }
 
     return <ProtectedComponent user={user} {...props} />;
