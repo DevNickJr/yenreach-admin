@@ -3,17 +3,17 @@ import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getStorage } from "firebase/storage";
 
-const apiKey = ""
-const authDomain =  ""
-const projectId =  ""
-const storageBucket = ""
-const messagingSenderId =  ""
-const appId =  ""
-const measurementId =""
+const apiKey = process.env.NEXT_PUBLIC_API_KEY || ""
+const authDomain = process.env.NEXT_PUBLIC_Auth_Domain || ""
+const projectId = process.env.NEXT_PUBLIC_Project_Id || ""
+const storageBucket = process.env.NEXT_PUBLIC_Storage_Bucket || ""
+const messagingSenderId = process.env.NEXT_PUBLIC_Messaging_Sender_Id || ""
+const appId = process.env.NEXT_PUBLIC_App_Id || ""
+const measurementId = process.env.NEXT_PUBLIC_Measurement_Id || ""
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
- 
+
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
