@@ -15,16 +15,15 @@ interface IProps<T> {
     enabled?: boolean
 }
 
-const useFetch = <T,>({ api, param, key, onSuccess, requireAuth, select, enabled, ...rest }: IProps<T>) => {
+const useFetch = <T,>({ api, param={}, key, onSuccess, select, enabled, ...rest }: IProps<T>) => {
     const context = useAuthContext()
     const token = context?.token
-    
 
 
     const { data, error, isLoading, isSuccess, isFetching, remove, refetch, fetchStatus } = useQuery({
         queryKey: [...key],
         enabled: typeof enabled === 'undefined' ? true : !!enabled,
-        queryFn: () => requireAuth ? getData(api, param, token!) : getData(api, param),
+        queryFn: () => getData(api, {...param, token}),
         // queryFn: () => getData(api, param),
         // queryFn: () => requireAuth ? api(session?.user?.token.access, param) : api(param),
         select: select || ((d: any): T => d?.data),

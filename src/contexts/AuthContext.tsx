@@ -2,7 +2,7 @@ import { ReactNode, Reducer, createContext, useEffect, useReducer } from "react"
 import { toast } from "react-toastify";
 
 
-const user = sessionStorage.getItem("user") 
+const user = localStorage.getItem("user") 
 
 interface IUser {
     id: string | undefined
@@ -27,7 +27,7 @@ const initialState: IAuthContext = user ? JSON.parse(user) : {
 type IActionType = "LOGIN" | "LOGOUT"
 interface IAction {
     type: IActionType
-    payload: IUser | null
+    payload: { user: IUser, token: string } | null
 }
 interface IAuthContextProvider extends IAuthContext {
     dispatch: React.Dispatch<IAction>
@@ -55,18 +55,18 @@ const authReducer = (state: IAuthContext, action: IAction) => {
                     token: ''
                 }
             }
-            sessionStorage.setItem("user", JSON.stringify({
+            localStorage.setItem("user", JSON.stringify({
                 isLoggedIn: true,
-                user: action.payload, 
-                token: action.payload.id || null
+                user: action.payload.user, 
+                token: action.payload.token || null
             }))
             return {
                 isLoggedIn: true,
-                user: { ...action.payload }, 
-                token: action.payload.id || null
+                user: { ...action.payload?.user }, 
+                token: action.payload?.token || null
             }
         case "LOGOUT":
-            sessionStorage.setItem("user", '')
+            localStorage.setItem("user", '')
             return {
                 isLoggedIn: false,
                 user: null,
@@ -83,10 +83,9 @@ export const AuthContextProvider = ({children}: { children: ReactNode }) => {
 
     
     useEffect(() => {
-        const user: IAuthContext = JSON.parse(sessionStorage.getItem("user") || "{}")
-        console.log({user})
-        if (user?.isLoggedIn) {
-            dispatch({type: "LOGIN", payload: user?.user })
+        const user: IAuthContext = JSON.parse(localStorage.getItem("user") || "{}")
+        if (user?.isLoggedIn && user?.user) {
+            dispatch({type: "LOGIN", payload: { user: user?.user, token: user?.token || '' } })
         }
     }, [dispatch])
     

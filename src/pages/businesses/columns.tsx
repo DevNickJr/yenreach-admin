@@ -47,17 +47,17 @@ export const columnsMaker = ({
     header: ({ column }) => <ColumnHead title="Email" column={column} />,
   },
   {
-    accessorKey: "phonenumber",
+    accessorKey: "phoneNumber",
     header: ({ column }) => <ColumnHead title="Phone" column={column} />,
   },
   {
     accessorKey: "owner_name",
     header: ({ column }) => <ColumnHead title="Owner's Name" column={column} />,
   },
-  {
-    accessorKey: "state",
-    header: ({ column }) => <ColumnHead title="State" column={column} />,
-  },
+  // {
+  //   accessorKey: "state",
+  //   header: ({ column }) => <ColumnHead title="State" column={column} />,
+  // },
   {
     id: "actions",
     header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex items-center justify-center" />,
@@ -65,13 +65,13 @@ export const columnsMaker = ({
       const business = row.original
       return (
         <div className="flex items-center justify-center gap-2">
-          <Link to={`/businesses/${business.verify_string}`}>
+          <Link to={`/businesses/${business.id}`}>
               <BsEye className="text-xl cursor-pointer text-black/40"  />
           </Link>
-          <Link to={`/businesses/${business.verify_string}/edit`}>
+          <Link to={`/businesses/${business.id}/edit`}>
               <BiEdit className="text-xl cursor-pointer text-black/40" />
           </Link>
-          <MdDelete onClick={() => deleteFunc(business.verify_string || "")} className="text-xl cursor-pointer text-black/40" />
+          <MdDelete onClick={() => deleteFunc(business.id || "")} className="text-xl cursor-pointer text-black/40" />
         </div>
 
       )

@@ -1,6 +1,6 @@
 const appConfig = {
     // apiPrefix: "https://yenreach.cfcing.org/api",
-    apiPrefix: "https://yenreach.site/api",
+    apiPrefix: "http://localhost:3800/api/v1",
 }
 
 

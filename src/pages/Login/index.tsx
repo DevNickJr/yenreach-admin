@@ -22,7 +22,7 @@ const Login = () => {
 
 
   
-const loginMutation = useMutations<IUserLogin, any>(
+const loginMutation = useMutations<IUserLogin, unknown>(
   apiLogin,
   {
     onSuccess: (data) => {
@@ -88,7 +88,7 @@ const handleLoginMutation = async (e: FormEvent<HTMLFormElement>): Promise<void>
             {messageState && <p className='text-[#FF6B93] text-sm'>{messageState}</p>}
           </div> */}
         </form>
-        <p className='mt-8 text-sm font-semibold'>Don't have an account? <Link to='/signup' className='text-[#5441ff]'>Sign Up</Link></p>
+        <p className='mt-8 text-sm font-semibold'>Welcome to <Link to='#' className='text-[#5441ff]'>Yenreach</Link></p>
         </div>
       </div>
     </>

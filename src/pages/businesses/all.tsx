@@ -3,7 +3,7 @@ import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 // import { Link } from "react-router-dom"
 import { apiAdminDeleteBusiness, apiAdminGetBusinesses } from "src/services/CommonService"
-import { IBusiness } from "src/interfaces"
+import { IBusiness, IPaginatedResponse } from "src/interfaces"
 // import BusinessCard from "./fragments/BusinessCard"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
@@ -17,12 +17,12 @@ import DeleteItemModal from "src/assets"
 
 const AllBusinesses = () => {
     // const { user } = useAuthContext()
-    const [editBusiness, setEditBusiness] = useState('')
+    const [, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
 
-    console.log({editBusiness, deleteBusiness})
+    // console.log({editBusiness, deleteBusiness})
     
-    const { data: businesses, isLoading, refetch } = useFetch<IBusiness[]>({
+    const { data: businesses, isLoading, refetch } = useFetch<IPaginatedResponse<IBusiness[]>>({
       api: apiAdminGetBusinesses,
       key: ["businesses"],
       param: {
@@ -32,10 +32,10 @@ const AllBusinesses = () => {
     })
 
     
-    const deleteBussinessMutation = useMutations<string, any>(
+    const deleteBussinessMutation = useMutations<string, unknown>(
         apiAdminDeleteBusiness,
     {
-        onSuccess: (data: any) => {
+        onSuccess: (data: unknown) => {
             console.log("data", data)
             toast.success("Business Deleted Successfully")
             setDeleteBusiness("")
@@ -50,18 +50,6 @@ const AllBusinesses = () => {
       deleteFunc: (id: string) => setDeleteBusiness(id),
     })
 
-    // useEffect(() => {
-    //   const fn = async () => {
-    //     const response = await fetch("https://yenreach.site/api/jobs/fetch_all_job_api.php")
-    //     const value = await response.json()
-    //     setJobs(value)
-    //   }
-
-    //   fn()
-    // }, [])
-
-    // console.log({businesses})
-  
     return (
         <Layout>
             {
@@ -80,13 +68,13 @@ const AllBusinesses = () => {
             </div> */}
             <div className="mt-12">
             {
-                (businesses?.length && businesses?.length > 0) ?
+                (businesses?.data?.length && businesses?.data?.length > 0) ?
                       <DataTable 
                           title="Businesses"
                           columns={columns} 
-                          data={businesses || []} 
+                          data={businesses?.data || []} 
                           // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(businesses?.length || 0)/pagination.pageSize)}
+                          // pageCount={Math.floor(Number(businesses?.data?.length || 0)/pagination.pageSize)}
                           // pagination={pagination}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}

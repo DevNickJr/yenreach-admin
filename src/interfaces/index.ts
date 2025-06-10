@@ -4,6 +4,14 @@ export interface IResponse<T> {
     total?: number
 }
 
+export interface IPaginatedResponse<T> {
+    data: T
+    page: number
+    limit: number
+    total: number
+    totalPages: number
+}
+
 export interface IUserLogin {
     username: string
     password: string
@@ -150,7 +158,7 @@ export interface IUpdateStatus {
 }
 
 export interface IDisapproveBusiness {
-    verify_string: string
+    id: string
     remarks: string
 }
 
@@ -173,7 +181,7 @@ export interface IAdvert {
     created: string
     duration: string
     duration_type: string
-    errors: any[]
+    errors: unknown[]
     id: string
     last_updated: string
     title: string
@@ -246,42 +254,46 @@ export interface IActivateAdmin {
     password: string
 }
 
+export enum BusinessRegistrationState {
+    INCOMPLETE = 'incomplete',
+    PENDING = 'pending',
+    APPROVED = 'approved',
+    DECLINED = 'declined',
+}
+
 export interface IBusiness {
-    address: string
-    category: string
-    created: string
-    cv: string
-    description: string    
-    email: string
-    experience: string
-    facebook_link: string
-    facilities: string
-    id: string
-    instagram_link: string
-    last_updated: string
-    linkedin_link: string
-    modifiedby: string
-    name: string
-    owner_email: string
-    owner_name: string
-    phonenumber: string
-    reg_stage: string
-    state: string
-    state_id: string
-    subscription_string: string
-    user_string: string
-    verify_string: string
-    website: string
-    whatsapp: string
-    working_hours: string
-    youtube_link: string
-    cover_img?: string
-    profile_img?: string
-    month_started?: string
-    year_started?: string
-    town?: string
-    categories: string[]
-    lga?: string   
+    id: string;
+    verifyString: string;
+    name: string;
+    description: string;
+    userString: string;
+    userId: string;
+    subscriptionString: string;
+    address: string;
+    town: string;
+    lgaId: string;
+    stateId: string;
+    phoneNumber: string;
+    whatsapp: string;
+    email: string;
+    website: string;
+    facebookLink: string;
+    twitterLink: string;
+    instagramLink: string;
+    youtubeLink: string;
+    linkedinLink: string;
+    cv: string;
+    experience: string;
+    monthStarted: string;
+    yearStarted: string;
+    profileImg: string;
+    coverImg: string;
+    registrationStatus: BusinessRegistrationState;
+    isActive: boolean;
+    createdAt: string;
+    categories: ICategory[];
+    updatedAt: string;
+    deletedAt: string | null
 }
 
 export interface IAddAdvert {
@@ -333,8 +345,14 @@ export interface IBillboard {
     user: IUser
 }
 
-
 export interface IQuery {
     page: number
+    token: string
+    search: number
     num_per_page: number
+}
+
+export interface IMutateQuery {
+    id: string
+    token: string
 }

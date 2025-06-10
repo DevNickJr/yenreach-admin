@@ -1,7 +1,7 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
-import { apiAdminGetIncompleteBusinesses } from "src/services/CommonService"
-import { IBusiness } from "src/interfaces"
+import { apiAdminGetBusinesses } from "src/services/CommonService"
+import { IBusiness, IPaginatedResponse } from "src/interfaces"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
@@ -14,12 +14,13 @@ const IncompleteBusinesses = () => {
 
     console.log({editBusiness, deleteBusiness})
     
-    const { data: businesses, isLoading } = useFetch<IBusiness[]>({
-      api: apiAdminGetIncompleteBusinesses,
+    const { data: businesses, isLoading } = useFetch<IPaginatedResponse<IBusiness[]>>({
+      api: apiAdminGetBusinesses,
       key: ["Incomplete-businesses"],
       param: {
         page: 1,
-        num_per_page: 40
+        num_per_page: 40,
+        type: "incomplete",
       }
     })
 
@@ -38,7 +39,7 @@ const IncompleteBusinesses = () => {
     //   fn()
     // }, [])
 
-    console.log({businesses})
+    // console.log({businesses})
   
     return (
         <Layout>
@@ -46,13 +47,13 @@ const IncompleteBusinesses = () => {
           <h1 className="text-xl">Incomplete Businesses</h1>
             <div className="mt-12">
             {
-                (businesses?.length && businesses?.length > 0) ?
+                (businesses?.data?.length && businesses?.data?.length > 0) ?
                       <DataTable 
                           title="Businesses"
                           columns={columns} 
-                          data={businesses || []} 
+                          data={businesses?.data || []} 
                           // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(businesses?.length || 0)/pagination.pageSize)}
+                          // pageCount={Math.floor(Number(businesses?.data?.length || 0)/pagination.pageSize)}
                           // pagination={pagination}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}

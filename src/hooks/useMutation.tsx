@@ -5,15 +5,15 @@ import { useAuthContext } from 'src/hooks/useAuthContext'
 
 
 interface State {
-  onSuccess?: (data: any, variables?: any, context?: any) => void;
-  onError?: (error: any, variables?: any, context?: any) => void;
+  onSuccess?: (data: unknown, variables?: unknown, context?: unknown) => void;
+  onError?: (error: unknown, variables?: unknown, context?: unknown) => void;
   showSuccessMessage?: boolean;
   showErrorMessage?: boolean;
   requireAuth?: boolean;
   id?: string;
 }
 
-const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string, token: string, rest?: any }) => Promise<AxiosResponse>, { onSuccess, onError, showSuccessMessage=false, showErrorMessage=false, requireAuth, id, ...rest }: State) => {
+const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string, token: string }) => Promise<AxiosResponse>, { onSuccess, onError, showSuccessMessage=false, showErrorMessage=false, id, ...rest }: State) => {
     // const { data: session } = useSession()
     const context = useAuthContext()
     const token = context?.token || ""
@@ -23,7 +23,7 @@ const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string,
         mutationFn: async (data: T) => {
           
           // const response = requireAuth ? await api(data, session?.user?.token.access) : await api(data)
-          const response = requireAuth ? await api(data, { id: id!, token }) : await api(data, { id: id!, token })
+          const response =  await api(data, { id: id!, token })
           // console.log("response from usePost", response)
 
           if (response?.data?.status === "success") {

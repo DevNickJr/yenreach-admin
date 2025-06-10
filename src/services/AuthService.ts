@@ -1,12 +1,8 @@
-import { ILogin, IUserLogin, IUserRegister } from "@/interfaces"
+import { ILogin, IUserLogin } from "@/interfaces"
 import BaseService from "./BaseService"
 
-const servicePrefix = '/'
-
-export const apiRegister = (data: IUserRegister) => {
-    return BaseService.post(`${servicePrefix}/admin_login_api.php`, JSON.stringify(data))
-}
+const servicePrefix = '/auth'
 
 export const apiLogin =  (data: IUserLogin) => {
-    return BaseService.post<ILogin>(`/admin_login_api.php`, data)
+    return BaseService.post<ILogin>(`${servicePrefix}/admin-login`, data)
 }
