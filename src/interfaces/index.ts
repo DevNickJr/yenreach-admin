@@ -74,35 +74,34 @@ export interface IUserRegister {
 }
 
 export interface IUser extends IUserRegister {
-    _id?: string
-    balance: number
-    bonus: number
-    total_deposit: number
-    total_withdrawal: number
-    status: string
-    is_admin: boolean
-    total_investment?: number
-    total_earnings?: number
-    total_referral?: number
-    document?: {
-        front: string
-        back: string
-    },
-    reset?: {
-        code: string
-        time: number
-    },
-    referral_id?: string
-    symbol?: string  
-    user?: string
+    id: string;
+    verifyString: string;
+    name: string;
+    email: string;
+    profileImage: string | null;
+    referral: string | null;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
+    emailVerified: boolean;
+    cv: string | null;
+    dob: string | null;
+    phoneNumber: string | null;
+    gender: string | null;
+    timer: number
+}
+
+export interface IAuth {
+    token: string
 }
 
 export interface IDelete {
-    admin_string: string
+    token: string
     id: string
 }
 
 export interface IPaginatedQuery {
+    token: string
     page: number
     num_per_page: number
 }
@@ -111,23 +110,21 @@ export interface IBulkSMS {
 }
 
 export interface IJob {
-    company_name: string,
-    job_title: string,
-    job_type: string,
-    salary: string,
-    location: string,
-    job_overview: string,
-    job_benefit: string,
-    job_link: string,
-    job_tags: string,
-    admin_string: string,
-    expiry_date: string
-    admin_job?: string
-    business_string?: string
-    created_at?: string
-    id?: string
-    job_string?: string
-    status?: string
+    id?: string;
+    companyName: string;
+    businessId: string;
+    title: string;
+    type: string;
+    location: string;
+    salary: string;
+    description: string;
+    benefit: string;
+    applicationMethod: string;
+    overview: string,
+    applicationExpiry: string;
+    tags: string[]
+    status?: string;
+    createdAt?: string;
 }
 
 export interface IBlog {
@@ -294,6 +291,7 @@ export interface IBusiness {
     categories: ICategory[];
     updatedAt: string;
     deletedAt: string | null
+    user: IUser;
 }
 
 export interface IAddAdvert {

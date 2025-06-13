@@ -4,7 +4,7 @@ import JobCard from "./fragments/JobCard"
 import Layout from 'src/layout'
 import { Link } from "react-router-dom"
 import { apiDeleteJob, apiGetAllJobsAdmin } from "src/services/JobService"
-import { IDelete, IJob, IResponse } from "src/interfaces"
+import { IJob, IResponse } from "src/interfaces"
 import DeleteItemModal from "src/components/modals/DeleteItemModal"
 import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
@@ -21,18 +21,17 @@ const Jobs = () => {
 
   const { data, refetch, isLoading } = useFetch<IResponse<IJob[]>>({
     api: apiGetAllJobsAdmin,
-    key: ["jobs", String(page), String(num_per_page)],
+    key: ["jobs", page, num_per_page],
     param: { page, num_per_page },
     enabled: !!isLoggedIn,
-    select: (a: any) => a
   })
 
     // console.log({data, user})
 
-    const deleteItemMutation = useMutations<IDelete, any>(
+    const deleteItemMutation = useMutations<{ id: string }, unknown>(
       apiDeleteJob,
   {
-      onSuccess: (data: any) => {
+      onSuccess: (data: unknown) => {
           console.log("data", data)
           toast.success("Item Deleted Successfully.")
           refetch()
@@ -57,7 +56,7 @@ const Jobs = () => {
         <Layout>
           {(deleteItemMutation?.isLoading || isLoading) && <Loader />}
           <DeleteItemModal
-            deleteFunc={() => deleteItemMutation.mutate({ id: deleteItemId, admin_string: user?.verify_string || "" })}
+            deleteFunc={() => deleteItemMutation.mutate({ id: deleteItemId })}
             isOpen={deleteItemId} 
             setIsOpen={setDeleteItemId} 
             desc='Are you sure you want to delete this Job?'
@@ -78,12 +77,12 @@ const Jobs = () => {
               }
             </div>
             <Pagination
-                page={page} 
-                num_per_page={num_per_page} 
-                data={data?.data || []} 
-                handlePageChange={handlePageChange} 
-                total={data?.total || 0} 
-              />
+              page={page} 
+              num_per_page={num_per_page} 
+              data={data?.data || []} 
+              handlePageChange={handlePageChange} 
+              total={data?.total || 0} 
+            />
           </div>
         </Layout>
     )

@@ -1,93 +1,22 @@
-import { IDelete, IJob, IPaginatedQuery } from "src/interfaces"
+import { IDelete, IJob, IMutateQuery, IPaginatedQuery } from "src/interfaces"
 import BaseService from "./BaseService"
+import Auth from "src/utils/Auth"
 
 const servicePrefix = "/jobs"
-const serviceSuffix = ".php"
-
-const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
-
-console.log({token})
-
-
+const adminPrefix = "/jobs/admin"
 
 /* Get Jobs */
 export const apiGetAllJobsAdmin = (query: IPaginatedQuery) => {
-    return BaseService.get(`${servicePrefix}/fetch_all_job_api${serviceSuffix}?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+    return BaseService.get(`${servicePrefix}/all?page=${query?.num_per_page || 40}&limit=${query?.num_per_page || 40}`, Auth({ token: query.token }))
 }
 
-
 /* Add Job */
-export const apiAdminAddJob = (data: IJob) => {
-    return BaseService.post(`${servicePrefix}/add_job_admin_api${serviceSuffix}`, data)
+export const apiAdminAddJob = (data: IJob, { token }: IMutateQuery) => {
+    return BaseService.post(`${adminPrefix}`, data, Auth({ token }))
 }
-
-
-/* Add Job */
-// export const apiAddJob = (data: IJob) => {
-//     return  BaseService.post(`${servicePrefix}/add_job_api${serviceSuffix}`, data)
-// }
 
 
 /* Delete Job */
-export const apiDeleteJob = ({id, admin_string }: IDelete) => {
-    return BaseService.delete(`${servicePrefix}/delete_job_api${serviceSuffix}?job_string=${id}&admin_string=${admin_string}`)
+export const apiDeleteJob = (data: { id: string }, { id, token }: IDelete) => {
+    return BaseService.delete(`${servicePrefix}/${data.id || id}`, Auth({ token }))
 }
-
-
-
-
-// Previous Data -------------------------------------------------------------------------------
-// Previous Data -------------------------------------------------------------------------------
-// Previous Data -------------------------------------------------------------------------------
-// Previous Data -------------------------------------------------------------------------------
-
-
-/* Get user */
-// export const apiGetUser = () => {
-//     return ApiAdapter.fetchData({
-//         url: `${servicePrefix}/fetch_user_by_string_api${serviceSuffix}?string=${token}`,
-//         method: "get"    
-//     })
-// }
-
-
-// /* Add Job */
-// export const apiAddJob = (data) => {
-//     return ApiAdapter.fetchData({
-//         url: `${servicePrefix}/add_job_api${serviceSuffix}`,
-//         method: "post",
-//         data    
-//     })
-// }
-
-
-// /* Get Jobs */
-// export const apiGetAllJobs = (query) => {
-//     return ApiAdapter.fetchData({
-//         url: `${servicePrefix}/fetch_active_job_api${serviceSuffix}?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}&search=${query?.search || ''}`,
-//         method: "get",  
-//     })
-// }
-
-
-
-// /* Update Job */
-// export const apiUpdateJob = (data) => {
-//     return ApiAdapter.fetchData({
-//         url: `${servicePrefix}/update_job_api${serviceSuffix}`,
-//         method: "post",
-//         data
-//     })
-// }
-
-// /* Update Job status */
-// export const apiUpdateJobStatus = (data) => {
-//     return ApiAdapter.fetchData({
-//         url: `${servicePrefix}/update_job_status_api${serviceSuffix}`,
-//         method: "post",
-//         data
-//     })
-// }
-
-
-

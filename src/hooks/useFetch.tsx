@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { QueryKey, useQuery } from '@tanstack/react-query'
 import { AxiosResponse } from 'axios'
 import { useAuthContext } from 'src/hooks/useAuthContext'
 import getData from 'src/utils/getData'
@@ -8,7 +8,7 @@ import getData from 'src/utils/getData'
 interface IProps<T> {
     api: (a?: any, b?: any) =>  Promise<AxiosResponse<T, any>>
     param?: any
-    key: string[]
+    key: QueryKey
     onSuccess?: (a: any) => void
     requireAuth?: boolean
     select?: (a: any) => T,

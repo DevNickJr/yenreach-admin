@@ -50,7 +50,7 @@ export const columnsMaker = ({
     header: ({ column }) => <ColumnHead title="Phone" column={column} />,
   },
   {
-    accessorKey: "owner_name",
+    accessorKey: "user.name",
     header: ({ column }) => <ColumnHead title="Owner's Name" column={column} />,
   },
   {

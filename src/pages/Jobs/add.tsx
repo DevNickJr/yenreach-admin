@@ -9,20 +9,21 @@ import Layout from 'src/layout'
 import { apiAdminAddJob } from "src/services/JobService"
 
 const initialState: IJob = { 
-    company_name: "",
-    job_title: '',
-    job_type: '',
-    salary: '',
+    companyName: '',
+    businessId: '',
+    title: '',
+    type: '',
     location: '',
-    job_overview: "",
-    job_benefit: "",
-    job_link: "",
-    job_tags: "",
-    admin_string: "",
-    expiry_date: ""
+    salary: '',
+    description: '',
+    benefit: '',
+    applicationMethod: '',
+    overview: '',
+    applicationExpiry: '',
+    tags: [],
 }
 
-type Action = "reset" | "company_name" | "job_title" | "job_type" | "location" | "salary" | "job_link" | "job_benefit" | "job_overview" | "expiry_date"
+type Action = "reset" | "companyName" | "title" | "type" | "location" | "salary" | "applicationMethod" | "benefit" | "overview" | "applicationExpiry"
 
 interface IAction {
     type: Action,
@@ -41,10 +42,10 @@ const AddJob = () => {
     }
     }, initialState)
 
-    const addItemMutation = useMutations<IJob, any>(
+    const addJobMutation = useMutations<IJob, unknown>(
         apiAdminAddJob,
         {
-        onSuccess: (data: any) => {
+        onSuccess: (data: unknown) => {
             console.log("data", data)
             toast.success("Item Added Successfully.")
             setJob({ type: "reset", payload: "" })
@@ -59,7 +60,7 @@ const AddJob = () => {
 
     return (
         <Layout>
-          {addItemMutation?.isLoading && <Loader />}
+          {addJobMutation?.isLoading && <Loader />}
 
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Hi {user?.username}</h1>
@@ -67,15 +68,15 @@ const AddJob = () => {
             <div className="flex flex-col gap-4 mt-12">
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Comany Name</span>
-                    <input value={job.company_name} onChange={e => handleChange("company_name", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={job.companyName} onChange={e => handleChange("companyName", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Job Title</span>
-                    <input value={job.job_title} onChange={e => handleChange("job_title", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={job.title} onChange={e => handleChange("title", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Job Type</span>
-                    <input value={job.job_type} onChange={e => handleChange("job_type", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={job.type} onChange={e => handleChange("type", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Location</span>
@@ -87,21 +88,21 @@ const AddJob = () => {
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Link</span>
-                    <input value={job.job_link} onChange={e => handleChange("job_link", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={job.applicationMethod} onChange={e => handleChange("applicationMethod", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Expiry Date</span>
-                    <input value={job.expiry_date} onChange={e => handleChange("expiry_date", e.target.value)} type="date" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={job.applicationExpiry} onChange={e => handleChange("applicationExpiry", e.target.value)} type="date" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Job Description</span>
-                    <textarea value={job.job_overview} onChange={e => handleChange("job_overview", e.target.value)} rows={6} className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <textarea value={job.overview} onChange={e => handleChange("overview", e.target.value)} rows={6} className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Job Perks and benefits</span>
-                    <textarea value={job.job_benefit} onChange={e => handleChange("job_benefit", e.target.value)} rows={6} className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <textarea value={job.benefit} onChange={e => handleChange("benefit", e.target.value)} rows={6} className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
-                <Button onClick={() => addItemMutation.mutate({ ...job, admin_string: user?.verify_string || "" })} className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</Button>
+                <Button onClick={() => addJobMutation.mutate(job)} className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</Button>
             </div>
           </div>
         </Layout>

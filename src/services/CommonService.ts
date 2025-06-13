@@ -2,7 +2,7 @@ import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, I
 import BaseService from "./BaseService"
 import Auth from "src/utils/Auth"
 
-const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
+// const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
 const servicePrefix = "/admin/business"
 
 

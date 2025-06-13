@@ -13,7 +13,7 @@ const BusinessCard = ({ business }: { business: IBusiness}) => {
       </span>
       -
       <span className="text-sm">
-        {business?.owner_name}
+        {business?.user?.name}
       </span>
     </div>
   )

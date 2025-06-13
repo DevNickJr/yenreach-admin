@@ -54,7 +54,7 @@ const Billboard = () => {
             }
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Billboard Title - {billboard?.title}</h1>
-            <h1 className="text-xl">Owner's Name - {billboard?.user?.user}</h1>
+            <h1 className="text-xl">Owner's Name - {billboard?.user?.name}</h1>
             <div className="flex flex-col md:flex-row gap-6">
                 <img src={billboard?.filename?.replace("mediatoken", "media&token")} alt="" className="flex-1 w-full max-h-48" />
             </div>

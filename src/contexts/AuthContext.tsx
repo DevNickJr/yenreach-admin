@@ -6,7 +6,6 @@ const user = localStorage.getItem("user")
 
 interface IUser {
     id: string | undefined
-    verify_string?: string | undefined
     username?: string | undefined
     autho_level?: string | undefined
     user_type?: string | undefined
