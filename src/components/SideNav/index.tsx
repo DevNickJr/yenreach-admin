@@ -1,7 +1,4 @@
-import { AiOutlineBorderVerticle } from 'react-icons/ai';
-import { BiCategory } from 'react-icons/bi';
-import { MdLogout, MdBusiness, MdWorkOutline, MdPerson, MdOutlineAirplaneTicket, MdSubscriptions, MdMessage } from 'react-icons/md'
-import { TbBrandBlogger } from 'react-icons/tb'
+import { MdLogout, MdBusiness, MdWorkOutline, MdPerson } from 'react-icons/md'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuthContext } from 'src/hooks/useAuthContext';
 
@@ -35,7 +32,7 @@ const SideNav = () => {
                     <MdWorkOutline size={"1.3rem"} />
                     Jobs 
                 </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("billboards") && 'font-bold'}`} to={"/billboards"}>
+                {/* <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("billboards") && 'font-bold'}`} to={"/billboards"}>
                     <AiOutlineBorderVerticle size={"1.3rem"} />
                     Billboards
                 </Link>
@@ -58,7 +55,7 @@ const SideNav = () => {
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("sms") && 'font-bold'}`} to={"/sms"}>
                     <MdMessage size={"1.3rem"} />
                     SMS 
-                </Link>
+                </Link> */}
             </div>
         </div>
         <div className='flex flex-col gap-10 pb-2 underline'>
