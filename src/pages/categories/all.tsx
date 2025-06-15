@@ -12,6 +12,7 @@ import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
 import { Link } from "react-router-dom"
 import Button from "src/components/Button"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const AllCategories = () => {
@@ -19,22 +20,22 @@ const AllCategories = () => {
     const [editBusiness, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
 
-    console.log({editBusiness, deleteBusiness})
+    const { onPaginationChange, pagination, page } = usePagination()
     
     const { data: categories, isLoading, refetch } = useFetch<ICategory[]>({
       api: apiAdminGetCategories,
-      key: ["categories"],
+      key: ["categories", page, pagination.pageSize],
       param: {
-        page: 1,
-        num_per_page: 40
+        page: page,
+        num_per_page: pagination.pageSize,
       }
     })
 
     
-    const deleteBussinessMutation = useMutations<string, any>(
+    const deleteBussinessMutation = useMutations<string, unknown>(
       apiAdminDeleteCategory,
     {
-        onSuccess: (data: any) => {
+        onSuccess: (data: unknown) => {
             console.log("data", data)
             toast.success("Category Deleted Successfully")
             setDeleteBusiness("")
@@ -88,9 +89,9 @@ const AllCategories = () => {
                           title="Categories"
                           columns={columns} 
                           data={categories || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(adverts?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          onPaginationChange={onPaginationChange}
+                          pageCount={Math.floor(Number(categories?.length || 0)/pagination.pageSize)}
+                          pagination={pagination}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />

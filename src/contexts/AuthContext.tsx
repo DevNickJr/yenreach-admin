@@ -5,7 +5,7 @@ import { AdminAuthorizationLevel } from "src/interfaces";
 
 const user = localStorage.getItem("user") 
 
-interface IUser {
+export interface IUser {
     id: string | undefined
     username?: string | undefined
     authorizationLevel?: AdminAuthorizationLevel | undefined

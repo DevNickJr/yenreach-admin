@@ -178,8 +178,11 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-     
-      <Pagination tableLib={table} />
+      {
+        pageCount > 1 && (
+          <Pagination tableLib={table} />
+        )
+      }
     </div>
   )
 

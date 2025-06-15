@@ -8,6 +8,7 @@ import useMutations from 'src/hooks/useMutation';
 import { toast } from 'react-toastify'
 import { useAuthContext } from 'src/hooks/useAuthContext';
 import Button from 'src/components/Button';
+import { IUser } from 'src/contexts/AuthContext';
 // import Button from '@/components/ui/Button';
 // import Header from '@/components/Header';
 // import useAuth from '@/hooks/useAuth';
@@ -22,7 +23,7 @@ const Login = () => {
 
 
   
-const loginMutation = useMutations<IUserLogin, unknown>(
+const loginMutation = useMutations<IUserLogin, { user: IUser, token: string }>(
   apiLogin,
   {
     onSuccess: (data) => {

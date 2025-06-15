@@ -1,25 +1,27 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 import { apiAdminGetPendingBillboards } from "src/services/CommonService"
-import { IBillboard } from "src/interfaces"
+import { IBillboard, IPaginatedResponse } from "src/interfaces"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
 import NoResult from "src/components/NoResult"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const PendingBillboard = () => {
-    const [editBusiness, setEditBusiness] = useState('')
-    const [deleteBusiness, setDeleteBusiness] = useState('')
+    const [, setEditBusiness] = useState('')
+    const [, setDeleteBusiness] = useState('')
 
-    console.log({editBusiness, deleteBusiness})
+    // console.log({editBusiness, deleteBusiness})
+    const { onPaginationChange, pagination, page } = usePagination()
     
-    const { data: billboards, isLoading } = useFetch<IBillboard[]>({
+    const { data: billboards, isLoading } = useFetch<IPaginatedResponse<IBillboard[]>>({
       api: apiAdminGetPendingBillboards,
-      key: ["pending-billboards"],
+      key: ["pending-billboards", page, pagination.pageSize],
       param: {
-        page: 1,
-        num_per_page: 40
+        page: page,
+        num_per_page: pagination.pageSize,
       }
     })
 
@@ -38,22 +40,20 @@ const PendingBillboard = () => {
     //   fn()
     // }, [])
 
-    console.log({billboards})
-  
     return (
         <Layout>
           <div className="flex flex-col gap-1 p-6 mb-6">
           <h1 className="text-xl">Pending billboards</h1>
             <div className="mt-12">
             {
-                (billboards?.length && billboards?.length > 0) ?
+                (billboards?.data?.length && billboards?.data?.length > 0) ?
                       <DataTable 
                           title="billboards"
                           columns={columns} 
-                          data={billboards || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(billboards?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          data={billboards?.data || []} 
+                          onPaginationChange={onPaginationChange}
+                          pageCount={billboards?.totalPages}
+                          pagination={pagination}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />

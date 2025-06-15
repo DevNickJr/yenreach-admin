@@ -28,10 +28,10 @@ const Jobs = () => {
 
 
     
-    const deleteItemMutation = useMutations<IDelete, any>(
+    const deleteItemMutation = useMutations<IDelete, unknown>(
       apiDeleteBlog,
   {
-      onSuccess: (data: any) => {
+      onSuccess: (data: unknown) => {
           console.log("data", data)
           toast.success("Blog Deleted Successfully.")
           refetch()
@@ -53,7 +53,7 @@ const Jobs = () => {
           {(isLoading || deleteItemMutation?.isLoading) && <Loader />}
 
             <DeleteItemModal
-              deleteFunc={() => deleteItemMutation.mutate({ id: deleteItemId, admin_string: user?.verify_string || "" })}
+              deleteFunc={() => deleteItemMutation.mutate({ id: deleteItemId })}
               isOpen={deleteItemId} 
               setIsOpen={setDeleteItemId} 
               desc='Are you sure you want to delete this Blog?'

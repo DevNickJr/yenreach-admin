@@ -24,10 +24,10 @@ const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string,
           
           // const response = requireAuth ? await api(data, session?.user?.token.access) : await api(data)
           const response =  await api(data, { id: id!, token })
-          // console.log("response from usePost", response)
+          console.log("response from usePost", response)
 
-          if (response?.data?.status === "success") {
-            return response?.data?.data
+          if (response?.data?.status === "success" || response?.status === 201 || response?.status === 200) {
+            return response?.data?.data || response?.data
           } else {
             throw new Error(response?.data?.message)
           }

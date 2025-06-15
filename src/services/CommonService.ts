@@ -1,4 +1,4 @@
-import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IAddSubscription, IBulkSMS, IBusiness, IDisapproveBusiness, IMutateQuery, IPlan, IQuery } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IAddSubscription, IBulkSMS, IBusiness, IDisapproveBusiness, IMutateQuery, IPlan, IQuery, ISubPlan } from "src/interfaces"
 import BaseService from "./BaseService"
 import Auth from "src/utils/Auth"
 
@@ -32,6 +32,31 @@ export const apiAdminGetAdmins =  (query: IQuery) => {
 }
 
 
+/* Subscription */
+export const apiAdminGetSubscriptions = (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("/plans", Auth({ token: query.token}))
+}
+
+export const apiAdminGetSubPlans = (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("/subplans", Auth({ token: query.token}))
+}
+
+export const apiAddSubscription = (data: IAddSubscription, query: IMutateQuery) => {
+    return BaseService.post(`/plans`, data, Auth({ token: query.token}))
+}
+
+export const apiAdminGetSubscriptionSubPlans =  (id: string) => {
+    // console.log({ query })
+    return BaseService.get("/plans" + `/?string=${id}`)
+}
+
+export const apiAddSubPlan = (data: ISubPlan, query: IMutateQuery) => {
+    return BaseService.post(`/subplans`, data, Auth({ token: query.token}))
+}
+
+
 export const apiAdminDeleteAdmin = (data: { id: string }, query: IMutateQuery) => {
     // console.log({ query })
     return BaseService.delete(`/users/admin/${query.id}`, Auth({ token: query.token,}))
@@ -54,10 +79,6 @@ export const apiAdminGetAdverts =  () => {
     return BaseService.get("/fetch_all_advert_payment_types_api")
 }
 
-export const apiAdminGetSubscriptions =  () => {
-    // console.log({ query })
-    return BaseService.get("/fetch_all_business_subscriptions_api")
-}
 
 export const apiAdminGetSubCategories =  () => {
     // console.log({ query })
@@ -78,10 +99,7 @@ export const apiAdminGetSubCategoriesByCategoryString =  (id: string) => {
     // console.log({ query })
     return BaseService.get("/fetch_categories_by_section_string_api" + `/?section_string=${id}`)
 }
-export const apiAdminGetPlansBySubscriptionString =  (id: string) => {
-    // console.log({ query })
-    return BaseService.get("/fetch_subscription_plans_api" + `/?string=${id}`)
-}
+
 
 export const apiAdminGetCategoryString =  (id: string) => {
     // console.log({ query })
@@ -195,9 +213,7 @@ export const apiAddAdvert = (data: IAddAdvert) => {
     return BaseService.post(`/add_advert_payment_type_api`, data)
 }
 
-export const apiAddSubscription = (data: IAddSubscription) => {
-    return BaseService.post(`/add_business_subscription_api`, data)
-}
+
 export const apiAddCategory = (data: IAddCategory) => {
     return BaseService.post(`/add_section_api`, data)
 }
@@ -208,9 +224,7 @@ export const apiAddSubCategory = (data: IAddSubCategory) => {
     return BaseService.post(`/add_category_api`, data)
 }
 
-export const apiAddPlan = (data: IPlan) => {
-    return BaseService.post(`/add_payment_plan_api`, data)
-}
+
 
 export const apiActivateAdmin = (data: IActivateAdmin) => {
     return BaseService.post(`/activate_admin_account_api`, data)

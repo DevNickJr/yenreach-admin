@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { MdCheckBoxOutlineBlank, MdDelete } from "react-icons/md"
 // import { BiEdit } from "react-icons/bi";
 // import { UseMutationResult } from "@tanstack/react-query";
-import { ISubscription } from "src/interfaces";
+import { IPlan } from "src/interfaces";
 import ColumnHead from "src/components/ColumnHead";
 import { Link } from "react-router-dom";
 import { BsEye } from "react-icons/bs";
@@ -20,7 +20,7 @@ interface IProps {
 export const columnsMaker = ({ 
   // editFunc,
   deleteFunc
- }: IProps): ColumnDef<ISubscription>[] => [
+ }: IProps): ColumnDef<IPlan>[] => [
   {
     id: "select",
     cell: () => {
@@ -36,39 +36,43 @@ export const columnsMaker = ({
     header: ({ column }) => <ColumnHead title="ID" column={column} />,
   },
   {
-    accessorKey: "slider",
+    accessorKey: "name",
+    header: ({ column }) => <ColumnHead title="Name" column={column} />,
+  },
+  {
+    accessorKey: "sliderLimit",
     header: ({ column }) => <ColumnHead title="Slider" column={column} />,
   },
+  // {
+  //   accessorKey: "position",
+  //   header: ({ column }) => <ColumnHead title="Position" column={column} />,
+  // },
+  // {
+  //   accessorKey: "package",
+  //   header: ({ column }) => <ColumnHead title="Package" column={column} />,
+  // },
   {
-    accessorKey: "position",
-    header: ({ column }) => <ColumnHead title="Position" column={column} />,
-  },
-  {
-    accessorKey: "package",
-    header: ({ column }) => <ColumnHead title="Package" column={column} />,
-  },
-  {
-    accessorKey: "photos",
+    accessorKey: "photoLimit",
     header: ({ column }) => <ColumnHead title="Photos" column={column} />,
   },
   {
-    accessorKey: "branches",
+    accessorKey: "branchLimit",
     header: ({ column }) => <ColumnHead title="Branches" column={column} />,
   },
   {
-    accessorKey: "socialmedia",
+    accessorKey: "socialMediaLimit",
     header: ({ column }) => <ColumnHead title="Social Media" column={column} />,
   },
   {
-    accessorKey: "videos",
+    accessorKey: "videoLimit",
     header: ({ column }) => <ColumnHead title="Videos" column={column} />,
   },
   {
-    accessorKey: "created",
+    accessorKey: "createdAt",
     header: ({ column }) => <ColumnHead title="Created At" column={column} />,
   },
   {
-    accessorKey: "last_updated",
+    accessorKey: "updatedAt",
     header: ({ column }) => <ColumnHead title="Last Updated" column={column} />,
   },
   {
@@ -78,11 +82,11 @@ export const columnsMaker = ({
       const admin = row.original
       return (
         <div className="flex items-center justify-center gap-2">
-          <Link to={`/subscriptions/${admin.verify_string}/plans`}>
+          <Link to={`/subscriptions/${admin.id}/plans`}>
               <BsEye className="text-xl cursor-pointer text-black/40"  />
           </Link>
-        {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(admin?.verify_string || "")} /> */}
-          <MdDelete onClick={() => deleteFunc(admin.verify_string || "")} className="text-xl cursor-pointer text-black/40" />
+        {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(admin?.id || "")} /> */}
+          <MdDelete onClick={() => deleteFunc(admin.id || "")} className="text-xl cursor-pointer text-black/40" />
         </div>
       )
     },

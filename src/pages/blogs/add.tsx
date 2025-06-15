@@ -43,10 +43,10 @@ const AddBlog = () => {
     }
   }, initialState)
 
-  const addItemMutation = useMutations<IAddBlog, any>(
+  const addItemMutation = useMutations<IAddBlog, unknown>(
     apiAdminAddBlog,
     {
-    onSuccess: (data: any) => {
+    onSuccess: (data: unknown) => {
         console.log("data", data)
         toast.success("Blog Added Successfully.")
         setBlog({ type: "reset", payload: "" })
@@ -64,7 +64,7 @@ const AddBlog = () => {
     if (!img) {
       return toast.info("upload image")
     }
-    addItemMutation.mutate({ ...blog, file_path: img, post: ref?.current?.getContent() || "", admin_string: user?.verify_string || "" })
+    addItemMutation.mutate({ ...blog, file_path: img, post: ref?.current?.getContent() || "", admin_string: user?.id || "" })
   }
   
   return (

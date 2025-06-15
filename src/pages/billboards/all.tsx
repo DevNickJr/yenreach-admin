@@ -3,7 +3,7 @@ import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 // import { Link } from "react-router-dom"
 import { apiAdminDeleteBusiness, apiAdminGetBilllboards } from "src/services/CommonService"
-import { IBillboard } from "src/interfaces"
+import { IBillboard, IPaginatedResponse } from "src/interfaces"
 // import BusinessCard from "./fragments/BusinessCard"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
@@ -13,29 +13,29 @@ import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
 import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const AllBillboards = () => {
     // const { user } = useAuthContext()
-    const [editBusiness, setEditBusiness] = useState('')
+    const [, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
+    const { onPaginationChange, pagination, page } = usePagination()
 
     
-    const { data: billboards, isLoading, refetch } = useFetch<IBillboard[]>({
+    const { data: billboards, isLoading, refetch } = useFetch<IPaginatedResponse<IBillboard[]>>({
       api: apiAdminGetBilllboards,
-      key: ["billboards"],
+      key: ["billboards", page, pagination.pageSize],
       param: {
-        page: 1,
-        num_per_page: 40
+        page: page,
+        num_per_page: pagination.pageSize,
       }
     })
-    console.log({billboards, editBusiness})
-
     
-    const deleteBussinessMutation = useMutations<string, any>(
+    const deleteBussinessMutation = useMutations<string, unknown>(
         apiAdminDeleteBusiness,
     {
-        onSuccess: (data: any) => {
+        onSuccess: (data: unknown) => {
             console.log("data", data)
             toast.success("Business Deleted Successfully")
             setDeleteBusiness("")
@@ -80,14 +80,14 @@ const AllBillboards = () => {
             </div> */}
             <div className="mt-12">
             {
-                (billboards?.length && billboards?.length > 0) ?
+                (billboards?.data?.length && billboards?.data?.length > 0) ?
                       <DataTable 
                           title="billboards"
                           columns={columns} 
-                          data={billboards || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(billboards?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          data={billboards?.data || []} 
+                          onPaginationChange={onPaginationChange}
+                          pageCount={billboards?.totalPages}
+                          pagination={pagination}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />

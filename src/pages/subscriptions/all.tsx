@@ -3,7 +3,7 @@ import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 // import { Link } from "react-router-dom"
 import { apiAdminDeleteSubscription, apiAdminGetSubscriptions } from "src/services/CommonService"
-import { ISubscription } from "src/interfaces"
+import { IPlan } from "src/interfaces"
 // import BusinessCard from "./fragments/BusinessCard"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
@@ -13,29 +13,31 @@ import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
 import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const AllSubscription = () => {
     // const { user } = useAuthContext()
-    const [editBusiness, setEditBusiness] = useState('')
+    const [, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
+    const { onPaginationChange, pagination, page } = usePagination()
 
-    console.log({editBusiness, deleteBusiness})
     
-    const { data: subscriptions, isLoading, refetch } = useFetch<ISubscription[]>({
+    const { data: subscriptions, isLoading, refetch } = useFetch<IPlan[]>({
       api: apiAdminGetSubscriptions,
-      key: ["subscriptions"],
+      key: ["subscriptions", 'plans'],
+      select:  ((d) => d),
       param: {
-        page: 1,
-        num_per_page: 40
+        page: page,
+        num_per_page: pagination.pageSize
       }
     })
 
     
-    const deleteBussinessMutation = useMutations<string, any>(
+    const deleteBussinessMutation = useMutations<string, unknown>(
       apiAdminDeleteSubscription,
     {
-        onSuccess: (data: any) => {
+        onSuccess: (data: unknown) => {
             console.log("data", data)
             toast.success("Subscription Deleted Successfully")
             setDeleteBusiness("")
@@ -50,8 +52,6 @@ const AllSubscription = () => {
       deleteFunc: (id: string) => setDeleteBusiness(id),
     })
 
-    console.log({ subscriptions })
-
     // useEffect(() => {
     //   const fn = async () => {
     //     const response = await fetch("https://yenreach.site/api/jobs/fetch_all_job_api.php")
@@ -62,7 +62,7 @@ const AllSubscription = () => {
     //   fn()
     // }, [])
 
-    // console.log({subscriptions})
+    console.log({subscriptions})
   
     return (
         <Layout>
@@ -87,9 +87,9 @@ const AllSubscription = () => {
                           title="Subscriptions"
                           columns={columns} 
                           data={subscriptions || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(subscriptions?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          onPaginationChange={onPaginationChange}
+                          pagination={pagination}
+                          pageCount={1}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />

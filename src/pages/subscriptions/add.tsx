@@ -10,16 +10,16 @@ import Layout from 'src/layout'
 import { apiAddSubscription } from "src/services/CommonService"
 
 const initialState: IAddSubscription = { 
-    package: '',
+    name: '',
     description: '',
-    position: 0,
-    photos: 0,
-    videos: 0,
-    slider: 0,
-    socialmedia:0,
-    branches: 0,
+    photoLimit: 0,
+    videoLimit: 0,
+    sliderLimit: 0,
+    branchLimit: 0,
+    socialMediaLimit: 0,
+    order: 0,
 }
-type Action = "reset" | "package" | "description" | "position" | "photos" | "videos" | "slider" | "socialmedia" | "branches"
+type Action = "reset" | "name" | "description" | "order" | "photoLimit" | "videoLimit" | "sliderLimit" | "socialMediaLimit" | "branchLimit"
 
 interface IAction {
     type: Action
@@ -44,12 +44,12 @@ const AddSubscription = () => {
         setData({ type, payload })
     }
 
-    const addItemMutation = useMutations<IAddSubscription, any>(
+    const addItemMutation = useMutations<IAddSubscription, unknown>(
         apiAddSubscription,
         {
-        onSuccess: (data: any) => {
+        onSuccess: (data: unknown) => {
             console.log("data", data)
-            toast.success("Package Added Successfully.")
+            toast.success("Subcription Package Added Successfully.")
             handleChange("reset", '')
             navigate("/subscriptions/all")
         },
@@ -69,35 +69,35 @@ const AddSubscription = () => {
             <div className="flex flex-col gap-4 mt-12">
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Package Name</span>
-                    <input value={data.package} onChange={e => handleChange("package", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={data.name} onChange={e => handleChange("name", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Description</span>
                     <input value={data.description} onChange={e => handleChange("description", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
-                    <span className="text-xs">Position</span>
-                    <input value={data.position==0 ? '' : data.position} onChange={e => handleChange("position", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <span className="text-xs">order</span>
+                    <input value={data.order==0 ? '' : data.order} onChange={e => handleChange("order", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Photos</span>
-                    <input value={data.photos==0 ? '' : data.photos} onChange={e => handleChange("photos", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={data.photoLimit==0 ? '' : data.photoLimit} onChange={e => handleChange("photoLimit", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Videos</span>
-                    <input value={data.videos==0 ? '' : data.videos} onChange={e => handleChange("videos", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={data.videoLimit==0 ? '' : data.videoLimit} onChange={e => handleChange("videoLimit", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Slider</span>
-                    <input value={data.slider==0 ? '' : data.slider} onChange={e => handleChange("slider", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={data.sliderLimit==0 ? '' : data.sliderLimit} onChange={e => handleChange("sliderLimit", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Socialmedia</span>
-                    <input value={data.socialmedia==0 ? '' : data.socialmedia} onChange={e => handleChange("socialmedia", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={data.socialMediaLimit==0 ? '' : data.socialMediaLimit} onChange={e => handleChange("socialMediaLimit", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <div className="flex flex-col gap-1">
                     <span className="text-xs">Branches</span>
-                    <input value={data.branches==0 ? '' : data.branches} onChange={e => handleChange("branches", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
+                    <input value={data.branchLimit==0 ? '' : data.branchLimit} onChange={e => handleChange("branchLimit", e.target.value)} type="number" className="p-2 px-3 text-sm rounded-md outline-none" />
                 </div>
                 <Button onClick={() => addItemMutation.mutate(data)} className="p-2.5 px-5 text-sm text-white bg-green-400 rounded-md w-fit">Submit</Button>
             </div>

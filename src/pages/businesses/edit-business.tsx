@@ -133,7 +133,7 @@ const { data: businessCategories, refetch: refetchBusCategories } = useFetch<ICa
     
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        const data = { ...businessData, id: user?.verify_string, profileImg: profileImg || businessData?.profileImg, coverImg: coverImg || businessData?.coverImg }
+        const data = { ...businessData, id: user?.id, profileImg: profileImg || businessData?.profileImg, coverImg: coverImg || businessData?.coverImg }
 
         // console.log("data", data)
         editBusinessMutation.mutate(data)
@@ -253,7 +253,7 @@ const { data: businessCategories, refetch: refetchBusCategories } = useFetch<ICa
                                 {businessCategories?.map(category =>
                                     <div key={category.id} className='flex items-center gap-2 bg-black/10 px-4 py-2 font-medium whitespace-nowrap'>
                                         <span className=''>{category.category}</span>
-                                        <MdClose onClick={() => deleteBusinessCategoryMutation?.mutate(category.verify_string)} className='text-base cursor-pointer'  />
+                                        <MdClose onClick={() => deleteBusinessCategoryMutation?.mutate(category.id)} className='text-base cursor-pointer'  />
                                     </div>
                                 )}
                             </div>
