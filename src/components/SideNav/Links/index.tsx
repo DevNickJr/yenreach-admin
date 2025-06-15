@@ -2,6 +2,7 @@ import { MdLogout, MdOutlineClose } from 'react-icons/md'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useAuthContext } from 'src/hooks/useAuthContext'
+import { AdminAuthorizationLevel } from 'src/interfaces'
 
 
 
@@ -28,7 +29,7 @@ const Links = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: React.Dispat
       <nav className="flex flex-col justify-between h-full gap-16 p-4 pt-24 md:hidden">
         <ul className='flex flex-col font-medium text-dark-light gap-7 md:gap-4 lg:gap-7'>
           {
-            (user?.autho_level && Number(user?.autho_level) < 2) &&
+            (user?.authorizationLevel === AdminAuthorizationLevel.OWNER || user?.authorizationLevel === AdminAuthorizationLevel.MANAGER) &&
               <li><Link to="/admins" className={`pb-1.5 px-1 ${(pathname === '/admins') ? 'font-bold' : "font-medium"}`}>Admins</Link></li>
           }
           <li><Link to="/businesses" className={`pb-1.5 px-1 ${(pathname?.includes("businesses")) ? 'font-bold' : "font-medium"}`}>Businesses</Link></li>

@@ -25,8 +25,8 @@ export const apiAdminUpdateBlog = (data: IAddBlog) => {
 }
 
 /* Delete Blog */
-export const apiDeleteBlog = ({id, admin_string }: IDelete) => {
-    return BaseService.delete(`${servicePrefix}/delete_blog_post_api${serviceSuffix}?blog_string=${id}&admin_string=${admin_string}`)
+export const apiDeleteBlog = ({id, }: IDelete) => {
+    return BaseService.delete(`${servicePrefix}/delete_blog_post_api${serviceSuffix}?blog_string=${id}=$}`)
 }
 
 

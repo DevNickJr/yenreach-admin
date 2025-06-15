@@ -2,7 +2,8 @@
 
 import {
   ColumnDef,
-  ColumnFiltersState, PaginationState, // filter
+  ColumnFiltersState, 
+  // PaginationState, // filter
   flexRender,
   getCoreRowModel,
   getFilteredRowModel, getPaginationRowModel, // filter
@@ -28,19 +29,19 @@ interface DataTableProps<TData, TValue> {
   title: string
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  // onPaginationChange: React.Dispatch<React.SetStateAction<{
-  //   pageSize: number;
-  //   pageIndex: number;
-  // }>>
+  onPaginationChange: React.Dispatch<React.SetStateAction<{
+    pageSize: number;
+    pageIndex: number;
+  }>>
   // onSortingChange: React.Dispatch<React.SetStateAction<{
   //   id: string;
   //   desc: boolean;
   // }[]>>
-  // pageCount: number
-  // pagination: {
-  //   pageSize: number;
-  //   pageIndex: number;
-  // }
+  pageCount: number
+  pagination: {
+    pageSize: number;
+    pageIndex: number;
+  }
   // sorting: {
   //   id: string;
   //   desc: boolean;
@@ -51,9 +52,9 @@ export function DataTable<TData, TValue>({
   title,
   columns,
   data,
-  // onPaginationChange,
-  // pagination,
-  // pageCount,
+  onPaginationChange,
+  pagination,
+  pageCount,
   // sorting,
   // onSortingChange,
 }: DataTableProps<TData, TValue>) {
@@ -61,28 +62,19 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]) // filter
   const [globalFilter, setGlobalFilter] = React.useState('')
 
-  const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 20,
-  })
-
-  // const [globalFilters, setGlobalFilters] = React.useState("") // filter
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    // getPaginationRowModel: getPaginationRowModel(), // pagination
-    // onSortingChange: setSorting, // sort
     getSortedRowModel: getSortedRowModel(), // sort
     onColumnFiltersChange: setColumnFilters, // filter
     onGlobalFilterChange: setGlobalFilter, // GLOBAL FILTER
     getFilteredRowModel: getFilteredRowModel(), // filter
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
-    // manualPagination: true, // server pagination
-    // onPaginationChange, // server pagination
-    // pageCount,
-    manualSorting: true,
+    manualPagination: true, // server pagination
+    onPaginationChange, // server pagination
+    pageCount,
+    // manualSorting: true,
     // onSortingChange,
     state: {
       // sorting, // sort

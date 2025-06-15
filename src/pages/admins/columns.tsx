@@ -46,11 +46,11 @@ export const columnsMaker = ({
     header: ({ column }) => <ColumnHead title="Official Email" column={column} />,
   },
   {
-    accessorKey: "phone",
+    accessorKey: "phoneNumber",
     header: ({ column }) => <ColumnHead title="Phone" column={column} />,
   },
   {
-    accessorKey: "autho_level",
+    accessorKey: "authorizationLevel",
     header: ({ column }) => <ColumnHead title="Level" column={column} />,
   },
   {
@@ -60,11 +60,11 @@ export const columnsMaker = ({
       const admin = row.original
       return (
         <div className="flex items-center justify-center gap-2">
-          <Link to={`/admins/${admin.verify_string}`}>
+          <Link to={`/admins/${admin.id}`}>
               <BsEye className="text-xl cursor-pointer text-black/40"  />
           </Link>
-        {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(admin?.verify_string || "")} /> */}
-          <MdDelete onClick={() => deleteFunc(admin.verify_string || "")} className="text-xl cursor-pointer text-black/40" />
+        {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(admin?.id || "")} /> */}
+          <MdDelete onClick={() => deleteFunc(admin.id || "")} className="text-xl cursor-pointer text-black/40" />
         </div>
 
       )

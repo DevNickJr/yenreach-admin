@@ -2,9 +2,9 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 // import { Link } from "react-router-dom"
-import { apiAdminDeleteBusiness, apiAdminGetAdmins } from "src/services/CommonService"
-import { IAdmin } from "src/interfaces"
-// import BusinessCard from "./fragments/BusinessCard"
+import { apiAdminDeleteAdmin, apiAdminGetAdmins } from "src/services/CommonService"
+import { IAdmin, IPaginatedResponse } from "src/interfaces"
+// import AdminCard from "./fragments/AdminCard"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
@@ -13,41 +13,42 @@ import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
 import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const AllAdmins = () => {
     // const { user } = useAuthContext()
-    const [editBusiness, setEditBusiness] = useState('')
-    const [deleteBusiness, setDeleteBusiness] = useState('')
+    const [, setEditAdmin] = useState('')
+    const [deleteAdmin, setDeleteAdmin] = useState('')
 
-    console.log({editBusiness, deleteBusiness})
-    
-    const { data: businesses, isLoading, refetch } = useFetch<IAdmin[]>({
+    const { onPaginationChange, pagination, page } = usePagination()
+
+    const { data, isLoading, refetch } = useFetch<IPaginatedResponse<IAdmin[]>>({
       api: apiAdminGetAdmins,
-      key: ["admins"],
+      key: ["admins", page, pagination.pageSize],
       param: {
-        page: 1,
-        num_per_page: 40
+        page: page,
+        num_per_page: pagination.pageSize
       }
     })
 
-    
-    const deleteBussinessMutation = useMutations<string, any>(
-        apiAdminDeleteBusiness,
+    const deleteAdminMutation = useMutations<{ id: string }, unknown>(
+        apiAdminDeleteAdmin,
     {
-        onSuccess: (data: any) => {
+        onSuccess: (data: unknown) => {
             console.log("data", data)
-            toast.success("Business Deleted Successfully")
-            setDeleteBusiness("")
+            toast.success("Admin Deleted Successfully")
+            setDeleteAdmin("")
             refetch()
         },
         showErrorMessage: true,
         requireAuth: true,
+        id: deleteAdmin,
     })
 
     const columns = columnsMaker({
-      editFunc: (id: string) => setEditBusiness(id),
-      deleteFunc: (id: string) => setDeleteBusiness(id),
+      editFunc: (id: string) => setEditAdmin(id),
+      deleteFunc: (id: string) => setDeleteAdmin(id),
     })
 
     // useEffect(() => {
@@ -60,34 +61,32 @@ const AllAdmins = () => {
     //   fn()
     // }, [])
 
-    console.log({businesses})
-  
     return (
         <Layout>
             {
-                (deleteBussinessMutation?.isLoading) && <Loader />
+                (deleteAdminMutation?.isLoading) && <Loader />
             }
             <DeleteItemModal
-                deleteFunc={() => deleteBussinessMutation.mutate(deleteBusiness)}
-                isOpen={deleteBusiness} 
-                setIsOpen={setDeleteBusiness} 
-                desc='Are you sure you want to delete this Business?'
+                deleteFunc={() => deleteAdminMutation.mutate({ id: deleteAdmin })}
+                isOpen={deleteAdmin} 
+                setIsOpen={setDeleteAdmin} 
+                desc='Are you sure you want to delete this Admin?'
             />
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Admins</h1>
             {/* <div className="flex flex-end">
-              <Link to={"/businesses/add"}>Add Business</Link>
+              <Link to={"/admins/add"}>Add Admin</Link>
             </div> */}
             <div className="mt-12">
             {
-                (businesses?.length && businesses?.length > 0) ?
+                (data?.data?.length && data?.data?.length > 0) ?
                       <DataTable 
                           title="Admins"
                           columns={columns} 
-                          data={businesses || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(businesses?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          data={data?.data || []} 
+                          onPaginationChange={onPaginationChange}
+                          pageCount={data?.totalPages}
+                          pagination={pagination}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />
@@ -95,8 +94,8 @@ const AllAdmins = () => {
                       <NoResult
                           isLoading={isLoading}
                           image={""}
-                          desc='Add bussinesses to your dashboard and start to see businesses here.' 
-                          buttonText='Add Business'
+                          desc='Add Admins to your dashboard' 
+                          buttonText='Add Admin'
                           onClick={() => ""}
                       />
               }

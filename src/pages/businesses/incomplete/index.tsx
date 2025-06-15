@@ -6,20 +6,20 @@ import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
 import NoResult from "src/components/NoResult"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const IncompleteBusinesses = () => {
-    const [editBusiness, setEditBusiness] = useState('')
-    const [deleteBusiness, setDeleteBusiness] = useState('')
-
-    console.log({editBusiness, deleteBusiness})
+    const [, setEditBusiness] = useState('')
+    const [, setDeleteBusiness] = useState('')
+    const { onPaginationChange, pagination, page } = usePagination()
     
     const { data: businesses, isLoading } = useFetch<IPaginatedResponse<IBusiness[]>>({
       api: apiAdminGetBusinesses,
-      key: ["Incomplete-businesses"],
+      key: ["Incomplete-businesses", page, pagination.pageSize],
       param: {
-        page: 1,
-        num_per_page: 40,
+        page: page,
+        num_per_page: pagination.pageSize,
         type: "incomplete",
       }
     })
@@ -52,9 +52,9 @@ const IncompleteBusinesses = () => {
                           title="Businesses"
                           columns={columns} 
                           data={businesses?.data || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(businesses?.data?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          onPaginationChange={onPaginationChange}
+                          pagination={pagination}
+                          pageCount={businesses?.totalPages}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />

@@ -1,5 +1,6 @@
 import { ReactNode, Reducer, createContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
+import { AdminAuthorizationLevel } from "src/interfaces";
 
 
 const user = localStorage.getItem("user") 
@@ -7,8 +8,10 @@ const user = localStorage.getItem("user")
 interface IUser {
     id: string | undefined
     username?: string | undefined
-    autho_level?: string | undefined
-    user_type?: string | undefined
+    authorizationLevel?: AdminAuthorizationLevel | undefined
+    phoneNumber?: string | undefined
+    personal_email?: string | undefined
+    official_email?: string | undefined
 }
 interface IAuthContext {
     isLoggedIn: boolean

@@ -2,7 +2,7 @@ import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, I
 import BaseService from "./BaseService"
 import Auth from "src/utils/Auth"
 
-// const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.verify_string
+// const token = JSON.parse(sessionStorage.getItem("user") || `{}`)?.id
 const servicePrefix = "/admin/business"
 
 
@@ -21,10 +21,28 @@ export const apiAdminGetBusinesses =  (query: IQuery & { type: string }) => {
     return BaseService.get(`${servicePrefix}?page=${query?.page || '1'}&limit=${query?.num_per_page || '40'}&search=${query.search || ''}&type=${query.type || ''}`, Auth({ token: query.token}))
 }
 
+/* Add Admin */
+export const apiAddAdmin = (data: IAddAdmin, query: IMutateQuery) => {
+    return BaseService.post(`/auth/admin-register`, data, Auth({ token: query.token}))
+}
+
+export const apiAdminGetAdmins =  (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("/users/admin" + `?page=${query?.page || 1}&limit=${query?.num_per_page || 20}`, Auth({ token: query.token}))
+}
+
+
+export const apiAdminDeleteAdmin = (data: { id: string }, query: IMutateQuery) => {
+    // console.log({ query })
+    return BaseService.delete(`/users/admin/${query.id}`, Auth({ token: query.token,}))
+}
+
+
 /* Add Job */
 export const apiSendBulkSMS = (data: IBulkSMS) => {
     return BaseService.post(`/send_bulk_sms_api`, data)
 }
+
 
 export const apiAdminGetBilllboards =  (query: IQuery) => {
     // console.log({ query })
@@ -73,11 +91,6 @@ export const apiAdminGetCategoryString =  (id: string) => {
 export const apiAdminGetSubscriptionByString =  (id: string) => {
     // console.log({ query })
     return BaseService.get("/fetch_business_subscription_by_string_api" + `/?string=${id}`)
-}
-
-export const apiAdminGetAdmins =  (query: IQuery) => {
-    // console.log({ query })
-    return BaseService.get("/fetch_admins_api" + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
 }
 
 export const apiAdminGetPendingBusinesses =  (query: IQuery) => {
@@ -142,44 +155,40 @@ export const apiAdminDispproveBusinesses =  (data: IDisapproveBusiness) => {
     return BaseService.post("disapprove_business_api", data)
 }
 
-export const apiAdminDeleteBusiness =  (id: string) => {
-    // console.log({ query })
-    return BaseService.post("delete_business_api" + `/?string=${id}`, { verify_string: id })
-}
 export const apiAdminDeleteAdvert =  (id: string) => {
     // console.log({ query })
-    return BaseService.post("delete_advert_payment_type_api" + `/?string=${id}`, { verify_string: id })
+    return BaseService.post("delete_advert_payment_type_api" + `/?string=${id}`)
 }
 
 export const apiAdminDeleteSubscription =  (id: string) => {
     // console.log({ query })
-    return BaseService.post("delete_business_subscription_api" + `/?string=${id}`, { verify_string: id })
+    return BaseService.post("delete_business_subscription_api" + `/?string=${id}`)
 }
 
 // section == category
 // category == subcategory
 export const apiAdminDeleteCategory =  (id: string) => {
     // console.log({ query })
-    return BaseService.post("delete_section_api" + `/?string=${id}`, { verify_string: id })
+    return BaseService.post("delete_section_api" + `/?string=${id}`)
 }
 
 export const apiAdminDeleteSubCategory =  (id: string) => {
     // console.log({ query })
-    return BaseService.post("delete_category_api" + `/?string=${id}`, { verify_string: id })
+    return BaseService.post("delete_category_api" + `/?string=${id}`)
 }
 
 export const apiAdminDeletePaymentPlan =  (id: string) => {
     // console.log({ query })
-    return BaseService.post("delete_payment_plan_api" + `/?string=${id}`, { verify_string: id })
+    return BaseService.post("delete_payment_plan_api" + `/?string=${id}`)
 }
 
 export const apiAdminGetBlog =  (id: string) => {
     return BaseService.get(`/fetch_one_blog_post_api.php?string=${id}`)
 }
 
-/* Add Admin */
-export const apiAddAdmin = (data: IAddAdmin) => {
-    return BaseService.post(`/add_admin_api`, data)
+export const apiAdminDeleteBusiness =  (id: string) => {
+    // console.log({ query })
+    return BaseService.delete("users/admin/${id}" + `/?string=${id}`)
 }
 
 export const apiAddAdvert = (data: IAddAdvert) => {

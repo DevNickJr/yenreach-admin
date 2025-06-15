@@ -160,17 +160,14 @@ export interface IDisapproveBusiness {
 }
 
 export interface IAdmin {
-    activation: string
-    autho_level: string
-    created: string
     id: string
-    last_updated: string
+    username: string
     name: string
     official_email: string
     personal_email: string
-    phone: string
-    username: string
-    verify_string: string
+    phoneNumber: string
+    authorizationLevel: AdminAuthorizationLevel
+    createdAt: string
 }
 
 export interface IAdvert {
@@ -238,12 +235,13 @@ export interface ISubCategory {
 }
 
 export interface IAddAdmin {
+    password: string;
+    phoneNumber: string;
     name: string
     username: string
     personal_email: string
     official_email: string
-    phone: string
-    autho_level: number
+    authorizationLevel: AdminAuthorizationLevel
 }
 
 export interface IActivateAdmin {
@@ -354,3 +352,10 @@ export interface IMutateQuery {
     id: string
     token: string
 }
+
+export enum AdminAuthorizationLevel {
+    STAFF = 'staff',
+    MANAGER = 'manager',
+    OWNER = 'owner',
+  }
+  

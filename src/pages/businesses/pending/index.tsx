@@ -6,20 +6,22 @@ import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
 import NoResult from "src/components/NoResult"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const PendingBusinesses = () => {
-    const [editBusiness, setEditBusiness] = useState('')
-    const [deleteBusiness, setDeleteBusiness] = useState('')
+    const [, setEditBusiness] = useState('')
+    const [, setDeleteBusiness] = useState('')
 
-    console.log({editBusiness, deleteBusiness})
+    const { onPaginationChange, pagination, page } = usePagination()
+
     
     const { data: businesses, isLoading } = useFetch<IPaginatedResponse<IBusiness[]>>({
       api: apiAdminGetBusinesses,
-      key: ["pending-businesses"],
+      key: ["pending-businesses", page, pagination.pageSize],
       param: {
-        page: 1,
-        num_per_page: 40,
+        page: page,
+        num_per_page: pagination.pageSize,
         type: "pending",
       }
     })
@@ -52,9 +54,9 @@ const PendingBusinesses = () => {
                           title="Businesses"
                           columns={columns} 
                           data={businesses?.data || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(businesses?.data?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          onPaginationChange={onPaginationChange}
+                          pagination={pagination}
+                          pageCount={businesses?.totalPages}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />

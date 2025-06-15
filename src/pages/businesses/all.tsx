@@ -13,21 +13,23 @@ import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
 import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
+import { usePagination } from "src/hooks/usePagination"
 
 
 const AllBusinesses = () => {
     // const { user } = useAuthContext()
     const [, setEditBusiness] = useState('')
     const [deleteBusiness, setDeleteBusiness] = useState('')
+    const { onPaginationChange, pagination, page } = usePagination()
 
     // console.log({editBusiness, deleteBusiness})
     
     const { data: businesses, isLoading, refetch } = useFetch<IPaginatedResponse<IBusiness[]>>({
       api: apiAdminGetBusinesses,
-      key: ["businesses"],
+      key: ["businesses", page, pagination.pageSize],
       param: {
-        page: 1,
-        num_per_page: 40
+        page: page,
+        num_per_page: pagination.pageSize
       }
     })
 
@@ -73,9 +75,9 @@ const AllBusinesses = () => {
                           title="Businesses"
                           columns={columns} 
                           data={businesses?.data || []} 
-                          // onPaginationChange={onPaginationChange}
-                          // pageCount={Math.floor(Number(businesses?.data?.length || 0)/pagination.pageSize)}
-                          // pagination={pagination}
+                          onPaginationChange={onPaginationChange}
+                          pagination={pagination}
+                          pageCount={businesses?.totalPages}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />

@@ -4,8 +4,8 @@ import { AxiosResponse } from "axios";
 import { useAuthContext } from 'src/hooks/useAuthContext'
 
 
-interface State {
-  onSuccess?: (data: unknown, variables?: unknown, context?: unknown) => void;
+interface State<T, K> {
+  onSuccess?: (data: K, variables?: T, context?: unknown) => void;
   onError?: (error: unknown, variables?: unknown, context?: unknown) => void;
   showSuccessMessage?: boolean;
   showErrorMessage?: boolean;
@@ -13,7 +13,7 @@ interface State {
   id?: string;
 }
 
-const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string, token: string }) => Promise<AxiosResponse>, { onSuccess, onError, showSuccessMessage=false, showErrorMessage=false, id, ...rest }: State) => {
+const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string, token: string }) => Promise<AxiosResponse>, { onSuccess, onError, showSuccessMessage=false, showErrorMessage=false, id, ...rest }: State<T,K>) => {
     // const { data: session } = useSession()
     const context = useAuthContext()
     const token = context?.token || ""
@@ -52,9 +52,19 @@ const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string,
         onError: (error: any, variables, context) => {
             console.log("error", error)
             if (showErrorMessage) {
-              // toast.error(error?.response?.data?.message || "An Error Occurred!");
-              toast.error(error?.message || "An Error Occurred!");
-
+              const message = error?.response?.data?.message || error?.response?.data?.data?.message ||  error?.response?.data?.detail || error?.message || error?.response?.data?.message?.[0] || "An Error Occurred!"
+              if (typeof message === "string") {
+                if (message === "Token Expired") {
+                  toast.error("Token Expired. Log back in to access your account")
+                } else if (message === "Validation failed") {
+                  toast.error(error?.response?.data?.errors?.[0]?.message || "An Error Occurred!");
+                }
+                else {
+                  toast.error(message || "An Error Occurred!");
+                }
+              } else {
+                  toast.error(error?.response?.data?.message[0] || "An Error Occurred!");
+              }
             }
             if (onError) {
                 onError(error, variables, context)

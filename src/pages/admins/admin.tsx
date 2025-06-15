@@ -44,7 +44,7 @@ const Admin = () => {
     // })
 
 
-    console.log({admin})
+    // console.log({admin})
   
     return (
         <Layout>
@@ -59,11 +59,11 @@ const Admin = () => {
             }
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl">Name - {admin?.name}</h1>
-            <h1 className="text-xl">Level - {admin?.autho_level}</h1>
+            <h1 className="text-xl">Level - {admin?.authorizationLevel}</h1>
             <p className="text-md">Personal Email - {admin?.personal_email}</p>
             <p className="text-md">Official Email - {admin?.official_email}</p>
             <p className="text-md">Username - {admin?.username}</p>
-            <p className="text-md">Phone - {admin?.phone}</p>
+            <p className="text-md">Phone - {admin?.phoneNumber}</p>
             {/* <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
               <Button onClick={() => approveBussinessMutation?.mutate(admin?.verify_string || "")} className="p-3 h-fit px-6">
                 Approve

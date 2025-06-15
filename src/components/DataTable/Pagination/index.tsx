@@ -12,7 +12,7 @@ export function Pagination<TData>({ tableLib }: { tableLib: ITable<TData> }){
           <div className="flex items-center gap-1.5">
             <select
               className="text-sm bg-gray-100 border rounded outline-none cursor-pointer focus:border-black/60"
-              value={tableLib.getState().pagination.pageSize}
+              value={tableLib.getState()?.pagination.pageSize}
               onChange={e => {
                 tableLib.setPageSize(Number(e.target.value))
               }}
@@ -26,14 +26,14 @@ export function Pagination<TData>({ tableLib }: { tableLib: ITable<TData> }){
             <span className="text-black/40">items per page</span>
           </div>
           <div className="">
-            {/* <span>{tableLib.getState().pagination.pageSize} </span>  */}
+            {/* <span>{tableLib.getState()?.pagination.pageSize} </span>  */}
             <span>total of {tableLib.getPrePaginationRowModel().rows.length} item(s)</span>
           </div>
         </div>
         <div className="flex flex-col items-center gap-3 md:flex-row">
           <span className="">
             <span>
-              {tableLib.getState().pagination.pageIndex + 1} of{' '}
+              {tableLib.getState()?.pagination.pageIndex + 1} of{' '}
               {tableLib.getPageCount()}
             </span>
             <span> pages</span>
@@ -42,7 +42,7 @@ export function Pagination<TData>({ tableLib }: { tableLib: ITable<TData> }){
             Go to page:
             <input
               type="number"
-              defaultValue={tableLib.getState().pagination.pageIndex + 1}
+              defaultValue={tableLib.getState()?.pagination.pageIndex + 1}
               onChange={e => {
                 const page = e.target.value ? Number(e.target.value) - 1 : 0
                 tableLib.setPageIndex(page)
@@ -98,7 +98,7 @@ export function Pagination<TData>({ tableLib }: { tableLib: ITable<TData> }){
           ◀️
         </button>
         <span>{`page ${
-          tableLib.getState().pagination.pageIndex + 1
+          tableLib.getState()?.pagination.pageIndex + 1
         } of ${tableLib.getPageCount()}`}</span>
         <button disabled={!tableLib.getCanNextPage()} onClick={tableLib.nextPage}>
           ▶️
@@ -111,7 +111,7 @@ export function Pagination<TData>({ tableLib }: { tableLib: ITable<TData> }){
         </button>
         <span>Show: </span>
         <select
-          value={tableLib.getState().pagination.pageSize}
+          value={tableLib.getState()?.pagination.pageSize}
           onChange={(e) => tableLib.setPageSize(parseInt(e.target.value, 10))}
         >
           {[2, 5, 10, 20].map((size) => (

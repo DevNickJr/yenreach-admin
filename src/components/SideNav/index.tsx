@@ -1,6 +1,7 @@
-import { MdLogout, MdBusiness, MdWorkOutline, MdPerson } from 'react-icons/md'
+import { MdLogout, MdBusiness, MdWorkOutline, MdPerson, MdSubscriptions } from 'react-icons/md'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuthContext } from 'src/hooks/useAuthContext';
+import { AdminAuthorizationLevel } from 'src/interfaces';
 
 const SideNav = () => {
     const { pathname } = useLocation();
@@ -18,7 +19,7 @@ const SideNav = () => {
             </div>
             <div className='flex flex-col gap-2 pt-12 pb-2'>
                 {
-                    (user?.autho_level && Number(user?.autho_level) < 2) &&
+                    (user?.authorizationLevel === AdminAuthorizationLevel.OWNER || user?.authorizationLevel === AdminAuthorizationLevel.MANAGER) &&
                         <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${(pathname === '/admins') && 'font-bold'}`} to="/admins">
                             <MdPerson size={"1.3rem"} />
                             Admins
@@ -39,20 +40,20 @@ const SideNav = () => {
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("blogs") && 'font-bold'}`} to={"/blogs"}>
                     <TbBrandBlogger size={"1.3rem"} />
                     Blogs 
-                </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("adverts") && 'font-bold'}`} to={"/adverts"}>
+                </Link> */}
+                {/* <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("adverts") && 'font-bold'}`} to={"/adverts"}>
                     <MdOutlineAirplaneTicket size={"1.3rem"} />
                     AdPayType 
                 </Link>
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("categories") && 'font-bold'}`} to={"/categories"}>
                     <BiCategory size={"1.3rem"} />
                     Categories 
-                </Link>
+                </Link> */}
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("subscriptions") && 'font-bold'}`} to={"/subscriptions"}>
                     <MdSubscriptions size={"1.3rem"} />
                     Subscriptions 
                 </Link>
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("sms") && 'font-bold'}`} to={"/sms"}>
+                {/* <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("sms") && 'font-bold'}`} to={"/sms"}>
                     <MdMessage size={"1.3rem"} />
                     SMS 
                 </Link> */}

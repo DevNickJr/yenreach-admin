@@ -3,11 +3,11 @@ import useTimeOutMessage from './useTimeOutMessage'
 
 
 function useCopyToClipboard() {
-  const [copiedText, setCopiedText] = useState(null)
+  const [copiedText, setCopiedText] = useState<string | null>(null)
   const { messageState: message, setMessageState: setMessage } = useTimeOutMessage()
 
 
-  const copy = async text => {
+  const copy = async (text: string) => {
     if (!navigator?.clipboard) {
       console.warn('Clipboard not supported')
       return false
@@ -28,7 +28,7 @@ function useCopyToClipboard() {
     }
   }
 
-  return [copiedText, copy, message]
+  return {copiedText, copy, message}
 }
 
 export default useCopyToClipboard;
