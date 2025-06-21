@@ -49,10 +49,10 @@ const SideNav = () => {
                     <BiCategory size={"1.3rem"} />
                     Categories 
                 </Link> */}
-                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("subscriptions") && 'font-bold'}`} to={"/subscriptions"}>
+                {/* <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("subscriptions") && 'font-bold'}`} to={"/subscriptions"}>
                     <MdSubscriptions size={"1.3rem"} />
                     Subscriptions 
-                </Link>
+                </Link> */}
                 {/* <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("sms") && 'font-bold'}`} to={"/sms"}>
                     <MdMessage size={"1.3rem"} />
                     SMS 
