@@ -128,24 +128,31 @@ export interface IJob {
 }
 
 export interface IBlog {
-    title: string
-    author: string
-    blog_string: string
-    created_at: string | null
-    file_path: string
     id: string
-    post: string
-    snippet: string
+    authorId: string;
+    title: string;
+    preview: string;
+    content: string;
+    mediaUrl?: string;
+    isFeatured?: boolean;
+    author: IUser
+
+    // author: string
+    // blog_string: string
+    // created_at: string | null
+    // file_path: string
+    // id: string
+    // post: string
+    // snippet: string
 }
 
 export interface IAddBlog {
-    title: string
-    author: string
-    post: string
-    snippet: string
-    admin_string: string
-    file_path: string
-    blog_string?: string
+    authorId: string;
+    title: string;
+    preview: string;
+    content: string;
+    mediaUrl?: string;
+    isFeatured?: boolean;
 }
 
 

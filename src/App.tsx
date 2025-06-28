@@ -26,9 +26,9 @@ import AllSubscription from './pages/subscriptions/all';
 import Subscription from './pages/subscriptions/subscription';
 // import AllSubscriptionPlans from './pages/subscriptions/subscription-plans';
 import AddPlan from './pages/subscriptions/plans/add';
-// import Blogs from './pages/blogs';
-// import AddBlog from './pages/blogs/add';
-// import EditBlog from './pages/blogs/edit';
+import Blogs from './pages/blogs';
+import AddBlog from './pages/blogs/add';
+import EditBlog from './pages/blogs/edit';
 // import Adverts from './pages/user-ads';
 // import AddAdvert from './pages/user-ads/add';
 // import AllAdverts from './pages/user-ads/all';
@@ -108,9 +108,9 @@ function App() {
 
 
             {/* blogs */}
-            {/* <Route path="/blogs" element={<Blogs />} />
+            <Route path="/blogs" element={<Blogs />} />
             <Route path="/blogs/add" element={<AddBlog />} />
-            <Route path="/blogs/:id/edit" element={<EditBlog />} /> */}
+            <Route path="/blogs/:id/edit" element={<EditBlog />} />
 
             
             {/* SMS */}

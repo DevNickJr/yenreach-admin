@@ -13,14 +13,14 @@ import { Editor } from "tinymce"
 
 const initialState: IAddBlog = { 
     title: "",
-    author: "",
-    post: "",
-    snippet: "",
-    admin_string : "",
-    file_path: "",
-}
+    authorId: "",
+    preview: "",
+    content: "",
+    mediaUrl: "",
+    isFeatured: false,
+  }
 
-type Action = "reset" | "title" | "author" | "post" | "snippet" | "admin_string" | "file_path"
+type Action = "reset" | "title" | "authorId" | "preview" | "content" | "mediaUrl" | "isFeatured"
 
 interface IAction {
     type: Action,
@@ -64,7 +64,11 @@ const AddBlog = () => {
     if (!img) {
       return toast.info("upload image")
     }
-    addItemMutation.mutate({ ...blog, file_path: img, post: ref?.current?.getContent() || "", admin_string: user?.id || "" })
+    addItemMutation.mutate({ 
+      ...blog, mediaUrl: img,
+      content: ref?.current?.getContent() || "",
+      authorId: user?.id || ""
+    })
   }
   
   return (
@@ -79,17 +83,17 @@ const AddBlog = () => {
                 <span className="text-xs">Title</span>
                 <input value={blog.title} onChange={e => handleChange("title", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
             </div>
-            <div className="flex flex-col gap-1">
+            {/* <div className="flex flex-col gap-1">
                 <span className="text-xs">Author</span>
-                <input value={blog.author} onChange={e => handleChange("author", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-            </div>
+                <input value={blog.authorId} onChange={e => handleChange("author", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+            </div> */}
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Image</span>
                 <input onChange={(e) => uploadImg(e.target.files![0])}  type="file" className="p-2 px-3 text-sm rounded-md outline-none" />
             </div>
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Snippet</span>
-                <input maxLength={120} placeholder="(max 120 characters)" value={blog.snippet} onChange={e => handleChange("snippet", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                <input maxLength={120} placeholder="(max 120 characters)" value={blog.preview} onChange={e => handleChange("preview", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
             </div>
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Content</span>
