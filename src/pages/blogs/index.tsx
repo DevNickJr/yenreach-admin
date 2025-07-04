@@ -2,7 +2,7 @@ import { useAuthContext } from "src/hooks/useAuthContext"
 import useFetch from "src/hooks/useFetch"
 import BlogCard from "./fragments/BlogCard"
 import Layout from 'src/layout'
-import { IBlog, IDelete } from "src/interfaces"
+import { IBlog, IDelete, IPaginatedResponse } from "src/interfaces"
 import { apiAdminGetBlogs } from "src/services/CommonService"
 import useMutations from "src/hooks/useMutation"
 import { apiDeleteBlog } from "src/services/BlogService"
@@ -20,7 +20,7 @@ const Jobs = () => {
     const { user, isLoggedIn } = useAuthContext()
   const [deleteItemId, setDeleteItemId] = useState('')
 
-    const { data, refetch, isLoading } = useFetch<IBlog[]>({
+    const { data, refetch, isLoading } = useFetch<IPaginatedResponse<IBlog[]>>({
       api: apiAdminGetBlogs,
       key: ["blogs"],
       enabled: !!isLoggedIn
@@ -68,7 +68,7 @@ const Jobs = () => {
             </div>
             <div className="flex flex-col gap-4 mt-12">
               {
-                data?.map((blog: IBlog) => (
+                data?.data?.map((blog: IBlog) => (
                   <BlogCard setDeleteItemId={setDeleteItemId} key={blog?.id} blog={blog} />
                 ))
               }
