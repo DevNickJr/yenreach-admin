@@ -15,8 +15,7 @@ interface State<T, K> {
 
 const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string, token: string }) => Promise<AxiosResponse>, { onSuccess, onError, showSuccessMessage=false, showErrorMessage=false, id, ...rest }: State<T,K>) => {
     // const { data: session } = useSession()
-    const context = useAuthContext()
-    const token = context?.token || ""
+    const { token, dispatch } = useAuthContext()
     
 
     const Mutation = useMutation<K, K, T>({
@@ -54,8 +53,9 @@ const useMutations = <T,K>(api: (data: T, { id, token, ...rest } : { id: string,
             if (showErrorMessage) {
               const message = error?.response?.data?.message || error?.response?.data?.data?.message ||  error?.response?.data?.detail || error?.message || error?.response?.data?.message?.[0] || "An Error Occurred!"
               if (typeof message === "string") {
-                if (message === "Token Expired") {
+                if (message === "Token Expired" || message == 'jwt expired') {
                   toast.error("Token Expired. Log back in to access your account")
+                  dispatch({ type: "LOGOUT" , payload: null })
                 } else if (message === "Validation failed") {
                   toast.error(error?.response?.data?.errors?.[0]?.message || "An Error Occurred!");
                 }
