@@ -1,4 +1,4 @@
-import { IDelete, IPaginatedQuery, IAddBlog, IMutateQuery } from "src/interfaces"
+import { IDelete, IPaginatedQuery, IAddBlog, IMutateQuery, IQuery } from "src/interfaces"
 import BaseService from "./BaseService"
 import Auth from "src/utils/Auth"
 
@@ -29,5 +29,8 @@ export const apiDeleteBlog = (data: { id: string }, { id, token }: IDelete) => {
     return BaseService.delete(`${servicePrefix}/${data.id || id}`,  Auth({ token }))
 }
 
+export const apiAdminGetBlog =  (query: IQuery) => {
+    return BaseService.get(`${servicePrefix}/${query?.id}`, Auth({ token: query.token }))
+}
 
 

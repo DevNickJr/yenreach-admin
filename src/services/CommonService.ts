@@ -200,9 +200,6 @@ export const apiAdminDeletePaymentPlan =  (id: string) => {
     return BaseService.post("delete_payment_plan_api" + `/?string=${id}`)
 }
 
-export const apiAdminGetBlog =  (id: string) => {
-    return BaseService.get(`/fetch_one_blog_post_api.php?string=${id}`)
-}
 
 export const apiAdminDeleteBusiness =  (id: string) => {
     // console.log({ query })

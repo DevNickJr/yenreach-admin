@@ -10,21 +10,18 @@ import useImage from "src/hooks/useImage"
 import useMutations from "src/hooks/useMutation"
 import { IAddBlog, IBlog } from "src/interfaces"
 import Layout from 'src/layout'
-import { apiAdminUpdateBlog } from "src/services/BlogService"
-import { apiAdminGetBlog } from "src/services/CommonService"
+import { apiAdminUpdateBlog, apiAdminGetBlog } from "src/services/BlogService"
 import { Editor } from "tinymce"
 
 const initialState: IAddBlog = { 
-    title: "",
-    author: "",
-    post: "",
-    snippet: "",
-    admin_string : "",
-    blog_string : "",
-    file_path: "",
+  title: "",
+  authorId: "",
+  preview: "",
+  content: "",
+  mediaUrl: "",
+  isFeatured: false,
 }
-
-type Action = "reset" | "title" | "author" | "post" | "snippet" | "admin_string" | "file_path" | "blog_string"
+type Action = "reset" | "title" | "authorId" | "preview" | "content" | "mediaUrl" | "isFeatured"
 
 interface IAction {
     type: Action,
@@ -54,7 +51,7 @@ const EditBlog = () => {
     api: apiAdminGetBlog,
     key: ["blog", id || ''],
     enabled: !!id,
-    param: id,
+    param: { id },
   })
 
   const handleChange = useCallback((type: Action, payload: string) => {
@@ -64,12 +61,11 @@ const EditBlog = () => {
   useEffect(() => {
     if (blogPost && editorReady) {
         handleChange("title", blogPost.title)
-        handleChange("author", blogPost.author)
-        handleChange("blog_string", blogPost.blog_string)
-        handleChange("file_path", blogPost.file_path)
-        handleChange("post", blogPost.post)
-        handleChange("snippet", blogPost.snippet)
-        ref?.current?.setContent(blogPost.post)
+        handleChange("authorId", blogPost.authorId)
+        handleChange("mediaUrl", blogPost.mediaUrl)
+        handleChange("content", blogPost.content)
+        handleChange("preview", blogPost.preview)
+        ref?.current?.setContent(blogPost.content)
     }
   }, [blogPost, handleChange, editorReady])
 
@@ -89,10 +85,10 @@ const EditBlog = () => {
 
 
   const handleSubmit = () => {
-    if (!img && !blogPost?.file_path) {
+    if (!img && !blogPost?.mediaUrl) {
       return toast.info("upload image")
     }
-    addItemMutation.mutate({ ...blog, file_path: img || blogPost?.file_path || "", post: ref?.current?.getContent() || "", admin_string: user?.id || "" }) 
+    addItemMutation.mutate({ ...blog, mediaUrl: img || blogPost?.mediaUrl || "", content: ref?.current?.getContent() || "" }) 
   }
   
   return (
@@ -109,7 +105,7 @@ const EditBlog = () => {
             </div>
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Author</span>
-                <input value={blog.author} onChange={e => handleChange("author", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                <input value={blog.authorId} onChange={e => handleChange("authorId", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
             </div>
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Image</span>
@@ -117,7 +113,7 @@ const EditBlog = () => {
             </div>
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Snippet</span>
-                <input maxLength={120} placeholder="(max 120 characters)" value={blog.snippet} onChange={e => handleChange("snippet", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
+                <input maxLength={120} placeholder="(max 120 characters)" value={blog.preview} onChange={e => handleChange("preview", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
             </div>
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Content</span>

@@ -3,13 +3,21 @@ import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
 import { getStorage } from "firebase/storage";
 
-const apiKey = process.env.NEXT_PUBLIC_API_KEY || ""
-const authDomain = process.env.NEXT_PUBLIC_Auth_Domain || ""
-const projectId = process.env.NEXT_PUBLIC_Project_Id || ""
-const storageBucket = process.env.NEXT_PUBLIC_Storage_Bucket || ""
-const messagingSenderId = process.env.NEXT_PUBLIC_Messaging_Sender_Id || ""
-const appId = process.env.NEXT_PUBLIC_App_Id || ""
-const measurementId = process.env.NEXT_PUBLIC_Measurement_Id || ""
+const apiKey = "AIzaSyAwtt3bn_YeFcnSAqxaMGiDXHsBGV3GFec";
+const authDomain = "yenreach-49357.firebaseapp.com";
+const projectId = "yenreach-49357";
+const storageBucket = "yenreach-49357.appspot.com";
+const messagingSenderId = "910277699176";
+const appId = "1:910277699176:web:47cbf3e8cba565e058fddd";
+const measurementId = "G-ZPNG3YYY5F";
+
+// const apiKey = process.env.NEXT_PUBLIC_API_KEY || ""
+// const authDomain = process.env.NEXT_PUBLIC_Auth_Domain || ""
+// const projectId = process.env.NEXT_PUBLIC_Project_Id || ""
+// const storageBucket = process.env.NEXT_PUBLIC_Storage_Bucket || ""
+// const messagingSenderId = process.env.NEXT_PUBLIC_Messaging_Sender_Id || ""
+// const appId = process.env.NEXT_PUBLIC_App_Id || ""
+// const measurementId = process.env.NEXT_PUBLIC_Measurement_Id || ""
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries

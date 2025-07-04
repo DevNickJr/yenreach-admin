@@ -344,6 +344,7 @@ export interface IBillboard {
 }
 
 export interface IQuery {
+    id: string
     page: number
     token: string
     search: number
