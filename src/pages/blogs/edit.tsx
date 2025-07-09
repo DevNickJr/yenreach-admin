@@ -103,10 +103,10 @@ const EditBlog = () => {
                 <span className="text-xs">Title</span>
                 <input value={blog.title} onChange={e => handleChange("title", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
             </div>
-            <div className="flex flex-col gap-1">
+            {/* <div className="flex flex-col gap-1">
                 <span className="text-xs">Author</span>
                 <input value={blog.authorId} onChange={e => handleChange("authorId", e.target.value)} type="text" className="p-2 px-3 text-sm rounded-md outline-none" />
-            </div>
+            </div> */}
             <div className="flex flex-col gap-1">
                 <span className="text-xs">Image</span>
                 <input onChange={(e) => uploadImg(e.target.files![0])}  type="file" className="p-2 px-3 text-sm rounded-md outline-none" />
