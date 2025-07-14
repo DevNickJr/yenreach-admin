@@ -162,9 +162,9 @@ export const apiAdminApproveBusinesses =  ({ type }: { type: 'approve' | 'declin
     return BaseService.post(`${servicePrefix}/${id}/${type}`, {}, Auth({ token}))
 }
 
-export const apiAdminAddBusinessesOfTheWeek =  (id: string) => {
+export const apiAdminAddBusinessesOfTheWeek = ({ id: uid }: { id: string }, { token, id }: IMutateQuery) => {
     // console.log({ query })
-    return BaseService.get("add_business_of_the_week_api" + `/?string=${id}`)
+    return BaseService.post(`${servicePrefix}/${id}/business-of-the-week`, { id: id || uid }, Auth({ token }))
 }
 
 

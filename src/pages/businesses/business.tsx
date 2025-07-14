@@ -1,6 +1,6 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
-import { BusinessRegistrationState, IBusiness } from "src/interfaces"
+import { BusinessRegistrationState, IBusiness, IMutateQuery } from "src/interfaces"
 import { apiAdminAddBusinessesOfTheWeek, apiAdminApproveBusinesses, apiAdminGetOneBusinesses } from "src/services/CommonService"
 import { useParams } from "react-router-dom"
 import Loader from "src/components/Loader"
@@ -34,7 +34,7 @@ const Business = () => {
         id
     })
 
-    const makeWeekBussinessMutation = useMutations<string, unknown>(
+    const makeWeekBussinessMutation = useMutations<{ id: string }, unknown>(
       apiAdminAddBusinessesOfTheWeek,
     {
         onSuccess: (data: unknown) => {
@@ -81,7 +81,7 @@ const Business = () => {
             </div>
             {
               business?.registrationStatus == BusinessRegistrationState.APPROVED &&
-                <Button onClick={() => makeWeekBussinessMutation?.mutate(business?.id || "")} className="p-3 px-6 mt-3 h-fit">
+                <Button onClick={() => makeWeekBussinessMutation?.mutate({ id })} className="p-3 px-6 mt-3 h-fit">
                   Business of the week
                 </Button>
             }
