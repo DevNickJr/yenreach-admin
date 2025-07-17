@@ -56,7 +56,7 @@ const Billboard = () => {
             <h1 className="text-xl">Billboard Title - {billboard?.title}</h1>
             <h1 className="text-xl">Owner's Name - {billboard?.user?.name}</h1>
             <div className="flex flex-col md:flex-row gap-6">
-                <img src={billboard?.filename?.replace("mediatoken", "media&token")} alt="" className="flex-1 w-full max-h-48" />
+                <img src={billboard?.imageUrl?.replace("mediatoken", "media&token")} alt="" className="flex-1 w-full max-h-48" />
             </div>
             {/* <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
               <Button onClick={() => approveBussinessMutation?.mutate(billboard?.verify_string || "")} className="p-3 h-fit px-6">

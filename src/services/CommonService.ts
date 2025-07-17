@@ -69,9 +69,9 @@ export const apiSendBulkSMS = (data: IBulkSMS) => {
 }
 
 
-export const apiAdminGetBilllboards =  (query: IQuery) => {
+export const apiAdminGetBilllboards =  (query: IQuery & { status: string }) => {
     // console.log({ query })
-    return BaseService.get("/fetch_all_billboard_applications" + `?per_page=${query?.num_per_page || 40}&skip=${query?.page ? (query.page - 1) * (query?.num_per_page || 40) : 0}`)
+    return BaseService.get("/admin/billboards" + `?page=${query?.page || 1}&limit=${query?.num_per_page || 20}&status=${query?.status}`, Auth({ token: query.token}))
 }
 
 export const apiAdminGetAdverts =  () => {
@@ -167,6 +167,11 @@ export const apiAdminAddBusinessesOfTheWeek = ({ id: uid }: { id: string }, { to
     return BaseService.post(`${servicePrefix}/${id}/business-of-the-week`, { id: id || uid }, Auth({ token }))
 }
 
+export const apiAdminAddToBillboard = (data: { startDate: string, endDate: string; businessId: string }, { token }: IMutateQuery) => {
+    // console.log({ query })
+    return BaseService.post(`/admin/billboards`, data, Auth({ token }))
+}
+
 
 export const apiAdminDispproveBusinesses =  (data: IDisapproveBusiness) => {
     // console.log({ query })
@@ -204,6 +209,11 @@ export const apiAdminDeletePaymentPlan =  (id: string) => {
 export const apiAdminDeleteBusiness =  (id: string) => {
     // console.log({ query })
     return BaseService.delete("users/admin/${id}" + `/?string=${id}`)
+}
+
+export const apiAdminDeleteBillboard = ({ id }: { id: string }, { token }: IMutateQuery) => {
+    // console.log({ query })
+    return BaseService.delete(`/admin/billboards/${id}`, Auth({ token}))
 }
 
 export const apiAddAdvert = (data: IAddAdvert) => {

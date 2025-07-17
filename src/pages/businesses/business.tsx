@@ -1,18 +1,20 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 import { BusinessRegistrationState, IBusiness, IMutateQuery } from "src/interfaces"
-import { apiAdminAddBusinessesOfTheWeek, apiAdminApproveBusinesses, apiAdminGetOneBusinesses } from "src/services/CommonService"
+import { apiAdminAddBusinessesOfTheWeek, apiAdminAddToBillboard, apiAdminApproveBusinesses, apiAdminGetOneBusinesses } from "src/services/CommonService"
 import { useParams } from "react-router-dom"
 import Loader from "src/components/Loader"
 import Button from "src/components/Button"
 import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
 import { useState } from "react"
+import BillboardModal from "src/components/modals/BillboardModal"
 
 const Business = () => {
     const { id } = useParams();
     const [decline, setDecline] = useState(false)
     const [remarks, setRemarks] = useState("")
+    const [isOpen, setIsOpen] = useState('')
 
   
     const { data: business, isLoading } = useFetch<IBusiness>({
@@ -46,14 +48,22 @@ const Business = () => {
         id
     })
 
+    const addToBillboardMutation = useMutations<{ startDate: string, endDate: string; businessId: string }, unknown>(
+      apiAdminAddToBillboard,
+    {
+        onSuccess: (data: unknown) => {
+            console.log("data", data)
+            toast.success("Business added to billboard")
+            setIsOpen("");
+        },
+        showErrorMessage: true,
+        requireAuth: true,
+        id
+    })
+
     return (
         <Layout>
-            {
-                (isLoading || approveBussinessMutation?.isLoading) && <Loader />
-            }
-            {
-                
-            }
+          {(isLoading || approveBussinessMutation?.isLoading) && <Loader />}
           <div className="flex flex-col gap-1 p-6 mb-6">
             <h1 className="text-xl mb-4">{business?.name}</h1>
             {/* <h1 className="text-xl">Owner's Name - {business?.userId}</h1> */}
@@ -85,7 +95,18 @@ const Business = () => {
                   Business of the week
                 </Button>
             }
+            {
+              business?.registrationStatus == BusinessRegistrationState.APPROVED &&
+                <Button onClick={() => setIsOpen(id)} className="p-3 px-6 mt-3 h-fit">
+                  Add To Billboard
+                </Button>
+            }
           </div>
+          <BillboardModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            confirm={(data) => addToBillboardMutation?.mutate({ ...data, businessId: id })}
+          />
         </Layout>
     )
 }

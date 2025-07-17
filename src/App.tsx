@@ -14,11 +14,11 @@ import Admins from './pages/admins';
 import AddAdmin from './pages/admins/add';
 import AllAdmins from './pages/admins/all';
 import Admin from './pages/admins/admin';
-// import Billboards from './pages/billboards';
+import Billboards from './pages/billboards';
 // import AddBillboard from './pages/billboards/add';
-// import AllBillboards from './pages/billboards/all';
-// import PendingBillboard from './pages/billboards/pending';
-// import Billboard from './pages/billboards/billboard';
+import AllBillboards from './pages/billboards/all';
+import PendingBillboard from './pages/billboards/pending';
+import Billboard from './pages/billboards/billboard';
 import EditBusiness from './pages/businesses/edit-business';
 import Subscriptions from './pages/subscriptions';
 import AddSubscription from './pages/subscriptions/add';
@@ -83,10 +83,11 @@ function App() {
          
                 
             {/* billboards */}
-            {/* <Route path="/billboards" element={<Billboards />} />
+            <Route path="/billboards" element={<Billboards />} />
+            {/* <Route path="/billboards/add" element={<AddBillboard />} /> */}
             <Route path="/billboards/all" element={<AllBillboards />} />
             <Route path="/billboards/pending" element={<PendingBillboard />} />
-            <Route path="/billboards/:id" element={<Billboard />} /> */}
+            <Route path="/billboards/:id" element={<Billboard />} />
          
             {/* adverts */}
             {/* <Route path="/adverts" element={<Adverts />} />

@@ -41,24 +41,24 @@ export const columnsMaker = ({
     accessorKey: "title",
     header: ({ column }) => <ColumnHead title="Title" column={column} />,
   },
+  // {
+  //   accessorKey: "stage",
+  //   header: ({ column }) => <ColumnHead title="Stage" column={column} />,
+  // },
   {
-    accessorKey: "stage",
-    header: ({ column }) => <ColumnHead title="Stage" column={column} />,
-  },
-  {
-    accessorKey: "proposed_start_date",
+    accessorKey: "startDate",
     header: ({ column }) => <ColumnHead title="Proposed Start Date" column={column} />,
   },
   {
-    accessorKey: "start_date",
-    header: ({ column }) => <ColumnHead title="Start Date" column={column} />,
+    accessorKey: "endDate",
+    header: ({ column }) => <ColumnHead title="End Date" column={column} />,
   },
   {
-    accessorKey: "call_to_action_type",
-    header: ({ column }) => <ColumnHead title="Type" column={column} />,
+    accessorKey: "ctaText",
+    header: ({ column }) => <ColumnHead title="Text" column={column} />,
   },
   {
-    accessorKey: "call_to_action_link",
+    accessorKey: "ctaLink",
     header: ({ column }) => <ColumnHead title="Link" column={column} />,
   },
   {
@@ -68,11 +68,11 @@ export const columnsMaker = ({
       const business = row.original
       return (
         <div className="flex items-center justify-center gap-2">
-            <Link to={`/businesses/${business.verify_string}`}>
+            <Link to={`/businesses/${business.id}`}>
                 <BsEye className="text-base cursor-pointer text-black/40"  />
             </Link>
-            <BiEdit className="text-base cursor-pointer text-black/40" onClick={() => editFunc(business?.verify_string || "")} />
-            <MdDelete onClick={() => deleteFunc(business.verify_string || "")} className="text-base cursor-pointer text-black/40" />
+            <BiEdit className="text-base cursor-pointer text-black/40" onClick={() => editFunc(business?.id || "")} />
+            <MdDelete onClick={() => deleteFunc(business.id || "")} className="text-base cursor-pointer text-black/40" />
         </div>
 
       )

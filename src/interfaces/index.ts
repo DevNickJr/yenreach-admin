@@ -321,26 +321,22 @@ export interface IAddSubCategory {
 }
 
 export interface IBillboard {
-    verify_string: string
-    advert_type: IAdvert
-    agent_string: string
-    agent_type: string
-    call_to_action_link: string
-    call_to_action_type: string
-    code: string
-    created: string
-    end_date: string
-    errors: string[]
-    filename: string
-    id: string
-    last_updated: string
-    proposed_start_date: string
-    remarks: string
-    stage: string
-    start_date: string
-    text: string
-    title: string
-    user: IUser
+    id: string;
+    userId: string | null;
+    user?: IUser;
+    adminId: string;
+    businessId: string;
+    title: string;
+    description: string;
+    imageUrl: string;
+    ctaText: string;
+    ctaLink: string;
+    startDate: string;
+    endDate: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    deletedAt: string | null;
 }
 
 export interface IQuery {

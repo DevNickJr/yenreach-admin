@@ -1,10 +1,8 @@
 // import { useAuthContext } from "src/hooks/useAuthContext"
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
-// import { Link } from "react-router-dom"
-import { apiAdminDeleteBusiness, apiAdminGetBilllboards } from "src/services/CommonService"
+import { apiAdminDeleteBillboard, apiAdminGetBilllboards } from "src/services/CommonService"
 import { IBillboard, IPaginatedResponse } from "src/interfaces"
-// import BusinessCard from "./fragments/BusinessCard"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
 import { useState } from "react"
@@ -14,31 +12,32 @@ import { toast } from "react-toastify"
 import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
 import { usePagination } from "src/hooks/usePagination"
+import { useNavigate } from "react-router-dom"
 
 
 const AllBillboards = () => {
-    // const { user } = useAuthContext()
-    const [, setEditBusiness] = useState('')
-    const [deleteBusiness, setDeleteBusiness] = useState('')
+    const [, setEditBillboard] = useState('')
+    const [deleteBillboard, setDeleteBillboard] = useState('')
     const { onPaginationChange, pagination, page } = usePagination()
-
+    const [status, setStatus] = useState('')
     
     const { data: billboards, isLoading, refetch } = useFetch<IPaginatedResponse<IBillboard[]>>({
       api: apiAdminGetBilllboards,
-      key: ["billboards", page, pagination.pageSize],
+      key: ["billboards", page, pagination.pageSize, status],
       param: {
         page: page,
         num_per_page: pagination.pageSize,
+        status
       }
     })
-    
-    const deleteBussinessMutation = useMutations<string, unknown>(
-        apiAdminDeleteBusiness,
+
+    const deleteBillboardMutation = useMutations<{ id: string }, unknown>(
+        apiAdminDeleteBillboard,
     {
         onSuccess: (data: unknown) => {
             console.log("data", data)
-            toast.success("Business Deleted Successfully")
-            setDeleteBusiness("")
+            toast.success("Billboard Deleted Successfully")
+            setDeleteBillboard("")
             refetch()
         },
         showErrorMessage: true,
@@ -46,37 +45,39 @@ const AllBillboards = () => {
     })
 
     const columns = columnsMaker({
-      editFunc: (id: string) => setEditBusiness(id),
-      deleteFunc: (id: string) => setDeleteBusiness(id),
+      editFunc: (id: string) => setEditBillboard(id),
+      deleteFunc: (id: string) => setDeleteBillboard(id),
     })
 
-    // useEffect(() => {
-    //   const fn = async () => {
-    //     const response = await fetch("https://yenreach.site/api/jobs/fetch_all_job_api.php")
-    //     const value = await response.json()
-    //     setJobs(value)
-    //   }
+    const navigate = useNavigate()
 
-    //   fn()
-    // }, [])
-
-    console.log({billboards})
-  
     return (
         <Layout>
             {
-                (deleteBussinessMutation?.isLoading) && <Loader />
+                (deleteBillboardMutation?.isLoading) && <Loader />
             }
             <DeleteItemModal
-                deleteFunc={() => deleteBussinessMutation.mutate(deleteBusiness)}
-                isOpen={deleteBusiness} 
-                setIsOpen={setDeleteBusiness} 
-                desc='Are you sure you want to delete this Business?'
+                deleteFunc={() => deleteBillboardMutation.mutate({ id: deleteBillboard })}
+                isOpen={deleteBillboard} 
+                setIsOpen={setDeleteBillboard} 
+                desc='Are you sure you want to delete this Billboard?'
             />
           <div className="flex flex-col gap-1 p-6 mb-6">
-            <h1 className="text-xl">All billboards</h1>
+            <div className="flex items-center gap-3 flex-wrap justify-between">
+              <h1 className="text-xl capitalize">{status ? status : 'All'} billboards</h1>
+              <select
+                onChange={(e) => setStatus(e.target.value)}
+                value={status}
+                className="border-2 border-gray-300 rounded-md px-3 py-2"
+              >
+                <option value="">All</option>
+                <option value="pending">Pending</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+              </select>
+            </div>
             {/* <div className="flex flex-end">
-              <Link to={"/billboards/add"}>Add Business</Link>
+              <Link to={"/billboards/add"}>Add Billboard</Link>
             </div> */}
             <div className="mt-12">
             {
@@ -86,8 +87,9 @@ const AllBillboards = () => {
                           columns={columns} 
                           data={billboards?.data || []} 
                           onPaginationChange={onPaginationChange}
-                          pageCount={billboards?.totalPages}
                           pagination={pagination}
+                          pageCount={billboards?.totalPages}
+                          // pageCount={1}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />
@@ -95,9 +97,9 @@ const AllBillboards = () => {
                       <NoResult
                           isLoading={isLoading}
                           image={""}
-                          desc='Add bussinesses to your dashboard and start to see billboards here.' 
-                          buttonText='Add Business'
-                          onClick={() => ""}
+                          desc='Add Billboard to billboard and start to see billboards here.' 
+                          buttonText='Add to Billboard'
+                          onClick={() => navigate("/Billboardes/all")}
                       />
               }
             </div>
