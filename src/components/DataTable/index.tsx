@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "./comps"
-import React from "react"
+import React, { useEffect } from "react"
 // import { MdChevronLeft, MdChevronRight, MdSearch } from "react-icons/md"
 import { Pagination } from "./Pagination"
 import { MdSearch } from "react-icons/md"
@@ -28,7 +28,7 @@ import { MdSearch } from "react-icons/md"
 interface DataTableProps<TData, TValue> {
   title: string
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[];
   onPaginationChange: React.Dispatch<React.SetStateAction<{
     pageSize: number;
     pageIndex: number;
@@ -42,6 +42,8 @@ interface DataTableProps<TData, TValue> {
     pageSize: number;
     pageIndex: number;
   }
+  search?: string;
+  setSearch?: React.Dispatch<React.SetStateAction<string>>;
   // sorting: {
   //   id: string;
   //   desc: boolean;
@@ -49,6 +51,8 @@ interface DataTableProps<TData, TValue> {
 }
 
 export function DataTable<TData, TValue>({
+  search,
+  setSearch,
   title,
   columns,
   data,
@@ -60,7 +64,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   // const [sorting, setSorting] = React.useState<SortingState>([]) // sort
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]) // filter
-  const [globalFilter, setGlobalFilter] = React.useState('')
+  const [globalFilter, setGlobalFilter] = React.useState(search ?? '')
 
   const table = useReactTable({
     data,
@@ -68,7 +72,9 @@ export function DataTable<TData, TValue>({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(), // sort
     onColumnFiltersChange: setColumnFilters, // filter
-    onGlobalFilterChange: setGlobalFilter, // GLOBAL FILTER
+    ...(!setSearch ? {
+      onGlobalFilterChange: setGlobalFilter,
+    } : {}),
     getFilteredRowModel: getFilteredRowModel(), // filter
     getPaginationRowModel: getPaginationRowModel(),
     manualPagination: true, // server pagination
@@ -79,7 +85,9 @@ export function DataTable<TData, TValue>({
     state: {
       // sorting, // sort
       columnFilters, // filter
-      globalFilter, // filter
+      ...(!setSearch ? {
+        globalFilter: globalFilter,
+      } : {}),
       pagination, // sever side
     },
   })
@@ -93,6 +101,24 @@ export function DataTable<TData, TValue>({
 //     key: ["customers", String(skip), String(limit)],
 //     requireAuth: true
 // })
+  const timer = React.useRef<NodeJS.Timeout>(null);
+
+  useEffect(() => {
+    if (!setSearch || search == globalFilter) return;
+    if (timer.current) {
+      clearTimeout(timer.current)
+    }
+    timer.current = setTimeout(() => {
+      setSearch(globalFilter)
+    }, 500)
+
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current)
+      }
+    }
+  }, [globalFilter, setSearch, search])
+
 
   return (
     <div className="p-5 text-sm bg-white rounded-lg font-inter">
@@ -102,7 +128,7 @@ export function DataTable<TData, TValue>({
           <MdSearch className="absolute text-black/50 text-xl top-1.5 left-2" />
           <input
             placeholder="Search"
-            value={globalFilter ?? ''}
+            value={(globalFilter) ?? ''}
             onChange={e => setGlobalFilter(String(e.target.value))}
             className="max-w-sm p-1 px-2 pl-10 border rounded-md outline-none focus:border-black/60 hover:border-black/60 bg-inherit"
           />

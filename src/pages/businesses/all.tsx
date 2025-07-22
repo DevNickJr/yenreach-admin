@@ -18,7 +18,9 @@ import { usePagination } from "src/hooks/usePagination"
 
 const AllBusinesses = () => {
     // const { user } = useAuthContext()
+    const [search, setSearch] = useState('')
     const [, setEditBusiness] = useState('')
+
     const [deleteBusiness, setDeleteBusiness] = useState('')
     const { onPaginationChange, pagination, page } = usePagination()
 
@@ -26,10 +28,11 @@ const AllBusinesses = () => {
     
     const { data: businesses, isLoading, refetch } = useFetch<IPaginatedResponse<IBusiness[]>>({
       api: apiAdminGetBusinesses,
-      key: ["businesses", page, pagination.pageSize],
+      key: ["businesses", page, pagination.pageSize, search],
       param: {
         page: page,
-        num_per_page: pagination.pageSize
+        num_per_page: pagination.pageSize,
+        search
       }
     })
 
@@ -78,6 +81,8 @@ const AllBusinesses = () => {
                           onPaginationChange={onPaginationChange}
                           pagination={pagination}
                           pageCount={businesses?.totalPages}
+                          search={search}
+                          setSearch={setSearch}
                           // onSortingChange={onSortingChange}
                           // sorting={sorting}
                       />
