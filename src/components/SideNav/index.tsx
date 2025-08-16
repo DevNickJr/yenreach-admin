@@ -1,5 +1,5 @@
 import { AiOutlineBorderVerticle } from 'react-icons/ai';
-import { MdLogout, MdBusiness, MdWorkOutline, MdPerson } from 'react-icons/md'
+import { MdLogout, MdBusiness, MdWorkOutline, MdPerson, MdSettings } from 'react-icons/md'
 import { TbBrandBlogger } from 'react-icons/tb'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuthContext } from 'src/hooks/useAuthContext';
@@ -42,6 +42,10 @@ const SideNav = () => {
                 <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("blogs") && 'font-bold'}`} to={"/blogs"}>
                     <TbBrandBlogger size={"1.3rem"} />
                     Blogs 
+                </Link>
+                <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("settings") && 'font-bold'}`} to={"/settings"}>
+                    <MdSettings size={"1.3rem"} />
+                    Settings 
                 </Link>
                 {/* <Link className={`py-2.5 pl-6 text-sm flex items-center gap-2 ${pathname?.includes("adverts") && 'font-bold'}`} to={"/adverts"}>
                     <MdOutlineAirplaneTicket size={"1.3rem"} />

@@ -9,6 +9,7 @@ import useMutations from "src/hooks/useMutation"
 import { toast } from "react-toastify"
 import { useState } from "react"
 import BillboardModal from "src/components/modals/BillboardModal"
+import { Link } from "react-router-dom"
 
 const Business = () => {
     const { id } = useParams();
@@ -100,6 +101,12 @@ const Business = () => {
                 <Button onClick={() => setIsOpen(id)} className="p-3 px-6 mt-3 h-fit">
                   Add To Billboard
                 </Button>
+            }
+            {
+              business?.registrationStatus == BusinessRegistrationState.APPROVED &&
+                <Link to={`/businesses/${business.id}/add-product`} className="p-3 px-6 mt-3 cursor-pointer whitespace-nowrap text-primary underline">
+                  Add Black Friday Product
+                </Link>
             }
           </div>
           <BillboardModal

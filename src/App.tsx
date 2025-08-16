@@ -43,7 +43,10 @@ import EditBlog from './pages/blogs/edit';
 // import AllCategoriesSub from './pages/categories/categories-sub';
 // import SMS from './pages/sms';
 // import BulkSMS from './pages/sms/bulk';
-
+import Settings from './pages/settings';
+import AddSettings from './pages/settings/add';
+import Setting from './pages/settings/setting';
+import AddProduct from './pages/businesses/add-product';
 
 function App() { 
 
@@ -66,12 +69,18 @@ function App() {
             <Route path="/businesses/pending" element={<PendingBusinesses />} />
             <Route path="/businesses/:id" element={<Business />} />
             <Route path="/businesses/:id/edit" element={<EditBusiness />} />
+            <Route path="/businesses/:id/add-product" element={<AddProduct />} />
 
             {/* admins */}
             <Route path="/admins" element={<Admins />} />
             <Route path="/admins/add" element={<AddAdmin />} />
             <Route path="/admins/all" element={<AllAdmins />} />
             <Route path="/admins/:id" element={<Admin />} />
+
+            {/* settings */}
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/settings/add" element={<AddSettings />} />
+            <Route path="/settings/:id" element={<Setting />} />
             
             {/* subscriptions */}
             {/* <Route path="/subscriptions" element={<Subscriptions />} />

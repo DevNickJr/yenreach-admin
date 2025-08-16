@@ -127,6 +127,37 @@ export interface IJob {
     createdAt?: string;
 }
 
+export interface IProduct { 
+    quantity: number;
+    price: number;
+    safetyTip: string;
+    name : string;
+    businessId: string;
+    description : string;
+    categories : { id: string; category: string }[];
+    photos : string[];
+    color : string;
+    type: string;
+    productId: string,
+    discountedPrice: number;
+    dealEndDate: string;
+}
+export interface IAddProduct { 
+    quantity: number;
+    price: number;
+    safetyTip: string;
+    name : string;
+    businessId: string;
+    description : string;
+    categories : string[];
+    photos : string[];
+    color : string;
+    type: string;
+    productId: string,
+    discountedPrice: number;
+    dealEndDate: string;
+}
+
 export interface IBlog {
     id: string
     authorId: string;
@@ -177,6 +208,24 @@ export interface IAdmin {
     createdAt: string
 }
 
+export interface ISetting {
+    id: string;
+    name: string;
+    value: string;
+}
+
+export enum SettingsValueType {
+    // String = 'string',
+    // Number = 'number',
+    Boolean = 'boolean',
+    // Enum = 'enum',
+    // Options = 'options',
+    // Object = 'object',
+    StringArray = 'string_array',
+    NumberArray = 'number_array',
+    // ObjectArray = 'object_array',
+}
+  
 export interface IAdvert {
     amount: string
     created: string
@@ -244,6 +293,13 @@ export interface IAddAdmin {
     personal_email: string
     official_email: string
     authorizationLevel: AdminAuthorizationLevel
+}
+
+export interface IAddSetting {
+    name: string;
+    value: string | boolean | number;
+    valueType: string;
+    options: string[];
 }
 
 export interface IActivateAdmin {

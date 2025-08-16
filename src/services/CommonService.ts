@@ -1,4 +1,4 @@
-import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSubCategory, IAddSubscription, IBulkSMS, IBusiness, IDisapproveBusiness, IMutateQuery, IPlan, IQuery, ISubPlan } from "src/interfaces"
+import { IActivateAdmin, IAddAdmin, IAddAdvert, IAddCategory, IAddSetting, IAddSubCategory, IAddSubscription, IBulkSMS, IBusiness, IDisapproveBusiness, IMutateQuery, IPlan, IQuery, ISubPlan } from "src/interfaces"
 import BaseService from "./BaseService"
 import Auth from "src/utils/Auth"
 
@@ -31,6 +31,16 @@ export const apiAdminGetAdmins =  (query: IQuery) => {
     return BaseService.get("/users/admin" + `?page=${query?.page || 1}&limit=${query?.num_per_page || 20}`, Auth({ token: query.token}))
 }
 
+/* Add settings */
+export const apiAddSetting = (data: IAddSetting, query: IMutateQuery) => {
+    return BaseService.post(`/settings`, data, Auth({ token: query.token}))
+}
+
+export const apiAdminGetSettings =  (query: IQuery) => {
+    // console.log({ query })
+    return BaseService.get("/settings" + `?page=${query?.page || 1}&limit=${query?.num_per_page || 20}`, Auth({ token: query.token}))
+}
+
 
 /* Subscription */
 export const apiAdminGetSubscriptions = (query: IQuery) => {
@@ -60,6 +70,11 @@ export const apiAddSubPlan = (data: ISubPlan, query: IMutateQuery) => {
 export const apiAdminDeleteAdmin = (data: { id: string }, query: IMutateQuery) => {
     // console.log({ query })
     return BaseService.delete(`/users/admin/${query.id}`, Auth({ token: query.token,}))
+}
+
+export const apiAdminDeleteSetting = (data: { id: string }, query: IMutateQuery) => {
+    // console.log({ query })
+    return BaseService.delete(`/settings/${query.id}`, Auth({ token: query.token,}))
 }
 
 
