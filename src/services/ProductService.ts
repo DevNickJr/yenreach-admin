@@ -21,7 +21,7 @@ export const apiAdminAddBlackProduct = (data: IAddProduct, { token }: IMutateQue
 
 /* Get Products */
 export const apiGetBlackProducts = (query: IPaginatedQuery) => {
-    return BaseService.get(`/products/black-friday/all?page=${query?.page || 1}&limit=${query?.num_per_page || 40}`, Auth({ token: query.token }))
+    return BaseService.get(`/products/black-friday?page=${query?.page || 1}&limit=${query?.num_per_page || 40}`, Auth({ token: query.token }))
 }
 
 /* Delete Product */
