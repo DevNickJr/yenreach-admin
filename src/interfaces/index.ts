@@ -128,6 +128,7 @@ export interface IJob {
 }
 
 export interface IProduct { 
+    id?: string;
     quantity: number;
     price: number;
     safetyTip: string;
@@ -142,6 +143,28 @@ export interface IProduct {
     discountedPrice: number;
     dealEndDate: string;
 }
+
+export interface IBlackFriday { 
+    id: string;
+    discountedPrice: number;
+    dealEndDate: string;
+    productId: string;
+    created_at: string;
+    product: {
+      id: string;
+      name: string;
+      businessId: string;
+      description: string;
+      price: 0;
+      quantity: 0;
+      color: string;
+      safetyTip: string;
+      categories: string[];
+      photos: string[];
+      created_at: string;
+    }
+}
+
 export interface IAddProduct { 
     quantity: number;
     price: number;
@@ -153,7 +176,7 @@ export interface IAddProduct {
     photos : string[];
     color : string;
     type: string;
-    productId: string,
+    productId: string;
     discountedPrice: number;
     dealEndDate: string;
 }
@@ -211,7 +234,7 @@ export interface IAdmin {
 export interface ISetting {
     id: string;
     name: string;
-    value: string;
+    value: string | boolean | number;
 }
 
 export enum SettingsValueType {

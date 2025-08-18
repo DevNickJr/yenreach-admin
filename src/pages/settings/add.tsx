@@ -1,14 +1,15 @@
-import { useReducer, useState } from "react"
+import { useMemo, useReducer, useState } from "react"
 import { MdVisibility, MdVisibilityOff } from "react-icons/md"
 import { toast } from "react-toastify"
 import Button from "src/components/Button"
 import Loader from "src/components/Loader"
 import { useAuthContext } from "src/hooks/useAuthContext"
 import useMutations from "src/hooks/useMutation"
-import { IAddSetting, SettingsValueType } from "src/interfaces"
+import { IAddSetting, IResponse, ISetting, SettingsValueType } from "src/interfaces"
 import Layout from 'src/layout'
-import { apiAddSetting } from "src/services/CommonService"
+import { apiAddSetting, apiAdminGetSettings } from "src/services/CommonService"
 import useCopyToClipBoard from "src/hooks/useCopy"
+import useFetch from "src/hooks/useFetch"
 
 const initialState: IAddSetting = { 
     name: '',
@@ -52,12 +53,20 @@ const AddAdmin = () => {
         setData({ type, payload })
     }
 
+    
+    const { data: settings, isLoading, refetch } = useFetch<IResponse<ISetting[]>>({
+        api: apiAdminGetSettings,
+        select: ((d) => d),
+        key: ["settings"],
+    })
+
     const addItemMutation = useMutations<IAddSetting, IAddSetting>(
         apiAddSetting,
         {
         onSuccess: (data) => {
             setAdmin(data)
             console.log("data", data)
+            refetch()
             toast.success("Setting Updated Successfully.")
         },
         showErrorMessage: true,
@@ -75,6 +84,9 @@ const AddAdmin = () => {
     //     requireAuth: true,
     // })
     
+    const is_black_friday_enabled = useMemo(() => {
+        return settings?.data?.find((val) => val.name == 'is_black_friday_enabled')?.value == true;
+    }, [settings]) 
     return (
         <Layout>
           {(addItemMutation?.isLoading) && <Loader />}
@@ -86,10 +98,10 @@ const AddAdmin = () => {
             <div className="flex flex-col gap-4 mt-12">
                 <div className="flex flex-col gap-1">
                     <span className="text-md">Black Friday enabled</span>
-                    <input type="checkbox" className="p-2 px-3 text-sm rounded-md w-fit border border-black" name="is_black_friday_enabled" onChange={(checked) => {
+                    <input type="checkbox" checked={is_black_friday_enabled} className="p-2 px-3 text-sm rounded-md w-fit border border-black" name="is_black_friday_enabled" onChange={(checked) => {
                         console.log("checked", checked)
                         addItemMutation.mutate({
-                            name: 'Black Friday enabled',
+                            name: 'is_black_friday_enabled',
                             value: checked.target.checked ? true : false,
                             valueType: 'boolean',
                             options: ['true', 'false'],

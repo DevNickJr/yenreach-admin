@@ -72,9 +72,10 @@ export const apiAdminDeleteAdmin = (data: { id: string }, query: IMutateQuery) =
     return BaseService.delete(`/users/admin/${query.id}`, Auth({ token: query.token,}))
 }
 
-export const apiAdminDeleteSetting = (data: { id: string }, query: IMutateQuery) => {
+
+export const apiAdminDeleteSetting = (data: { name: string }, query: IMutateQuery) => {
     // console.log({ query })
-    return BaseService.delete(`/settings/${query.id}`, Auth({ token: query.token,}))
+    return BaseService.delete(`/settings/${data.name}`, Auth({ token: query.token,}))
 }
 
 

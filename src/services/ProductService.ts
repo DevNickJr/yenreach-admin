@@ -19,6 +19,15 @@ export const apiAdminAddBlackProduct = (data: IAddProduct, { token }: IMutateQue
     return BaseService.post(`/admin/products/black-friday`, data, Auth({ token }))
 }
 
+/* Get Products */
+export const apiGetBlackProducts = (query: IPaginatedQuery) => {
+    return BaseService.get(`/products/black-friday/all?page=${query?.page || 1}&limit=${query?.num_per_page || 40}`, Auth({ token: query.token }))
+}
+
+/* Delete Product */
+export const apiAdminDeleteBlackProduct = (data: { id: string }, { id, token }: IDelete) => {
+    return BaseService.delete(`/admin/products/black-friday/${data.id || id}`, Auth({ token }))
+}
 /* Delete Product */
 export const apiDeleteProduct = (data: { id: string }, { id, token }: IDelete) => {
     return BaseService.delete(`${adminPrefix}/${data.id || id}`, Auth({ token }))

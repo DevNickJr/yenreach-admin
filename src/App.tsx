@@ -47,6 +47,7 @@ import Settings from './pages/settings';
 import AddSettings from './pages/settings/add';
 import Setting from './pages/settings/setting';
 import AddProduct from './pages/businesses/add-product';
+import BlackFriday from './pages/black-friday';
 
 function App() { 
 
@@ -81,6 +82,9 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/settings/add" element={<AddSettings />} />
             <Route path="/settings/:id" element={<Setting />} />
+          
+            {/* settings */}
+            <Route path="/black-friday" element={<BlackFriday />} />
             
             {/* subscriptions */}
             {/* <Route path="/subscriptions" element={<Subscriptions />} />

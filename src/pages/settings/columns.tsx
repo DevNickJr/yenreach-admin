@@ -41,21 +41,21 @@ export const columnsMaker = ({
   //   accessorKey: "valueType",
   //   header: ({ column }) => <ColumnHead title="value Type" column={column} />,
   // },
-  {
-    id: "actions",
-    header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex items-center justify-center" />,
-    cell: ({ row }) => {
-      const admin = row.original
-      return (
-        <div className="flex items-center justify-center gap-2">
-          <Link to={`/admins/${admin.id}`}>
-              <BsEye className="text-xl cursor-pointer text-black/40"  />
-          </Link>
-        {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(admin?.id || "")} /> */}
-          <MdDelete onClick={() => deleteFunc(admin.id || "")} className="text-xl cursor-pointer text-black/40" />
-        </div>
+  // {
+  //   id: "actions",
+  //   header: ({ column }) => <ColumnHead title="Actions" column={column} className="flex items-center justify-center" />,
+  //   cell: ({ row }) => {
+  //     const admin = row.original
+  //     return (
+  //       <div className="flex items-center justify-center gap-2">
+  //         {/* <Link to={`/admins/${admin.id}`}>
+  //             <BsEye className="text-xl cursor-pointer text-black/40"  />
+  //         </Link> */}
+  //       {/* <BiEdit className="text-xl cursor-pointer text-black/40" onClick={() => editFunc(admin?.id || "")} /> */}
+  //         {/* <MdDelete onClick={() => deleteFunc(admin.name || "")} className="text-xl cursor-pointer text-black/40" /> */}
+  //       </div>
 
-      )
-    },
-  },
+  //     )
+  //   },
+  // },
 ]

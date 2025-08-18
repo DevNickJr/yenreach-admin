@@ -2,8 +2,7 @@
 import useFetch from "src/hooks/useFetch"
 import Layout from 'src/layout'
 // import { Link } from "react-router-dom"
-import { apiAdminDeleteSetting, apiAdminGetSettings } from "src/services/CommonService"
-import { ISetting, IResponse } from "src/interfaces"
+import { IBlackFriday, IResponse } from "src/interfaces"
 // import AdminCard from "./fragments/AdminCard"
 import { columnsMaker } from "./columns"
 import { DataTable } from "src/components/DataTable"
@@ -15,40 +14,43 @@ import Loader from "src/components/Loader"
 import DeleteItemModal from "src/assets"
 import { usePagination } from "src/hooks/usePagination"
 import { useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
-import Button from "src/components/Button"
+import { apiAdminDeleteBlackProduct, apiGetBlackProducts } from "src/services/ProductService"
 
 
-const AllSettings = () => {
+const BlackFriday = () => {
     // const { user } = useAuthContext()
     const [, setEditAdmin] = useState('')
-    const [deleteSetting, setDeleteSetting] = useState('')
+    const [deleteDeal, setDelete] = useState('')
 
-    const { onPaginationChange, pagination } = usePagination()
+    const { onPaginationChange, pagination, page } = usePagination()
 
-    const { data, isLoading, refetch } = useFetch<IResponse<ISetting[]>>({
-      api: apiAdminGetSettings,
-      select: ((d) => d),
-      key: ["settings"],
+    const { data, isLoading, refetch } = useFetch<IResponse<IBlackFriday[]>>({
+      api: apiGetBlackProducts,
+      // select: ((d) => d),
+      key: ["blacked", page, pagination.pageSize],
+      param: {
+        page: page,
+        num_per_page: pagination.pageSize
+      }
     })
 
-    const deleteSettingMutation = useMutations<{ name: string }, unknown>(
-        apiAdminDeleteSetting,
+    const deleteDealMutation = useMutations<{ id: string }, unknown>(
+        apiAdminDeleteBlackProduct,
     {
         onSuccess: (data: unknown) => {
             console.log("data", data)
-            toast.success("Setting Deleted Successfully")
-            setDeleteSetting("")
+            toast.success("Deal Deleted Successfully")
+            setDelete("")
             refetch()
         },
         showErrorMessage: true,
         requireAuth: true,
-        id: deleteSetting,
+        id: deleteDeal,
     })
 
     const columns = columnsMaker({
       editFunc: (id: string) => setEditAdmin(id),
-      deleteFunc: (id: string) => setDeleteSetting(id),
+      deleteFunc: (id: string) => setDelete(id),
     })
 
     // useEffect(() => {
@@ -66,28 +68,24 @@ const AllSettings = () => {
     return (
         <Layout>
             {
-                (deleteSettingMutation?.isLoading) && <Loader />
+                (deleteDealMutation?.isLoading) && <Loader />
             }
             <DeleteItemModal
-                deleteFunc={() => deleteSettingMutation.mutate({ name: deleteSetting })}
-                isOpen={deleteSetting} 
-                setIsOpen={setDeleteSetting} 
+                deleteFunc={() => deleteDealMutation.mutate({ id: deleteDeal })}
+                isOpen={deleteDeal} 
+                setIsOpen={setDelete} 
                 desc='Are you sure you want to delete this Admin?'
             />
-          <div className="p-6 mb-6">
-            <div className="flex justify-between flex-wrap gap-1">
-              <h1 className="text-xl">Settings</h1>
-              <Link to={"/settings/add"}>
-                <Button className="p-2">
-                  Update Settings
-                </Button>
-              </Link>
-            </div>
-            <div className="mt-8">
+          <div className="flex flex-col gap-1 p-6 mb-6">
+            <h1 className="text-xl">Black Friday Deals</h1>
+            {/* <div className="flex flex-end">
+              <Link to={"/admins/add"}>Add Admin</Link>
+            </div> */}
+            <div className="mt-12">
             {
                 (data?.data?.length && data?.data?.length > 0) ?
                       <DataTable 
-                          title="Settings"
+                          title="Products"
                           columns={columns} 
                           data={data?.data || []} 
                           onPaginationChange={onPaginationChange}
@@ -100,9 +98,9 @@ const AllSettings = () => {
                       <NoResult
                           isLoading={isLoading}
                           image={""}
-                          desc='Add Settings to your dashboard' 
-                          buttonText='Add Setting'
-                          onClick={() => navigate('/settings/add')}
+                          desc='You can create a product from businesses page' 
+                          buttonText='Add Product'
+                          onClick={() => navigate('/businesses/all')}
                       />
               }
             </div>
@@ -111,4 +109,4 @@ const AllSettings = () => {
     )
 }
 
-export default AllSettings
+export default BlackFriday
