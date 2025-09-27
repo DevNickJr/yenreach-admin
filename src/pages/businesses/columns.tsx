@@ -41,6 +41,14 @@ export const columnsMaker = ({
   {
     accessorKey: "name",
     header: ({ column }) => <ColumnHead title="Business Name" column={column} />,
+    cell: ({row}) => {
+      const name = row?.original?.name
+      return (
+        <span>
+          {name?.slice(0, 30)} {name?.length > 30 ? "..." : ""}
+        </span>
+      )
+    },
   },
   {
     accessorKey: "email",
@@ -53,6 +61,14 @@ export const columnsMaker = ({
   {
     accessorKey: "user.name",
     header: ({ column }) => <ColumnHead title="Owner's Name" column={column} />,
+    cell: ({row}) => {
+      const name = row?.original?.user?.name
+      return (
+        <span>
+          {name?.slice(0, 20)} {name?.length > 20 ? "..." : ""}
+        </span>
+      )
+    },
   },
   // {
   //   accessorKey: "state",
